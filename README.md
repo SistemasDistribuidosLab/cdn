@@ -2,9 +2,12 @@ CDN
 ===
 Ejecutar
 --------
- 	rm main ; clear ; make
+```
+rm main ; clear ; make
+```
  
- Crear grafo:
+Crear grafo
+-----------
  	perl grafo.pl --quotetypes=quote >> grafo/grafo.dot
  	dot grafo/grafo.dot -o grafo/grafo
  	xdot grafo/grafo
