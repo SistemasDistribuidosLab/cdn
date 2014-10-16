@@ -5,10 +5,12 @@
 
 class EdgeServer;
 class Transport;
+class Dns;
 
 class Client : public Node {
     private:
         rng<double> *arrival_time;
+        Dns * dns;
     public:
         unsigned int querys_send;
         Client(const string &name, int id, int type, rng<double> *arrival_time) : Node(name, id, type) {
@@ -17,6 +19,9 @@ class Client : public Node {
         }
         ~Client() {
 
+        }
+        void SetDns(Dns * dns){
+            this->dns = dns;
         }
         void inner_body(void);
 };

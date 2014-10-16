@@ -1,5 +1,6 @@
 #include "cppsim.hh"
 #include "Constants.h"
+#include "Dns.h"
 #include "Transport.h"
 #include "Client.h"
 #include "EdgeServer.h"
@@ -49,12 +50,15 @@ class Simulation : public process {
             transport->SetEdgeServers(edge_servers);
             transport->activate();
 
+            Dns * dns = new Dns();
+
             for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
                 edge_servers[ i ]->SetTransport(&transport);
                 edge_servers[ i ]->activate();
             }
             for (int i = 0; i < NUM_CLIENTS; ++i) {
                 clients[ i ]->SetTransport(&transport);
+                clients[ i ]->SetDns(dns);
                 clients[ i ]->activate();
             }
 
