@@ -1,5 +1,6 @@
 #include "cppsim.hh"
 #include "Constants.h"
+#include "Transport.h"
 #include "Client.h"
 #include "EdgeServer.h"
 #include "Funciones.h"
@@ -14,6 +15,7 @@ int DURACION_SIMULACION;
 int ARRIVAL_TIME;
 
 // vector< handle<Client> > clients;
+handle<Client> *clients;
 handle<EdgeServer> * edge_servers;
 
 class Simulation : public process {
@@ -21,24 +23,43 @@ class Simulation : public process {
         Simulation(const string &name) : process(name) { }
         ~Simulation() { }
         void inner_body() {
+
+
             rng<double> *arrival_time;
             rng<double> *random_client;
 
             arrival_time = new rngExp( "Arrive Time", ARRIVAL_TIME );
             random_client = new rngUniform("SelectSource", 0, 100);
 
-            // EdgeServer * a = new EdgeServer("edge_server", 1, NODE_EDGE_SERVER);
-            // handle <EdgeServer>  hola = new EdgeServer("edge_server", 0, NODE_EDGE_SERVER);
-            // edge_servers.push_back(hola);
+            // Iniciar Edge Servers
             edge_servers = new handle<EdgeServer>[NUM_EDGE_SERVERS];
             for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
                 edge_servers[i] = new EdgeServer("edge_server", i, NODE_EDGE_SERVER);
+            }
+
+            // Iniciar Clientes
+            clients = new handle<Client>[ NUM_CLIENTS ];
+            for (int i = 0; i < NUM_CLIENTS; ++i) {
+                clients[i] = new Client("cliente", i, NODE_CLIENT, arrival_time);
+            }
+
+            // Iniciar Transporte
+            Transport * transport = new Transport();
+            transport->SetEdgeServers(edge_servers);
+            transport->SetClients(edge_servers);
+
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+                clients[i]->SetTransport(transport);
                 edge_servers[i]->activate();
             }
+            for (int i = 0; i < NUM_CLIENTS; ++i) {
+                clients[i]->SetTransport(transport);
+                clients[i]->activate();
+            }
+
             hold(10);
             end_simulation( );
         }
-
 };
 
 void GenerateGraph();

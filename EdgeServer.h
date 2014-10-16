@@ -2,6 +2,7 @@
 #define EDGE_SERVER
 
 #include "Node.h"
+#include "Constants.h"
 
 using namespace std;
 
@@ -19,10 +20,10 @@ class EdgeServer : public Node {
             idle_time = 0;
             busy_time = 0;
             processed_querys = 0;
-            // received_querys_from_count = new int[ NUM_CLIENTS ];
-            // for (int i = 0; i < NUM_CLIENTS; ++i) {
-            // received_querys_from_count[ i ] = 0;
-            // }
+            received_querys_from_count = new unsigned int[ NUM_CLIENTS ];
+            for (int i = 0; i < NUM_CLIENTS; ++i) {
+                received_querys_from_count[ i ] = 0;
+            }
         }
         ~EdgeServer() {
         }
@@ -30,8 +31,6 @@ class EdgeServer : public Node {
         double GetBusyTime();
         double GetProcessedQuerys();
         int GetQuerysByClient(int j);
-        void inner_body(void){
-            cout << "CHAO" << endl;
-        }
+        void inner_body(void);
 };
 #endif

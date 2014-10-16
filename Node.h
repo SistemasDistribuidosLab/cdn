@@ -3,16 +3,20 @@
 
 // #include "Message.h"
 #include "cppsim.hh"
-#include <string>
+#include "Message.h"
 #include <vector>
 
 using namespace std;
+
+class Transport;
 
 class Node : public process {
     private:
         int id;
         int type;
-        vector<string *> message_stack;
+        Transport *transport;
+    protected:
+        vector<Message *> message_stack;
     public:
         Node(const string &name, int id, int type) : process(name) {
             this->id = id;
@@ -22,12 +26,12 @@ class Node : public process {
         int GetId();
         string GetIdString();
         int GetType();
-        void AddMessage(string *message) {
+        void SetTransport(Transport *);
+        void AddMessage(Message *message) {
             message_stack.push_back(message);
         }
-        void inner_body(void) {
-
-        }
+        void SendMessage(Message *message);
+        virtual void inner_body(void) = 0;
 };
 
 #endif
