@@ -12,10 +12,10 @@ int Node::GetType() {
     return type;
 }
 
-void Node::SetTransport(Transport *transport) {
+void Node::SetTransport(handle<Transport> * transport) {
     this->transport = transport;
 }
 
 void Node::SendMessage(Message *message) {
-    transport->SendMessage(message);
+    (*transport)->AddMessage(message);
 }

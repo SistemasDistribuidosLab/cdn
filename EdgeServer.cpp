@@ -23,14 +23,17 @@ void EdgeServer::inner_body(void) {
     while (1) {
         // ===== BUSY TIME START =====
         time_aux = time();
-        for (int i = 0; i < message_stack.size(); ++i) {
-            //cout << time() << " - Edge Server " << this->GetId() << ": Mensaje Enviado en tiempo " << message_stack.at(i)->GetCreationTime() << " desde el cliente " << message_stack.at(i)->GetIdFrom() << ": " << message_stack.at(i)->GetMessage() << endl;
-            received_querys_from_count[ message_stack.at(i)->GetIdFrom() ]++;
+        while(!message_stack.empty()){
+            Message * message = message_stack.back();
+            cout << time() << " - Edge Server " << this->GetId() << ": Mensaje Enviado en tiempo " << message->GetCreationTime() << " desde el cliente " << message->GetIdFrom() << ": " << message->GetMessage() << endl;
+            message_stack.pop_back();
+            received_querys_from_count[ message->GetIdFrom() ]++;
             processed_querys++;
             hold(0.001);
-            //fflush(stdout);
+
+            string * respuesta = new string("respuestaaaaa !!!!!!!");
+            this->SendMessage(new Message(this->GetId(), this->GetType(), message->GetIdFrom(), message->GetTypeFrom(), message->GetCreationTime(), respuesta));
         }
-        hold(0.001);
         busy_time += time() - time_aux;
         // ===== BUSY TIME END =====
 

@@ -14,7 +14,7 @@ class Node : public process {
     private:
         int id;
         int type;
-        Transport *transport;
+        handle<Transport> * transport;
     protected:
         vector<Message *> message_stack;
     public:
@@ -26,7 +26,7 @@ class Node : public process {
         int GetId();
         string GetIdString();
         int GetType();
-        void SetTransport(Transport *);
+        void SetTransport(handle<Transport> * transport);
         void AddMessage(Message *message) {
             message_stack.push_back(message);
         }

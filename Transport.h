@@ -1,8 +1,9 @@
 #ifndef TRANSPORT
 #define TRANSPORT
 
-#include "Message.h"
 #include "cppsim.hh"
+#include "Node.h"
+#include "Message.h"
 #include <vector>
 
 using namespace std;
@@ -10,22 +11,19 @@ using namespace std;
 class Client;
 class EdgeServer;
 
-class Transport {
+class Transport : public Node {
     private:
         handle<EdgeServer> *edge_servers;
         handle<Client> *clients;
     public:
-        Transport() {
+        Transport(const string &name, int id, int type) : Node(name, id, type) {
             //cout << "{*} Transporte iniciado" << endl;
         }
         ~Transport() {}
-        void SetEdgeServers(handle<EdgeServer> *edge_servers) {
-            this->edge_servers = edge_servers;
-        }
-        void SetClients(handle<EdgeServer> *edge_servers) {
-            this->clients = clients;
-        }
-        void SendMessage(Message *message);
+        void SetEdgeServers(handle<EdgeServer> *edge_servers);
+        void SetClients(handle<Client> *clients);
+        void AddMessage(Message *message);
+        void inner_body(void);
 };
 
 #endif

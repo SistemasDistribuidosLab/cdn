@@ -4,72 +4,40 @@
 		"selected_items":
 		[
 			[
-				"edge",
-				"EdgeServer"
+				"get",
+				"GetIdTo"
 			],
 			[
-				"ed",
-				"edge_servers"
-			],
-			[
-				"NUM",
-				"NUM_CLIENTS"
-			],
-			[
-				"arg",
-				"argc"
+				"Cli",
+				"Client"
 			],
 			[
 				"me",
 				"message"
 			],
 			[
-				"Recibi",
-				"RecibirMensaje"
+				"c",
+				"cout	cout"
 			],
 			[
-				"en",
-				"endl"
+				"ed",
+				"edge_servers"
 			],
 			[
-				"cl",
-				"client"
+				"t",
+				"this	this"
 			],
 			[
-				"Ori",
-				"OriginServer"
-			],
-			[
-				"time",
-				"time_per_query"
-			],
-			[
-				"Arriva",
-				"ARRIVAL_TIME"
-			],
-			[
-				"color",
-				"GetColorNode"
-			],
-			[
-				"tota",
-				"total_edge_querys"
-			],
-			[
-				"NU",
-				"NUM_EDGE_SERVERS"
-			],
-			[
-				"Num",
-				"NUM_EDGE_SERVERS"
-			],
-			[
-				"max",
-				"max_querys"
+				"C",
+				"Client"
 			],
 			[
 				"total",
 				"total"
+			],
+			[
+				"tota",
+				"total_querys"
 			],
 			[
 				"A",
@@ -80,16 +48,24 @@
 				"clients"
 			],
 			[
+				"NUM",
+				"NUM_EDGE_SERVERS"
+			],
+			[
 				"num",
 				"number_of_query_to_edge_servers"
+			],
+			[
+				"edge",
+				"edge_server"
 			],
 			[
 				"to",
 				"total_time"
 			],
 			[
-				"Cli",
-				"clients"
+				"NU",
+				"NUM_EDGE_SERVERS"
 			],
 			[
 				"proce",
@@ -112,6 +88,10 @@
 				"time_aux"
 			],
 			[
+				"time",
+				"busy_time"
+			],
+			[
 				"tim",
 				"time_aux"
 			],
@@ -130,10 +110,6 @@
 			[
 				"is_",
 				"is_busy"
-			],
-			[
-				"get",
-				"GetId"
 			],
 			[
 				"nu",
@@ -224,6 +200,10 @@
 				"Numero"
 			],
 			[
+				"Num",
+				"Numero"
+			],
+			[
 				"Numer",
 				"Numero"
 			],
@@ -268,55 +248,23 @@
 	"buffers":
 	[
 		{
-			"file": "CDN/main.cpp",
+			"file": "main.cpp",
 			"settings":
 			{
-				"buffer_size": 1849,
+				"buffer_size": 2551,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "CDN/Funciones.h",
+			"file": "Transport.h",
 			"settings":
 			{
-				"buffer_size": 255,
+				"buffer_size": 666,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "makefile",
-			"settings":
-			{
-				"buffer_size": 258,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "main.cc",
-			"settings":
-			{
-				"buffer_size": 6841,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "CDN/Node.h",
-			"settings":
-			{
-				"buffer_size": 547,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "CDN/Node.cpp",
-			"settings":
-			{
-				"buffer_size": 188,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "CDN/Client.h",
+			"file": "Transport.cpp",
 			"settings":
 			{
 				"buffer_size": 316,
@@ -324,18 +272,42 @@
 			}
 		},
 		{
-			"file": "CDN/EdgeServer.h",
+			"file": "EdgeServer.cpp",
 			"settings":
 			{
-				"buffer_size": 944,
+				"buffer_size": 1255,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "CDN/EdgeServer.cpp",
+			"file": "Constants.h",
 			"settings":
 			{
-				"buffer_size": 384,
+				"buffer_size": 381,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Message.h",
+			"settings":
+			{
+				"buffer_size": 1164,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Node.h",
+			"settings":
+			{
+				"buffer_size": 795,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Node.cpp",
+			"settings":
+			{
+				"buffer_size": 379,
 				"line_ending": "Unix"
 			}
 		},
@@ -343,23 +315,39 @@
 			"file": "EdgeServer.h",
 			"settings":
 			{
-				"buffer_size": 2459,
+				"buffer_size": 931,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "CDN/Client.cpp",
+			"file": "Client.h",
 			"settings":
 			{
-				"buffer_size": 61,
+				"buffer_size": 409,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "CDN/makefile",
+			"file": "Client.cpp",
 			"settings":
 			{
-				"buffer_size": 139,
+				"buffer_size": 634,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "makefile",
+			"settings":
+			{
+				"buffer_size": 165,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Message.cpp",
+			"settings":
+			{
+				"buffer_size": 20,
 				"line_ending": "Unix"
 			}
 		}
@@ -448,111 +436,101 @@
 	},
 	"expanded_folders":
 	[
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN"
 	],
 	"file_history":
 	[
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Client.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/Client.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Constants.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Node.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Node.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/CDN.sublime-project",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Constants.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/EdgeServer.cpp",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/EdgeServer.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/.deps/main.Po",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/main.cpp",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/main",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/makefile",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/WSE.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/auxiliar/Hash.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/src/process.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/src/handle.hh",
-		"/home/giovanni/Escritorio/Universidad/CDN/src/handle.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/.git/config",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Node.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Client.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/WSE.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/p2p/ClientWSE.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/p2p/WSE.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/p2p/WSE.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/p2p/LruA.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/auxiliar/Util.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/p2p/LruA.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/p2p/Answer.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/p2p/MessageWSE.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/comandos.txt",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Transport.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Message.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/pruebas/Client.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/grafo.dot",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/main.cc",
+		"/home/giovanni/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Node.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Node.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigInteger.hh",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigIntegerAlgorithms.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigIntegerUtils.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigInteger.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/grafo.dot",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/grafoman",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/nbproject/configurations.xml",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/.gitignore",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/ChangeLog",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/grafo.pl",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/nbproject/private/CodeAssistancePathMapper.properties",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/nbproject/project.xml",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN.sublime-project",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/partial.DAT",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Constants.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/makefile",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/main_wse.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/main",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/main",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/.deps/main.Po",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/main.cpp",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/main.cc",
-		"/home/giovanni/.config/sublime-text-3/Packages/User/cout.sublime-snippet",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/EdgeServer.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/EdgeServer.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/EdgeServer.cpp",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/p2p/ClientWSE.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/Client.cc",
-		"/home/giovanni/.config/sublime-text-3/Packages/User/std.sublime-snippet",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/main.cpp",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/Edge.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/Edge.cpp",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/Client.cpp",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/edge.cpp",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/second.cpp",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/second.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/hola.cpp",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/Hola.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/main",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/comandos.txt",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/grafo/grafo",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/grafodot",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/grafo.dot",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/grafoman",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/grafo.file",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/grafo.pl",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Funciones.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Transport.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/EdgeServer.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigUnsigned.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/nbproject/configurations.xml",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/nbproject/private/Default.properties",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Funciones.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/OriginServer.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/README",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/run-testsuite",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/.gitignore",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigInteger.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigInteger.hh",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/WSE.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/p2p/WSE.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/p2p/WSE.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/auxiliar/Hash.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/p2p/LruA.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/auxiliar/Util.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/p2p/LruA.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/p2p/Answer.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/p2p/MessageWSE.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Client.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Message.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/.git/config",
-		"/home/giovanni/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/WSE.h",
-		"/home/giovanni/Descargas/server_config.txt",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Origin.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/pruebas.sublime-project",
-		"/home/giovanni/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigIntegerAlgorithms.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigIntegerUtils.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/ChangeLog",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/auxiliar/Util.cc",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/auxiliar/Hash.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/p2p/LruA.cc",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/nbproject/private/launcher.properties",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/p2p/WSE.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/p2p/ClientWSE.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/P2P/glob.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/WSE_GIO.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/WSE_GIO.cc",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/NumberlikeArray.hh",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/pruebas.sublime-project",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/sample.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Transport.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/WSE.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/WSE.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/EdgeServer.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/comandos.txt",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Hash.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Answer.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/LruA.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/ClientWSE.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/MessageWSE.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Constants.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/main.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/auxiliar/Hash.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/old_new/Client.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/Client.cc",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/README",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/makefile",
 		"/home/giovanni/.config/sublime-text-3/Packages/User/this.sublime-snippet",
 		"/home/giovanni/Escritorio/Universidad/CDN/old_new/main.cc",
 		"/home/giovanni/Escritorio/Universidad/CDN/old/Node.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigUnsigned.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/EdgeServer.cc",
 		"/home/giovanni/Escritorio/Universidad/CDN/old/Const.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/main",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/old/main.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/.deps/main.Po",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/old_new/main.cc",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/old_new/Transporte.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/old/Client.cc",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/pruebas/main.cpp",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/old/Client.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Transporte.cc",
 		"/home/giovanni/Escritorio/Universidad/CDN/P2P/transportLayer/redtubo.h",
@@ -580,7 +558,16 @@
 		"/home/giovanni/.config/sublime-text-3/Packages/User/getter.sublime-snippet",
 		"/home/giovanni/.config/sublime-text-3/Packages/User/setter.sublime-snippet",
 		"/var/www/led_respaldo/index.php",
-		"/var/www/diinfsitios/wp-content/themes/led/index.php"
+		"/var/www/diinfsitios/wp-content/themes/led/index.php",
+		"/var/www/phpmyadmin/config.inc.php",
+		"/var/www/diinfsitios/wp-config.php",
+		"/var/www/diinfsitios/wp-settings.php",
+		"/var/www/diinfsitios/login/config/authsources.php",
+		"/var/www/diinfsitios/wp-content/debug.log",
+		"/var/www/diinfsitios/wp-config-sample.php",
+		"/var/www/wordpress/wp-config.php",
+		"/var/log/apache2/access.log",
+		"/home/giovanni/CDN/P2P/Simulador.cc"
 	],
 	"find":
 	{
@@ -598,18 +585,6 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"One",
-			"one",
-			"lp",
-			"EdgeServer",
-			"process",
-			"SetNodes",
-			"EdgeServer",
-			"edgeserver",
-			"edge",
-			"3498db",
-			"e67e22",
-			"comme",
 			"number_of_querys_to_edge_servers",
 			"number_of_query_to_edge_servers",
 			"git",
@@ -725,7 +700,19 @@
 			"libs",
 			"CXX",
 			"AM_",
-			"AM_CXXFLAGS"
+			"AM_CXXFLAGS",
+			"CXXLINK",
+			"cxx",
+			"CXXLINK",
+			"CXX",
+			"g++",
+			"cxx",
+			"g++",
+			"Gen_rnd",
+			"_thao",
+			"acumulado",
+			"CXXFLAGS",
+			"-lcrypto"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -733,11 +720,6 @@
 		"regex": false,
 		"replace_history":
 		[
-			"Hola",
-			"One",
-			"Node",
-			"e74c3c",
-			"3498db",
 			"number_of_querys_to_edge_servers",
 			"int",
 			"WSENGINE",
@@ -776,187 +758,72 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "CDN/main.cpp",
+					"file": "main.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1849,
+						"buffer_size": 2551,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1108,
-								1108
+								1539,
+								1539
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
-						"translation.x": -0.0,
-						"translation.y": 0.0,
+						"translation.x": 0.0,
+						"translation.y": 326.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "CDN/Funciones.h",
+					"file": "Transport.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 255,
+						"buffer_size": 666,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								168,
-								168
+								658,
+								658
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.x": -0.0,
+						"translation.y": 112.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "makefile",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 258,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								227,
-								227
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Makefile/Makefile.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "main.cc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6841,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1566,
-								1548
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 816.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "CDN/Node.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 547,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								540,
-								540
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "CDN/Node.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 188,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								18,
-								18
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "CDN/Client.h",
+					"file": "Transport.cpp",
 					"semi_transient": false,
 					"settings":
 					{
@@ -967,8 +834,94 @@
 						"selection":
 						[
 							[
-								247,
-								247
+								294,
+								294
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "EdgeServer.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1255,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								880,
+								880
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 19.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Constants.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 381,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Message.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1164,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								74,
+								74
 							]
 						],
 						"settings":
@@ -976,6 +929,65 @@
 							"syntax": "Packages/C++/C++.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Node.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 795,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								288,
+								288
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 146.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "Node.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 379,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								309,
+								309
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -985,20 +997,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "CDN/EdgeServer.h",
+					"buffer": 8,
+					"file": "EdgeServer.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 944,
+						"buffer_size": 931,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								772,
-								772
+								78,
+								78
 							]
 						],
 						"settings":
@@ -1011,24 +1023,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "CDN/EdgeServer.cpp",
+					"buffer": 9,
+					"file": "Client.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 384,
+						"buffer_size": 409,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								87,
-								87
+								397,
+								397
 							]
 						],
 						"settings":
@@ -1037,97 +1049,95 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 17.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "Client.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 634,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								505,
+								505
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
-					"file": "EdgeServer.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2459,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								323,
-								323
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "CDN/Client.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 61,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								61,
-								61
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
 					"buffer": 11,
-					"file": "CDN/makefile",
+					"file": "makefile",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 139,
+						"buffer_size": 165,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								98,
-								98
+								124,
+								124
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Makefile/Makefile.tmLanguage"
 						},
-						"translation.x": 0.0,
+						"translation.x": 17.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "Message.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 20,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								19,
+								19
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
 					"type": "text"
 				}
 			]
@@ -1180,68 +1190,36 @@
 		"selected_items":
 		[
 			[
-				"clie",
-				"CDN/Client.h"
-			],
-			[
 				"edge",
-				"CDN/EdgeServer.h"
+				"EdgeServer.h"
 			],
 			[
-				"node",
-				"CDN/Node.h"
-			],
-			[
-				"make",
+				"mae",
 				"makefile"
 			],
 			[
-				"main",
-				"main.cc"
+				"ed",
+				"EdgeServer.cpp"
+			],
+			[
+				"cli",
+				"Client.cpp"
 			],
 			[
 				"mai",
 				"main.cpp"
 			],
 			[
-				"cli",
-				"pruebas/Client.h"
-			],
-			[
-				"clien",
-				"Client.h"
-			],
-			[
-				"sec",
-				"pruebas/second.cpp"
-			],
-			[
-				"grafod",
-				"grafodot"
-			],
-			[
-				"graf",
-				"grafo/grafo"
-			],
-			[
-				"coma",
-				"comandos.txt"
-			],
-			[
-				"gra",
-				"grafodot"
-			],
-			[
-				"coman",
-				"comandos.txt"
-			],
-			[
-				"nde",
+				"h",
 				"Node.h"
 			],
 			[
-				"ed",
-				"EdgeServer.h"
+				"ede",
+				"EdgeServer.cpp"
+			],
+			[
+				"node",
+				"Node.h"
 			],
 			[
 				"tra",
@@ -1249,59 +1227,43 @@
 			],
 			[
 				"ma",
-				"main.cc"
-			],
-			[
-				"cl",
-				"Client.h"
-			],
-			[
-				"tr",
-				"Transport.h"
-			],
-			[
-				"nod",
-				"Node.h"
-			],
-			[
-				"orig",
-				"OriginServer.h"
-			],
-			[
-				"mi",
-				"main"
-			],
-			[
-				"ori",
-				"OriginServer.h"
+				"main.cpp"
 			],
 			[
 				"con",
 				"Constants.h"
 			],
 			[
-				"mee",
+				"cl",
+				"Client.cpp"
+			],
+			[
+				"me",
 				"Message.h"
 			],
 			[
-				"messa",
-				"p2p/MessageWSE.h"
+				"make",
+				"makefile"
 			],
 			[
-				"ege",
-				"EdgeServer.h"
+				"nde",
+				"Node.h"
 			],
 			[
-				"mes",
-				"Message.h"
+				"clien",
+				"Client.h"
 			],
 			[
-				"ser",
-				"EdgeServer.h"
+				"clie",
+				"Client.h"
 			],
 			[
 				"mess",
 				"Message.h"
+			],
+			[
+				"gra",
+				"grafo.dot"
 			],
 			[
 				"com",
@@ -1310,6 +1272,14 @@
 			[
 				"g",
 				"grafo.dot"
+			],
+			[
+				"graf",
+				"grafo.dot"
+			],
+			[
+				"coman",
+				"comandos.txt"
 			],
 			[
 				"c",
@@ -1324,8 +1294,16 @@
 				"nbproject/configurations.xml"
 			],
 			[
+				"tr",
+				"bigint/BigInteger.hh"
+			],
+			[
 				"edg",
 				"EdgeServer.h"
+			],
+			[
+				"mes",
+				"Message.h"
 			],
 			[
 				"clientw",
@@ -1334,6 +1312,10 @@
 			[
 				"wse",
 				"p2p/WSE.h"
+			],
+			[
+				"coma",
+				"comandos.txt"
 			],
 			[
 				"uti",
@@ -1352,12 +1334,12 @@
 				"p2p/Answer.h"
 			],
 			[
-				"me",
-				"p2p/MessageWSE.h"
-			],
-			[
 				"has",
 				"auxiliar/Hash.h"
+			],
+			[
+				"messa",
+				"p2p/MessageWSE.h"
 			],
 			[
 				"subl",
@@ -1382,6 +1364,10 @@
 			[
 				"lrua",
 				"LruA.h"
+			],
+			[
+				"main",
+				"main.cc"
 			],
 			[
 				"no",
