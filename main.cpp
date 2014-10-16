@@ -69,7 +69,7 @@ int main(int argc, char const *argv[]) {
     NUM_CLIENTS = argc > 1 ? atoi(argv[1]) : 30;
     NUM_EDGE_SERVERS = argc > 2 ? atoi(argv[2]) : 10;
     DURACION_SIMULACION = argc > 3 ? atoi(argv[3]) : 10;
-    ARRIVAL_TIME = argc > 4 ? atoi(argv[4]) : 10;
+    ARRIVAL_TIME = argc > 4 ? atoi(argv[4]) : 1;
 
     cout << "NUM_CLIENTS:         " << NUM_CLIENTS << endl;
     cout << "NUM_EDGE_SERVERS:    " << NUM_EDGE_SERVERS << endl;

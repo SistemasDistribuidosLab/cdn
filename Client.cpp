@@ -12,7 +12,7 @@ void Client::inner_body(void) {
 
         while(!message_stack.empty()){
             Message * message = message_stack.back();
-            cout << time() << " - Cliente " << setw(3) << this->GetId() << ": recibi respuesta a mi consulta " << message->GetMessage() << " enviada en tiempo " << message->GetCreationTime() << " hacia el servidor " << message->GetIdFrom() << endl;
+            // cout << time() << " - Cliente " << setw(3) << this->GetId() << ": recibi respuesta a mi consulta " << message->GetMessage() << " enviada en tiempo " << message->GetCreationTime() << " hacia el servidor " << message->GetIdFrom() << endl;
             message_stack.pop_back();
             // string * respuesta = new string("respuestaaaaa !!!!!!!");
             // this->SendMessage(new Message(this->GetId(), this->GetType(), message->GetIdFrom(), message->GetTypeFrom(), time(), respuesta));
@@ -25,7 +25,9 @@ void Client::inner_body(void) {
         *message_str +=  this->GetIdString();
 
         // edge_server_to = this->GetEdgeServer();
-        edge_server_to = 0;
+        edge_server_to = this->GetId() % NUM_EDGE_SERVERS;
+        // cout << "CLiente " << this->GetId() << " hacia " << edge_server_to << endl;
+        this->querys_send++;
         this->SendMessage(new Message(this->GetId(), NODE_CLIENT, edge_server_to, NODE_EDGE_SERVER, time(), message_str));
 
 

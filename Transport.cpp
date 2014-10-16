@@ -60,7 +60,7 @@ void Transport::inner_body(void) {
 
 		    // handle<EdgeServer> edge_server = edge_servers[ message->GetIdTo() ];
 		    servidor->AddMessage(message);
-        	hold(0.001);
+        	// hold(0.001);
 		    if (servidor->idle()) {
 		        servidor->activate();
 		    }

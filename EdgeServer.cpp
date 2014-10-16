@@ -25,11 +25,11 @@ void EdgeServer::inner_body(void) {
         time_aux = time();
         while(!message_stack.empty()){
             Message * message = message_stack.back();
-            cout << time() << " - Edge Server " << this->GetId() << ": Mensaje Enviado en tiempo " << message->GetCreationTime() << " desde el cliente " << message->GetIdFrom() << ": " << message->GetMessage() << endl;
             message_stack.pop_back();
+            // cout << time() << " - Edge Server " << this->GetId() << ": Mensaje Enviado en tiempo " << message->GetCreationTime() << " desde el cliente " << message->GetIdFrom() << ": " << message->GetMessage() << endl;
             received_querys_from_count[ message->GetIdFrom() ]++;
             processed_querys++;
-            hold(0.001);
+            // hold(0.001);
 
             string * respuesta = new string("respuestaaaaa !!!!!!!");
             this->SendMessage(new Message(this->GetId(), this->GetType(), message->GetIdFrom(), message->GetTypeFrom(), message->GetCreationTime(), respuesta));
