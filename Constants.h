@@ -1,0 +1,19 @@
+#ifndef CONSTANTS
+#define CONSTANTS
+
+//#define NUM_CLIENTS 10000
+//#define NUM_EDGE_SERVERS 10
+//#define DURACION_SIMULACION 10 // seconds
+
+//int NUM_CLIENTS;
+//int NUM_EDGE_SERVERS;
+//int DURACION_SIMULACION;
+extern int NUM_CLIENTS;
+extern int NUM_EDGE_SERVERS;
+extern int DURACION_SIMULACION;
+
+#define NODE_CLIENT 0
+#define NODE_EDGE_SERVER 1
+#define NODE_ORIGIN_SERVER 2
+
+#endif

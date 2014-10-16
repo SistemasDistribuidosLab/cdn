@@ -1,9 +1,9 @@
 #include "cppsim.hh"
+#include "Constants.h"
 #include "Client.h"
 #include "EdgeServer.h"
+#include "Funciones.h"
 
-#include <iomanip>
-#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -13,12 +13,30 @@ int NUM_EDGE_SERVERS;
 int DURACION_SIMULACION;
 int ARRIVAL_TIME;
 
+// vector< handle<Client> > clients;
+handle<EdgeServer> * edge_servers;
+
 class Simulation : public process {
     public:
         Simulation(const string &name) : process(name) { }
         ~Simulation() { }
         void inner_body() {
+            rng<double> *arrival_time;
+            rng<double> *random_client;
 
+            arrival_time = new rngExp( "Arrive Time", ARRIVAL_TIME );
+            random_client = new rngUniform("SelectSource", 0, 100);
+
+            // EdgeServer * a = new EdgeServer("edge_server", 1, NODE_EDGE_SERVER);
+            // handle <EdgeServer>  hola = new EdgeServer("edge_server", 0, NODE_EDGE_SERVER);
+            // edge_servers.push_back(hola);
+            edge_servers = new handle<EdgeServer>[NUM_EDGE_SERVERS];
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+                edge_servers[i] = new EdgeServer("edge_server", i, NODE_EDGE_SERVER);
+                edge_servers[i]->activate();
+            }
+            hold(10);
+            end_simulation( );
         }
 
 };
@@ -27,11 +45,8 @@ void GenerateGraph();
 
 int main(int argc, char const *argv[]) {
     NUM_CLIENTS = argc > 1 ? atoi(argv[1]) : 30;
-
     NUM_EDGE_SERVERS = argc > 2 ? atoi(argv[2]) : 10;
-
     DURACION_SIMULACION = argc > 3 ? atoi(argv[3]) : 10;
-
     ARRIVAL_TIME = argc > 4 ? atoi(argv[4]) : 10;
 
     cout << "NUM_CLIENTS:         " << NUM_CLIENTS << endl;

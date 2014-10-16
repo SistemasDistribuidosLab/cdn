@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class Client;
+// class Client;
 
 class EdgeServer : public Node {
     private:
@@ -13,9 +13,9 @@ class EdgeServer : public Node {
         double busy_time;
         unsigned int processed_querys;
         unsigned int *received_querys_from_count;
-        Client * client;
+        // Client *client;
     public:
-        EdgeServer(int id, int type) : Node(id, type) {
+        EdgeServer(const string &name, int id, int type) : Node(name, id, type) {
             idle_time = 0;
             busy_time = 0;
             processed_querys = 0;
@@ -30,5 +30,8 @@ class EdgeServer : public Node {
         double GetBusyTime();
         double GetProcessedQuerys();
         int GetQuerysByClient(int j);
+        void inner_body(void){
+            cout << "CHAO" << endl;
+        }
 };
 #endif
