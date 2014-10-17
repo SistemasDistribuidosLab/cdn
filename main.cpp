@@ -5,7 +5,6 @@
 #include "Client.h"
 #include "EdgeServer.h"
 #include "Funciones.h"
-#include "prueba.h"
 
 #include <vector>
 
