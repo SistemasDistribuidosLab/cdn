@@ -25,9 +25,7 @@ void Client::inner_body(void) {
         *message_str = "Hola desde ";
         *message_str +=  this->GetIdString();
 
-        // edge_server_to = this->GetEdgeServer();
-        // edge_server_to = this->GetId() % NUM_EDGE_SERVERS;
-        edge_server_to = this->dns->GetEdgeServerId(this->GetId());
+        edge_server_to = this->GetEdgeServerId();
         // cout << "CLiente " << this->GetId() << " hacia " << edge_server_to << endl;
         this->querys_send++;
         this->SendMessage(new Message(this->GetId(), NODE_CLIENT, edge_server_to, NODE_EDGE_SERVER, time(), message_str));
@@ -35,4 +33,13 @@ void Client::inner_body(void) {
 
         hold(sleep);
     }
+}
+
+int Client::GetEdgeServerId(){
+    this->number_of_messages_sended_to_dns++;
+    return this->dns->GetEdgeServerId(this->GetId());
+}
+
+int Client::GetNumberOfMessagesSendedToDns(){
+    return this->number_of_messages_sended_to_dns;
 }

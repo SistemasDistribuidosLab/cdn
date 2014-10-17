@@ -70,8 +70,8 @@ class Simulation : public process {
 void GenerateGraph();
 
 int main(int argc, char const *argv[]) {
-    NUM_CLIENTS = argc > 1 ? atoi(argv[1]) : 30;
-    NUM_EDGE_SERVERS = argc > 2 ? atoi(argv[2]) : 10;
+    NUM_CLIENTS = argc > 1 ? atoi(argv[1]) : 100;
+    NUM_EDGE_SERVERS = argc > 2 ? atoi(argv[2]) : 5;
     DURACION_SIMULACION = argc > 3 ? atoi(argv[3]) : 10;
     ARRIVAL_TIME = argc > 4 ? atoi(argv[4]) : 1;
 
@@ -136,14 +136,18 @@ void GenerateGraph() {
     grafo << "digraph G {" << endl;
     grafo << "\tsplines=false;" << endl;
 
+    double alto = 0.3;
+    double ancho = 0.3;
+    string string_tamano = ",height=0.30, width=0.30, fixedsize=true,";
 
     for (int i = 0; i < NUM_CLIENTS; ++i) {
-        grafo << "\tc" << i << "[shape=circle, color=lightblue,style=filled];" << endl;
+        grafo << "\tc" << i << "[shape=circle, color=lightblue,style=filled " << string_tamano << "];" << endl;
     }
     for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
-        //grafo << "\te" << i << "[shape=box, color=\"#e67e22\",style=filled];" << endl;
-        grafo << "\te" << i << "[shape=box, color=\"" << GetColorNode(edge_servers[ i ]->GetProcessedQuerys(), total_edge_querys) << "\",style=filled];" << endl;
+        grafo << "\te" << i << "[shape=box, color=\"" << GetColorNode(edge_servers[ i ]->GetProcessedQuerys(), total_edge_querys) << "\",style=filled " << string_tamano << "];" << endl;
     }
+    // grafo << "\tDNS[shape=box, color=orange,style=filled " << string_tamano << "];" << endl;
+
 
     int max_querys = 0;
     int total;
@@ -161,13 +165,23 @@ void GenerateGraph() {
         total_total += total;
     }
 
+    // Clients -> EdgeServers
     for (int i = 0; i < NUM_CLIENTS; ++i) {
         for (int j = 0; j < NUM_EDGE_SERVERS; ++j) {
-            //clients[ i ]->GetNumberOfQuerysToEdgeServers(j)
             if (edge_servers[ j ]->GetQuerysByClient(i) > 0)
                 grafo << "\t" << "\"c" << i << "\" -> \"e" << j << "\"[color=\"" << GetColor(edge_servers[ j ]->GetQuerysByClient(i), max_querys) << "\"];" << endl;
         }
     }
+
+    // Clients -> DNS
+    for (int i = 0; i < NUM_CLIENTS; ++i) {
+        for (int j = 0; j < NUM_EDGE_SERVERS; ++j) {
+            if (edge_servers[ j ]->GetQuerysByClient(i) > 0){
+                // grafo << "\t" << "\"c" << i << "\" -> \"DNS\"" << endl;
+            }
+        }
+    }
+
     grafo << "}";
     grafo.close();
 }
