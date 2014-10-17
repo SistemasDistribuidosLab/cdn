@@ -5,6 +5,7 @@
 #include "Client.h"
 #include "EdgeServer.h"
 #include "Funciones.h"
+#include "prueba.h"
 
 #include <vector>
 
@@ -15,16 +16,10 @@ int NUM_EDGE_SERVERS;
 int DURACION_SIMULACION;
 int ARRIVAL_TIME;
 
-double isps[9][3] = {
-    {0, 0, 0.1},
-    {0, 1, 0.5},
-    {0, 2, 0.5},
-    {1, 0, 0.5},
-    {1, 1, 0.1},
-    {1, 2, 0.5},
-    {2, 0, 0.5},
-    {2, 1, 0.5},
-    {2, 2, 0.1},
+double isps[3][3] = {
+    {0.1, 0.5, 0.5},
+    {0.5, 0.1, 0.5},
+    {0.5, 0.5, 0.1},
 };
 
 // vector< handle<Client> > clients;
@@ -36,8 +31,6 @@ class Simulation : public process {
         Simulation(const string &name) : process(name) { }
         ~Simulation() { }
         void inner_body() {
-
-
             rng<double> *arrival_time;
             rng<double> *random_client;
 
@@ -60,9 +53,10 @@ class Simulation : public process {
             handle<Transport> transport = new Transport("transporte", 0, 0);
             transport->SetClients(clients);
             transport->SetEdgeServers(edge_servers);
+            Transport::SetIsps(isps);
             transport->activate();
 
-            Dns * dns = new Dns();
+            Dns *dns = new Dns();
 
             for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
                 edge_servers[ i ]->SetTransport(&transport);
@@ -86,7 +80,7 @@ void GenerateGraph();
 int main(int argc, char const *argv[]) {
     NUM_CLIENTS = argc > 1 ? atoi(argv[1]) : 100;
     NUM_EDGE_SERVERS = argc > 2 ? atoi(argv[2]) : 5;
-    DURACION_SIMULACION = argc > 3 ? atoi(argv[3]) : 10;
+    DURACION_SIMULACION = argc > 3 ? atoi(argv[3]) : 100;
     ARRIVAL_TIME = argc > 4 ? atoi(argv[4]) : 1;
 
     cout << "NUM_CLIENTS:         " << NUM_CLIENTS << endl;
@@ -130,6 +124,17 @@ int main(int argc, char const *argv[]) {
     cout << "\tAverage Idle Percentage: " << ( (total_idle_time_percentage / NUM_EDGE_SERVERS) ) << "%" << endl;
     cout << "\tAverage Processing Time: " << ( (total_busy_time_percentage / NUM_EDGE_SERVERS) ) << "%" << endl;
     cout << endl;
+
+    cout << "Clients:" << endl;
+
+    // Total consultas enviadas
+    unsigned int total_num_messages_sended = 0;
+    for (int i = 0; i < NUM_CLIENTS; ++i) {
+        total_num_messages_sended += clients[ i ]->GetNumMessagesSended();
+    }
+    cout << "\tTotal querys sended:   " << total_num_messages_sended << endl;
+    cout << fixed << setprecision(2);
+    cout << "\tAverage querys sended: " << (double)total_num_messages_sended / (double)NUM_CLIENTS << endl;
 
     GenerateGraph();
 
@@ -190,7 +195,7 @@ void GenerateGraph() {
     // Clients -> DNS
     for (int i = 0; i < NUM_CLIENTS; ++i) {
         for (int j = 0; j < NUM_EDGE_SERVERS; ++j) {
-            if (edge_servers[ j ]->GetQuerysByClient(i) > 0){
+            if (edge_servers[ j ]->GetQuerysByClient(i) > 0) {
                 // grafo << "\t" << "\"c" << i << "\" -> \"DNS\"" << endl;
             }
         }
@@ -229,7 +234,7 @@ string GetColorNode(int querys, int total_querys) {
     colors.push_back("#8c96c6");
     colors.push_back("#8856a7");
     colors.push_back("#810f7c");
-    if(total_querys == 0)
+    if (total_querys == 0)
         return colors.at(0);
     // cout << querys << " / " << total_querys << endl;
     // cout << ((double)querys / (double)total_querys * 10) << endl;

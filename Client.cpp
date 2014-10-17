@@ -8,12 +8,15 @@ using namespace std;
 
 void Client::inner_body(void) {
     int edge_server_to;
+    double delay;
     cout << fixed << setprecision(4);
     while (1) {
 
         while(!message_stack.empty()){
             Message * message = message_stack.back();
-            // cout << time() << " - Cliente " << setw(3) << this->GetId() << ": recibi respuesta a mi consulta " << message->GetMessage() << " enviada en tiempo " << message->GetCreationTime() << " hacia el servidor " << message->GetIdFrom() << endl;
+            cout << time() << " - Cliente " << setw(3) << this->GetId() << ": recibi respuesta a mi consulta " << message->GetMessage() << " enviada en tiempo " << message->GetCreationTime() << " hacia el servidor " << message->GetIdFrom() << endl;
+            cout << "Delay: " << time() - message->GetCreationTime() << endl;
+            SumDelayAcum( time() - message->GetCreationTime() );
             message_stack.pop_back();
             // string * respuesta = new string("respuestaaaaa !!!!!!!");
             // this->SendMessage(new Message(this->GetId(), this->GetType(), message->GetIdFrom(), message->GetTypeFrom(), time(), respuesta));
@@ -28,8 +31,10 @@ void Client::inner_body(void) {
         edge_server_to = this->GetEdgeServerId();
         // cout << "CLiente " << this->GetId() << " hacia " << edge_server_to << endl;
         this->querys_send++;
-        this->SendMessage(new Message(this->GetId(), NODE_CLIENT, edge_server_to, NODE_EDGE_SERVER, time(), message_str));
-
+        delay = this->SendMessage(new Message(this->GetId(), NODE_CLIENT, edge_server_to, NODE_EDGE_SERVER, time(), message_str));
+        sleep = sleep - delay;
+        sleep = sleep < 0 ? 0 : sleep;
+        // cout << "Sleep: " << sleep << endl;
 
         hold(sleep);
     }

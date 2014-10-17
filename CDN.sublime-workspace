@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"N",
+				"NUM_EDGE_SERVERS"
+			],
+			[
+				"NU",
+				"NUM_ISP"
+			],
+			[
+				"str",
+				"string_tamano"
+			],
+			[
+				"Geted",
+				"GetEdgeServerId"
+			],
+			[
 				"NUM",
 				"NUM_CLIENTS"
 			],
@@ -70,10 +86,6 @@
 			[
 				"to",
 				"total_time"
-			],
-			[
-				"NU",
-				"NUM_EDGE_SERVERS"
 			],
 			[
 				"proce",
@@ -252,19 +264,20 @@
 	"buffers":
 	[
 		{
-			"file": "Dns.h",
+			"file": "main.cpp",
 			"settings":
 			{
-				"buffer_size": 153,
+				"buffer_size": 8018,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "makefile",
+			"contents": "0 -> 0\n1 -> 0\n2 -> 0\n3 -> 1\n4 -> 1\n5 -> 1\n6 -> 2\n7 -> 2\n8 -> 2",
 			"settings":
 			{
-				"buffer_size": 173,
-				"line_ending": "Unix"
+				"buffer_size": 62,
+				"line_ending": "Unix",
+				"name": "0 -> 0"
 			}
 		},
 		{
@@ -276,18 +289,37 @@
 			}
 		},
 		{
-			"file": "main.cpp",
+			"contents": "#ifndef NODE\n#define NODE\n\n// #include \"Message.h\"\n#include \"cppsim.hh\"\n#include \"Message.h\"\n#include \"Isp.h\"\n#include <vector>\n\nusing namespace std;\n\nextern \n\nclass Transport;\n\nclass Node : public process {\n    private:\n        int id;\n        int type;\n        handle<Transport> * transport;\n        int isp;\n    protected:\n        vector<Message *> message_stack;\n    public:\n        Node(const string &name, int id, int type) : process(name) {\n            this->id = id;\n            this->type = type;\n        }\n        ~Node() { }\n        int GetId();\n        string GetIdString();\n        int GetType();\n        int GetIsp();\n        void SetIsp(int);\n        void SetTransport(handle<Transport> * transport);\n        void AddMessage(Message *message) {\n            message_stack.push_back(message);\n        }\n        void SendMessage(Message *message);\n        virtual void inner_body(void) = 0;\n};\n\n#endif",
+			"file": "Node.h",
+			"file_size": 904,
+			"file_write_time": 130579849843668895,
 			"settings":
 			{
-				"buffer_size": 7228,
+				"buffer_size": 913,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Client.h",
+			"file": "Isp.h",
 			"settings":
 			{
-				"buffer_size": 579,
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Constants.h",
+			"settings":
+			{
+				"buffer_size": 400,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "README.md",
+			"settings":
+			{
+				"buffer_size": 969,
 				"line_ending": "Unix"
 			}
 		},
@@ -295,17 +327,40 @@
 			"file": "Client.cpp",
 			"settings":
 			{
-				"buffer_size": 1541,
+				"buffer_size": 1644,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "notes.markdown",
+			"file": "Node.cpp",
 			"settings":
 			{
-				"buffer_size": 978,
-				"line_ending": "Unix",
-				"name": "Ejecutar:"
+				"buffer_size": 636,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Client.h",
+			"settings":
+			{
+				"buffer_size": 758,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "comandos.txt",
+			"settings":
+			{
+				"buffer_size": 947,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "makefile",
+			"settings":
+			{
+				"buffer_size": 173,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -397,25 +452,30 @@
 	],
 	"file_history":
 	[
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Constants.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/grafodot",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/dudas.markdown",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Dns.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/grafo.dot",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Constants.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Node.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/.deps/main.Po",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/grafodot",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/EdgeServer.cpp",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Client.h",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Dot.cpp",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/makefile",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/DNS.cpp",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/main.cpp",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Client.cpp",
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/notes.markdown",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/comandos.txt",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/CDN.sublime-project",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Message.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Client.cpp",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Message.cpp",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Client.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/EdgeServer.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Node.cpp",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Node.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/EdgeServer.cpp",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Transport.cpp",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/Transport.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/MIDNS.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/main.cpp",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/.deps/main.Po",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/makefile",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/EdgeServer.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/main",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/WSE.cc",
@@ -519,12 +579,7 @@
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigUnsignedInABase.cc",
 		"/home/giovanni/.config/sublime-text-3/Packages/User/getset.sublime-snippet",
 		"/home/giovanni/.config/sublime-text-3/Packages/User/getter.sublime-snippet",
-		"/home/giovanni/.config/sublime-text-3/Packages/User/setter.sublime-snippet",
-		"/var/www/led_respaldo/index.php",
-		"/var/www/diinfsitios/wp-content/themes/led/index.php",
-		"/var/www/phpmyadmin/config.inc.php",
-		"/var/www/diinfsitios/wp-config.php",
-		"/var/www/diinfsitios/wp-settings.php"
+		"/home/giovanni/.config/sublime-text-3/Packages/User/setter.sublime-snippet"
 	],
 	"find":
 	{
@@ -542,6 +597,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"-",
+			"->",
 			"MIDNS",
 			"dns",
 			"DNS",
@@ -667,9 +724,7 @@
 			"am_configure",
 			"libs",
 			"CXX",
-			"AM_",
-			"AM_CXXFLAGS",
-			"CXXLINK"
+			"AM_"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -677,6 +732,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"--",
+			"-",
 			"DNS",
 			"MIDNS",
 			"[ i ]",
@@ -718,63 +775,65 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Dns.h",
+					"file": "main.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 153,
+						"buffer_size": 8018,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								118,
-								118
+								1993,
+								1993
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 757.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "makefile",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 173,
+						"buffer_size": 62,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5,
-								5
+								62,
+								62
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+							"auto_name": "0 -> 0",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -790,8 +849,180 @@
 						"selection":
 						[
 							[
-								42,
-								42
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Node.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 913,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								906,
+								906
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 44.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Isp.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Constants.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 400,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								392,
+								392
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 969,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "Client.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1644,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "Node.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 636,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								534,
+								534
 							]
 						],
 						"settings":
@@ -803,24 +1034,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "main.cpp",
+					"buffer": 9,
+					"file": "Client.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7228,
+						"buffer_size": 758,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5163,
-								5163
+								747,
+								747
 							]
 						],
 						"settings":
@@ -830,99 +1061,66 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2178.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "comandos.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 947,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								606,
+								606
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "Client.h",
+					"buffer": 11,
+					"file": "makefile",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 579,
+						"buffer_size": 173,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								496,
-								496
+								140,
+								140
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Client.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1541,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1337,
-								1337
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "notes.markdown",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 978,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								978,
-								978
-							]
-						],
-						"settings":
-						{
-							"auto_name": "Ejecutar:",
-							"syntax": "Packages/Markdown/Markdown.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -975,44 +1173,76 @@
 		"selected_items":
 		[
 			[
-				"coman",
+				"node",
+				"Node.cpp"
+			],
+			[
+				"nde",
+				"Node.h"
+			],
+			[
+				"make",
+				"makefile"
+			],
+			[
+				"coma",
 				"comandos.txt"
+			],
+			[
+				"dns",
+				"DNS.cpp"
 			],
 			[
 				"mai",
 				"main.cpp"
 			],
 			[
-				"gr",
-				"grafodot"
+				"con",
+				"Constants.h"
 			],
 			[
-				"co",
-				"comandos.txt"
+				"n",
+				"Node.h"
+			],
+			[
+				"cli",
+				"Client.h"
+			],
+			[
+				"map",
+				"main.cpp"
+			],
+			[
+				"read",
+				"README.md"
+			],
+			[
+				"graf",
+				"grafo.dot"
+			],
+			[
+				"gr",
+				"grafo.dot"
 			],
 			[
 				"gra",
 				"grafodot"
 			],
 			[
-				"cli",
-				"Client.cpp"
-			],
-			[
-				"dns",
-				"Dns.h"
-			],
-			[
 				"cl",
 				"Client.h"
 			],
 			[
-				"ma",
-				"main.cpp"
+				"coman",
+				"comandos.txt"
 			],
 			[
-				"make",
-				"makefile"
+				"co",
+				"comandos.txt"
+			],
+			[
+				"ma",
+				"main.cpp"
 			],
 			[
 				"dn",
@@ -1021,10 +1251,6 @@
 			[
 				"ed",
 				"EdgeServer.cpp"
-			],
-			[
-				"node",
-				"Node.cpp"
 			],
 			[
 				"tr",
@@ -1051,24 +1277,12 @@
 				"Message.h"
 			],
 			[
-				"con",
-				"Constants.h"
-			],
-			[
 				"tra",
 				"Transport.cpp"
 			],
 			[
-				"n",
-				"Node.cpp"
-			],
-			[
 				"mak",
 				"makefile"
-			],
-			[
-				"nde",
-				"Node.h"
 			],
 			[
 				"c",
@@ -1111,10 +1325,6 @@
 				"grafo.dot"
 			],
 			[
-				"graf",
-				"grafo.dot"
-			],
-			[
 				"config",
 				"nbproject/configurations.xml"
 			],
@@ -1129,10 +1339,6 @@
 			[
 				"wse",
 				"p2p/WSE.h"
-			],
-			[
-				"coma",
-				"comandos.txt"
 			],
 			[
 				"uti",
@@ -1193,10 +1399,6 @@
 			[
 				"pro",
 				"CDN.sublime-project"
-			],
-			[
-				"read",
-				"README"
 			],
 			[
 				"tras",
