@@ -16,4 +16,6 @@ extern int DURACION_SIMULACION;
 #define NODE_EDGE_SERVER 1
 #define NODE_ORIGIN_SERVER 2
 
+#define NUM_ISP 3
+
 #endif

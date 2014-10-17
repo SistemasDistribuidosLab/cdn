@@ -22,3 +22,12 @@ void Node::SendMessage(Message *message) {
         (*transport)->activate();
     }
 }
+
+int Node::GetIsp() {
+    return this->isp;
+}
+
+void Node::SetIsp(int isp) {
+	// cout << "Mi id es: " << this->id << " y tengo el isp: " << isp << endl;
+    this->isp = isp;
+}

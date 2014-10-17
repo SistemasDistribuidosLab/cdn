@@ -15,6 +15,18 @@ int NUM_EDGE_SERVERS;
 int DURACION_SIMULACION;
 int ARRIVAL_TIME;
 
+double isps[9][3] = {
+    {0, 0, 0.1},
+    {0, 1, 0.5},
+    {0, 2, 0.5},
+    {1, 0, 0.5},
+    {1, 1, 0.1},
+    {1, 2, 0.5},
+    {2, 0, 0.5},
+    {2, 1, 0.5},
+    {2, 2, 0.1},
+};
+
 // vector< handle<Client> > clients;
 handle<Client> *clients;
 handle<EdgeServer> *edge_servers;
@@ -54,10 +66,12 @@ class Simulation : public process {
 
             for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
                 edge_servers[ i ]->SetTransport(&transport);
+                edge_servers[ i ]->SetIsp( ((double)i / (double)NUM_EDGE_SERVERS) * NUM_ISP );
                 edge_servers[ i ]->activate();
             }
             for (int i = 0; i < NUM_CLIENTS; ++i) {
                 clients[ i ]->SetTransport(&transport);
+                clients[ i ]->SetIsp( ((double)i / (double)NUM_CLIENTS) * NUM_ISP );
                 clients[ i ]->SetDns(dns);
                 clients[ i ]->activate();
             }

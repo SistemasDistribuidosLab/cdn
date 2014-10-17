@@ -4,6 +4,7 @@
 // #include "Message.h"
 #include "cppsim.hh"
 #include "Message.h"
+#include "Isp.h"
 #include <vector>
 
 using namespace std;
@@ -15,6 +16,7 @@ class Node : public process {
         int id;
         int type;
         handle<Transport> * transport;
+        int isp;
     protected:
         vector<Message *> message_stack;
     public:
@@ -26,6 +28,8 @@ class Node : public process {
         int GetId();
         string GetIdString();
         int GetType();
+        int GetIsp();
+        void SetIsp(int);
         void SetTransport(handle<Transport> * transport);
         void AddMessage(Message *message) {
             message_stack.push_back(message);
