@@ -5,6 +5,8 @@
 #include "Client.h"
 #include "EdgeServer.h"
 #include "Funciones.h"
+#include "wse/WSE.h"
+#include "generador/gen_rnd.h"
 
 #include <vector>
 
@@ -32,6 +34,23 @@ class Simulation : public process {
         void inner_body() {
             rng<double> *arrival_time;
             rng<double> *random_client;
+            handle<WSE> wse = new WSE("wse");
+            wse->activate();
+
+            char traces[2048];
+            strcpy(traces, "../partial3.DAT");
+            int totalQueries = 200000;
+            int Peer_Selection = 0;
+            int Nuser = 0;
+            int nodes = 100;
+            handle<Observer> obs = new Observer(nodes, "OBSERVER");
+            int *ends = new int[nodes + 1];
+            for ( int i = 0; i < nodes + 1; i++)
+                ends[i] = 0;
+
+            handle<Gen_rnd> generator = new Gen_rnd("GENERATOR", traces, &totalQueries, nodes,
+                                                    &obs, ends, Nuser, &wse, Peer_Selection);
+            generator->activate();
 
             arrival_time = new rngExp( "Arrive Time", ARRIVAL_TIME );
             random_client = new rngUniform("SelectSource", 0, 100);
@@ -69,7 +88,7 @@ class Simulation : public process {
                 clients[ i ]->activate();
             }
 
-            hold(10);
+            hold(DURACION_SIMULACION);
             end_simulation( );
         }
 };
@@ -79,7 +98,7 @@ void GenerateGraph();
 int main(int argc, char const *argv[]) {
     NUM_CLIENTS = argc > 1 ? atoi(argv[1]) : 100;
     NUM_EDGE_SERVERS = argc > 2 ? atoi(argv[2]) : 5;
-    DURACION_SIMULACION = argc > 3 ? atoi(argv[3]) : 100;
+    DURACION_SIMULACION = argc > 3 ? atoi(argv[3]) : 1000;
     ARRIVAL_TIME = argc > 4 ? atoi(argv[4]) : 1;
 
     cout << "NUM_CLIENTS:         " << NUM_CLIENTS << endl;
@@ -114,6 +133,8 @@ int main(int argc, char const *argv[]) {
         total_idle_time_percentage += idle_time_percentage;
         total_busy_time_percentage += busy_time_percentage;
         cout << "\tEdge Server " << i << endl;
+        // cout << "\t\tIdle Time:  " << idle_time << " s" << endl;
+        // cout << "\t\tBusy Time:  " << busy_time << " s" << endl << endl;
         cout << "\t\tIdle Percentage:  " << idle_time_percentage << " %" << endl;
         cout << "\t\tBusy Percentage:  " << busy_time_percentage << " %" << endl;
         cout << fixed << setprecision(0);

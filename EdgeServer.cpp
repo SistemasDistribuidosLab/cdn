@@ -19,22 +19,23 @@ int EdgeServer::GetQuerysByClient(int j) {
 
 void EdgeServer::inner_body(void) {
     double time_aux;
+    double processing_time_per_query = 0.01;
     // cout << fixed << setprecision(4);
     while (1) {
         // ===== BUSY TIME START =====
-        time_aux = time();
         while(!message_stack.empty()){
+            time_aux = time();
             Message * message = message_stack.back();
             message_stack.pop_back();
             // cout << time() << " - Edge Server " << this->GetId() << ": Mensaje Enviado en tiempo " << message->GetCreationTime() << " desde el cliente " << message->GetIdFrom() << ": " << message->GetMessage() << endl;
             received_querys_from_count[ message->GetIdFrom() ]++;
             processed_querys++;
-            // hold(0.001);
+            hold(processing_time_per_query);
+            busy_time += time() - time_aux;
 
             string * respuesta = new string("respuestaaaaa !!!!!!!");
             this->SendMessage(new Message(this->GetId(), this->GetType(), message->GetIdFrom(), message->GetTypeFrom(), message->GetCreationTime(), respuesta));
         }
-        busy_time += time() - time_aux;
         // ===== BUSY TIME END =====
 
         time_aux = time();

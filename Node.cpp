@@ -22,7 +22,6 @@ double Node::GetIspDelay(int isp_from, int id_to, int type_to) {
 
 double Node::SendMessage(Message *message) {
     double delay = this->GetIspDelay(this->GetIsp(), message->GetIdTo(), message->GetTypeTo());
-    // hold( delay );
     (*transport)->AddMessage(message);
     if ((*transport)->idle()) {
         (*transport)->activate();

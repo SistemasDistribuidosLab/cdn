@@ -16,6 +16,35 @@ extern int DURACION_SIMULACION;
 #define NODE_EDGE_SERVER 1
 #define NODE_ORIGIN_SERVER 2
 
+#define WSECACHESIZE 8000
+#define SIZE_ANSWER 1
+
+#define TTL_WSE 180 // 3min
+
+// FLASH CROWDS
+#define FLASH_CROWD true  // se utiliza o no el flash crowd
+#define CROWD_TIME 5.0 // segundos con flash crowd
+#define NORMAL_TIME 5.0 //segundos con tasa normal
+#define NORMAL_RATE 100.0 // tasa de arribo sin flash crowd
+#define CROWDED_RATE 500.0 // tasa de arribo con flash crowd
+
+#define QUERY_RATE_STRATEGY 0
+#define QUERY_DELTA_T 10000 //CADA 10000 Unidades de Tiempo
+#define QUERY_DELTA_Q 10000 //CADA 10000 QUERIES
+#define MIN_TTL 100 //1 Hour
+#define MAX_TTL 86400 //24 Hours
+#define TTL_WSE 180 // 3min
+#define TIMEOUT_Q 100 // Time out de las consultas
+
+#define MAX_BUFFER 2048
+
+#define D 10
+
+#define DELTA_O 100 // Observer check
+
+#define PEER 411
+#define USER 412
+
 #define NUM_ISP 3
 
 #endif
