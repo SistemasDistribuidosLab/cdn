@@ -38,7 +38,7 @@ class Simulation : public process {
             wse->activate();
 
             char traces[2048];
-            strcpy(traces, "../partial3.DAT");
+            strcpy(traces, "partial3.DAT");
             int totalQueries = 200000;
             int Peer_Selection = 0;
             int Nuser = 0;
