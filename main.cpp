@@ -39,7 +39,7 @@ class Simulation : public process {
 
             char traces[2048];
             strcpy(traces, "partial3.DAT");
-            int totalQueries = 200000;
+            unsigned long int totalQueries = 1000000;
             int Peer_Selection = 0;
             int Nuser = 0;
             int nodes = 100;
@@ -48,8 +48,11 @@ class Simulation : public process {
             for ( int i = 0; i < nodes + 1; i++)
                 ends[i] = 0;
 
+            ofstream * chart_file = new ofstream();
+            chart_file->open ("query_chart");
+            
             handle<Gen_rnd> generator = new Gen_rnd("GENERATOR", traces, &totalQueries, nodes,
-                                                    &obs, ends, Nuser, &wse, Peer_Selection);
+                                                    &obs, ends, Nuser, &wse, Peer_Selection, chart_file);
             generator->activate();
 
             arrival_time = new rngExp( "Arrive Time", ARRIVAL_TIME );
@@ -89,6 +92,7 @@ class Simulation : public process {
             }
 
             hold(DURACION_SIMULACION);
+            chart_file->close();
             end_simulation( );
         }
 };

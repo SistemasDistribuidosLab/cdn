@@ -23,8 +23,17 @@ void Gen_rnd::inner_body( ) {
 
 
     //cout<<"Linea "<<linea<<endl;
+    double accumulated_time = time();
+    double query_in_interval = 0;
     while ( 1 ) {
-        if ( ! getline( endStream, line ) ) passivate();
+        if (time() - accumulated_time > 10) {
+            (*chart_file) << time() << " " << query_in_interval << endl;
+            query_in_interval = 0;
+            accumulated_time = time();
+        }
+        if ( ! getline( endStream, line ) ) {
+            passivate();
+        }
         // cout << ".";
 
         prev = actual;
@@ -49,7 +58,7 @@ void Gen_rnd::inner_body( ) {
         double prob = SelectSource->value();
         if (prob > porcentaje_peers) { //viene fuera de la red peer
             // int *hashValue = h->GenerateKey(ptr);
-            int * hashValue = new int(1);
+            int *hashValue = new int(1);
             MessageWSE *wseQuery = new MessageWSE(NULL, hashValue, ptr, USER);
 
             delete [] ptr;
@@ -62,32 +71,32 @@ void Gen_rnd::inner_body( ) {
             // gq = Peers[0]; // ============================
 
             switch ((int)Peer_Selection) {
-                case 0: {
-                    //RANDOM SELECTION -> UNIFORM
-                    int rnd = rand() % NP;
-                    // gq = Peers[rnd]; // ============================
-                    ends[rnd]++;
-                    break;
-                }
-                case 1: {
-                    //ZIPF SELECTION -> CLUSTERING
-                    rand_val(1);
-                    int zipf = getZipf(1.0, NP - 1);
-                    //cout << "Peer " << zipf <<endl;
-                    fflush(stdout);
-                    // gq = Peers[zipf]; // ============================
-                    ends[zipf]++;
-                    break;
-                }
-                case 2: {
-                    // STATIC DEBUG PROPOSE
-                    // gq = Peers[chosen]; // ============================
-                    ends[chosen]++;
-                    chosen++;
-                    if (chosen >= NP)
-                        chosen = 0;
-                    break;
-                }
+            case 0: {
+                //RANDOM SELECTION -> UNIFORM
+                int rnd = rand() % NP;
+                // gq = Peers[rnd]; // ============================
+                ends[rnd]++;
+                break;
+            }
+            case 1: {
+                //ZIPF SELECTION -> CLUSTERING
+                rand_val(1);
+                int zipf = getZipf(1.0, NP - 1);
+                //cout << "Peer " << zipf <<endl;
+                fflush(stdout);
+                // gq = Peers[zipf]; // ============================
+                ends[zipf]++;
+                break;
+            }
+            case 2: {
+                // STATIC DEBUG PROPOSE
+                // gq = Peers[chosen]; // ============================
+                ends[chosen]++;
+                chosen++;
+                if (chosen >= NP)
+                    chosen = 0;
+                break;
+            }
             }
 
             // int *hashValue = h->GenerateKey(ptr);
@@ -113,6 +122,7 @@ void Gen_rnd::inner_body( ) {
 
         ///CTE = arrival_time->value();
         sentQueries++;
+        query_in_interval++;
 
         //cout<<"Generador envia "<<sentQueries<<endl;
         if (sentQueries >= (*totalQueries) ) {
@@ -127,7 +137,6 @@ void Gen_rnd::inner_body( ) {
             }
 
             // (*observer)->end();
-            endStream.close();
             passivate();
 
         }
@@ -138,8 +147,7 @@ void Gen_rnd::inner_body( ) {
             //    cout << "elapsed: " << elapsed_time << endl;
             if (!phase) {
                 if (elapsed_time > NORMAL_TIME) {
-                    cout << "change to crowd " << this->time() << endl;
-                    cout << "processed: " << sentQueries << endl;
+                    cout << "change to crowd " << this->time() << ", processed: " << sentQueries << endl;
                     phase = true;
                     phase_time = this->time();
                     double newRate = (1.0 / CROWDED_RATE);
@@ -149,8 +157,7 @@ void Gen_rnd::inner_body( ) {
                 }
             } else {
                 if (elapsed_time > CROWD_TIME) {
-                    cout << "change to normal" << this->time() << endl;
-                    cout << "processed: " << sentQueries << endl;
+                    cout << "change to normal" << this->time() << ", processed: " << sentQueries << endl;
                     phase = false;
                     phase_time = this->time();
                     double newRate = (1.0 / NORMAL_RATE);
@@ -216,26 +223,26 @@ int Gen_rnd::getZipf (int alpha, int n) {
 void Gen_rnd::setQueryRate( int newRate) {
     // newRate queries/sec
     switch (QUERY_RATE_STRATEGY) {
-        // DELTA T TIME
-        case 0:
-            if (this->time() > QUERY_DELTA_T ) {
-                double lambda = (1.0 / newRate);
-                delete arrival_time;
-                arrival_time = new rngExp("Arrive Time", lambda);
-                arrival_time ->reset();
-            }
-            break;
+    // DELTA T TIME
+    case 0:
+        if (this->time() > QUERY_DELTA_T ) {
+            double lambda = (1.0 / newRate);
+            delete arrival_time;
+            arrival_time = new rngExp("Arrive Time", lambda);
+            arrival_time ->reset();
+        }
+        break;
 
-        // Q QUERIES
-        case 1:
-            if ( (lastStepQueries + QUERY_DELTA_Q) < sentQueries) {
-                lastStepQueries = sentQueries;
-                double lambda = (1.0 / newRate);
-                delete arrival_time;
-                arrival_time = new rngExp("Arrive Time", lambda);
-                arrival_time ->reset();
-            }
-            break;
+    // Q QUERIES
+    case 1:
+        if ( (lastStepQueries + QUERY_DELTA_Q) < sentQueries) {
+            lastStepQueries = sentQueries;
+            double lambda = (1.0 / newRate);
+            delete arrival_time;
+            arrival_time = new rngExp("Arrive Time", lambda);
+            arrival_time ->reset();
+        }
+        break;
     }
 }
 

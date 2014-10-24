@@ -24,7 +24,7 @@ extern int DURACION_SIMULACION;
 // FLASH CROWDS
 #define FLASH_CROWD true  // se utiliza o no el flash crowd
 #define CROWD_TIME 5.0 // segundos con flash crowd
-#define NORMAL_TIME 5.0 //segundos con tasa normal
+#define NORMAL_TIME 50.0 //segundos con tasa normal
 #define NORMAL_RATE 100.0 // tasa de arribo sin flash crowd
 #define CROWDED_RATE 500.0 // tasa de arribo con flash crowd
 
