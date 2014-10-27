@@ -13,28 +13,32 @@ void WSE::inner_body(void) {
         MessageWSE *m = queue_in.front();
 
         queue_in.pop_front();
+        cout << time() << " - ";
+        cout << time() << endl;
 
         switch ( m->source ) {
-        case PEER:
+            case PEER:
 
-            //           m->setAnswer(WSE::getVersion(m->getQuery()));
-            m->setAnswer(WSE::getVersion(m->getKey(), m->getQuery()));
+                //           m->setAnswer(WSE::getVersion(m->getQuery()));
 
-            (*(m->src))->receiveWSE(m);
+                m->setAnswer(WSE::getVersion(m->getKey(), m->getQuery()));
 
-            if ( (*(m->src))->idle() && !(*(m->src))->get_busy() )
-                (*(m->src))->activateAfter( current() );
-            break;
-        case USER:
-            //chequea en la Rcache si esta la query, sino la inserta
+                (*(m->src))->receiveWSE(m);
 
-            //     m->setAnswer(WSE::getVersion(m->getQuery()));
-            m->setAnswer(WSE::getVersion(m->getKey(), m->getQuery()));
 
-            cout << "USER QUERY WSE" << endl;
-            break;
+                if ( (*(m->src))->idle() && !(*(m->src))->get_busy() )
+                    (*(m->src))->activateAfter( current() );
+                break;
+            case USER:
+                //chequea en la Rcache si esta la query, sino la inserta
 
-        default: cout << "ERROR: WSE Type o msg" << endl;
+                //     m->setAnswer(WSE::getVersion(m->getQuery()));
+                m->setAnswer(WSE::getVersion(m->getKey(), m->getQuery()));
+
+                cout << "USER QUERY WSE" << endl;
+                break;
+
+            default: cout << "ERROR: WSE Type o msg" << endl;
         }
     }
 }

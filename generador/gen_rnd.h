@@ -8,10 +8,16 @@
 #include "../wse/WSE.h"
 #include "../wse/MessageWSE.h"
 
+class Client;
+
 // class TlcProtocol;
 
 class Gen_rnd: public process {
+        handle<Client> *clients;
+        rng<double> *random_client;
+
         ofstream *chart_file;
+        ofstream *querys_sended_stream;
         //  list<handle<TlcProtocol> *> queue_thread;
 
         unsigned long int *totalQueries;
@@ -65,8 +71,10 @@ class Gen_rnd: public process {
 
         Gen_rnd ( const string &name, char *_traces_file, unsigned long int *_totalQueries,
                   int _NP, handle<Observer> *obs, int *_ends, int _Nuser,
-                  handle<WSE> *_wse, int _PS, ofstream * chart_file): process( name ) {
+                  handle<WSE> *_wse, int _PS, ofstream *chart_file, ofstream *querys_sended_stream): process( name ) {
             this-> chart_file = chart_file;
+            this->querys_sended_stream = querys_sended_stream;
+            
             totalQueries    = _totalQueries;
             sentQueries     = 0;
             wse             = _wse;
@@ -94,9 +102,15 @@ class Gen_rnd: public process {
             SelectSource = new rngUniform("SelectSource", 0, 100);
             SelectSource->reset();
 
+            random_client = new rngUniform("RandomClient", 0, NUM_CLIENTS);
+            random_client->reset();
+
             prev = 0.0;
             actual   = 0.0;
             observer = obs;
+        }
+        void SetClients(handle<Client> *clients) {
+            this->clients = clients;
         }
 
         // void add_peer(handle<TlcProtocol> * p)

@@ -1,4 +1,6 @@
 #include "gen_rnd.h"
+#include "../Client.h"
+#include "../Constants.h"
 #include <cmath>
 // #include "../applicationLayer/TlcProtocol.h"
 // #include "../applicationLayer/Query.h"
@@ -6,15 +8,14 @@
 
 void Gen_rnd::inner_body( ) {
     // handle<TlcProtocol> *gq;
-    string line, terms;
+    string line, terms, line_querys_sended;
     char *ptr;
     // Query *q; // ============================
     int id = 0;
     int chosen = 0;
     int envP2P = 0;
-    cout << "Archivo Trazas: " << traces_file << " - Get_Query.h" << endl;
-    endStream.open( traces_file );
 
+    endStream.open( traces_file );
     //La primera linea se tira si se usa el Log de Yahoo
     getline( endStream, line );
 
@@ -25,11 +26,20 @@ void Gen_rnd::inner_body( ) {
     //cout<<"Linea "<<linea<<endl;
     double accumulated_time = time();
     double query_in_interval = 0;
+    int num_cycles = 0;
     while ( 1 ) {
         if (time() - accumulated_time > 10) {
             (*chart_file) << time() << " " << query_in_interval << endl;
             query_in_interval = 0;
             accumulated_time = time();
+
+            (*querys_sended_stream) << num_cycles;
+            for (int i = 0; i < NUM_CLIENTS; ++i){
+                (*querys_sended_stream) << " " << clients[ i ]->GetNumberOfQuerysSendedThisCycle();
+                clients[ i ]->ResetCycle();
+            }
+            (*querys_sended_stream) << endl;
+            num_cycles++;
         }
         if ( ! getline( endStream, line ) ) {
             passivate();
@@ -55,6 +65,21 @@ void Gen_rnd::inner_body( ) {
 
         //  Verifica si va a un peer o al WSE, cuando la consulta llega desde un nodo fuera
         //  de la red de peers
+
+
+        // ===== ELIJO UN CLIENTE AL AZAR Y ENVIO UN MENSAJE
+        #ifndef USERS_GENERATE_QUERYS
+
+            int id_client = random_client->value();
+            // cout << "Estoy generando una query en " << time() << " para el cliente " << id_client << endl;
+            clients[ id_client ]->activate();
+
+
+        #endif
+        // ||||| ELIJO UN CLIENTE AL AZAR Y ENVIO UN MENSAJE
+
+
+
         double prob = SelectSource->value();
         if (prob > porcentaje_peers) { //viene fuera de la red peer
             // int *hashValue = h->GenerateKey(ptr);

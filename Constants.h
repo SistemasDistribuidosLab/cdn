@@ -8,6 +8,9 @@
 //int NUM_CLIENTS;
 //int NUM_EDGE_SERVERS;
 //int DURACION_SIMULACION;
+
+// #define USERS_GENERATE_QUERYS
+
 extern int NUM_CLIENTS;
 extern int NUM_EDGE_SERVERS;
 extern int DURACION_SIMULACION;

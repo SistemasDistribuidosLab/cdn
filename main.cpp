@@ -34,27 +34,6 @@ class Simulation : public process {
         void inner_body() {
             rng<double> *arrival_time;
             rng<double> *random_client;
-            handle<WSE> wse = new WSE("wse");
-            wse->activate();
-
-            char traces[2048];
-            strcpy(traces, "partial3.DAT");
-            unsigned long int totalQueries = 1000000;
-            int Peer_Selection = 0;
-            int Nuser = 0;
-            int nodes = 100;
-            handle<Observer> obs = new Observer(nodes, "OBSERVER");
-            int *ends = new int[nodes + 1];
-            for ( int i = 0; i < nodes + 1; i++)
-                ends[i] = 0;
-
-            ofstream * chart_file = new ofstream();
-            chart_file->open ("query_chart");
-            
-            handle<Gen_rnd> generator = new Gen_rnd("GENERATOR", traces, &totalQueries, nodes,
-                                                    &obs, ends, Nuser, &wse, Peer_Selection, chart_file);
-            generator->activate();
-
             arrival_time = new rngExp( "Arrive Time", ARRIVAL_TIME );
             random_client = new rngUniform("SelectSource", 0, 100);
 
@@ -91,8 +70,46 @@ class Simulation : public process {
                 clients[ i ]->activate();
             }
 
+            handle<WSE> wse = new WSE("wse");
+            wse->activate();
+
+            char traces[2048];
+            strcpy(traces, "partial3.DAT");
+            unsigned long int totalQueries = 1000000;
+            int Peer_Selection = 0;
+            int Nuser = 0;
+            int nodes = 100;
+            handle<Observer> obs = new Observer(nodes, "OBSERVER");
+            int *ends = new int[nodes + 1];
+            for ( int i = 0; i < nodes + 1; i++)
+                ends[i] = 0;
+
+            ofstream *chart_file = new ofstream();
+            chart_file->open ("query_chart");
+
+            ofstream *querys_sended_stream = new ofstream();
+            querys_sended_stream->open ("querys_sended_stream");
+
+            handle<Gen_rnd> generator = new Gen_rnd("GENERATOR", traces, &totalQueries, nodes,
+                                                    &obs, ends, Nuser, &wse, Peer_Selection, chart_file, querys_sended_stream);
+            generator->SetClients(clients);
+            generator->activate();
             hold(DURACION_SIMULACION);
+
             chart_file->close();
+            querys_sended_stream->close();
+
+            // Generar comandos
+            ofstream *comandos_charts_stream = new ofstream();
+            comandos_charts_stream->open ("comandos_charts");
+
+            (*comandos_charts_stream) << "plot ";
+            for (int i = 0; i < NUM_CLIENTS; ++i) {
+                (*comandos_charts_stream) << "'querys_sended_stream' using 1:" << (i+2) << " with lines, ";
+            }
+            (*comandos_charts_stream) << endl;
+            // ! Generar comandos
+
             end_simulation( );
         }
 };
@@ -102,7 +119,7 @@ void GenerateGraph();
 int main(int argc, char const *argv[]) {
     NUM_CLIENTS = argc > 1 ? atoi(argv[1]) : 100;
     NUM_EDGE_SERVERS = argc > 2 ? atoi(argv[2]) : 5;
-    DURACION_SIMULACION = argc > 3 ? atoi(argv[3]) : 1000;
+    DURACION_SIMULACION = argc > 3 ? atoi(argv[3]) : 300;
     ARRIVAL_TIME = argc > 4 ? atoi(argv[4]) : 1;
 
     cout << "NUM_CLIENTS:         " << NUM_CLIENTS << endl;

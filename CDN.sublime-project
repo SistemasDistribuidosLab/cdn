@@ -16,6 +16,8 @@
 				[
 					"--style=java",
 					"--indent-classes",
+					"--indent-preprocessor",
+					"--indent-switches",
 				],
 				"indent-spaces": 4
 			}
