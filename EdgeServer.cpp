@@ -1,6 +1,7 @@
 #include <iostream>
 #include "EdgeServer.h"
 #include "Client.h"
+#include "wse/MessageWSE.h"
 
 using namespace std;
 
@@ -33,11 +34,23 @@ void EdgeServer::inner_body(void) {
             hold(processing_time_per_query);
             busy_time += time() - time_aux;
 
-            string *respuesta = new string("respuestaaaaa !!!!!!!");
-            // this->SendMessage(new Message(this->GetId(), this->GetType(), message->GetIdFrom(), message->GetTypeFrom(), message->GetCreationTime(), respuesta));
-
-            this->SendMessage(new Message(this->GetId(), this->GetType(), message->GetIdFrom(),
-                                          message->GetTypeFrom(), message->GetCreationTime(), respuesta));
+            if (message->GetTypeFrom() == NODE_CLIENT) {
+                this->unprocessed_message_stack.push_back(message);
+                this->SendMessage(new Message(this->GetId(), this->GetType(), 0,
+                                              NODE_ORIGIN_SERVER, message->GetCreationTime(), message->GetMessagePointer()));
+            } else if (message->GetTypeFrom() == NODE_ORIGIN_SERVER) {
+                int id_message = -1;
+                for (int id = 0; id < unprocessed_message_stack.size(); ++id) {
+                    if (unprocessed_message_stack.at(id)->GetMessagePointer() == message->GetMessagePointer()) {
+                        id_message = id;
+                        break;
+                    }
+                }
+                Message * original = unprocessed_message_stack.at(id_message);
+                unprocessed_message_stack.erase(unprocessed_message_stack.begin() + id_message);
+                this->SendMessage(new Message(this->GetId(), this->GetType(), 
+                    original->GetIdFrom(), original->GetTypeFrom(), time(), original->GetMessagePointer()));
+            }
         }
         // ===== BUSY TIME END =====
 

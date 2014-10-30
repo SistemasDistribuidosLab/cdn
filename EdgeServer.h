@@ -7,6 +7,7 @@
 using namespace std;
 
 // class Client;
+class MessageWSE;
 
 class EdgeServer : public Node {
     private:

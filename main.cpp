@@ -5,6 +5,7 @@
 #include "Client.h"
 #include "EdgeServer.h"
 #include "Funciones.h"
+#include "Stats.h"
 #include "wse/WSE.h"
 #include "generador/gen_rnd.h"
 
@@ -24,16 +25,16 @@ double isps[3][3] = {
 };
 
 // vector< handle<Client> > clients;
-handle<Client> *clients;
-handle<EdgeServer> *edge_servers;
+handle<Client> * clients;
+handle<EdgeServer> * edge_servers;
 
 class Simulation : public process {
     public:
         Simulation(const string &name) : process(name) { }
         ~Simulation() { }
         void inner_body() {
-            rng<double> *arrival_time;
-            rng<double> *random_client;
+            rng<double> * arrival_time;
+            rng<double> * random_client;
             arrival_time = new rngExp( "Arrive Time", ARRIVAL_TIME );
             random_client = new rngUniform("SelectSource", 0, 100);
 
@@ -43,35 +44,51 @@ class Simulation : public process {
                 edge_servers[ i ] = new EdgeServer("edge_server", i, NODE_EDGE_SERVER);
             }
 
+            ifstream * endStream;
             // Iniciar Clientes
             clients = new handle<Client>[ NUM_CLIENTS ];
             for (int i = 0; i < NUM_CLIENTS; ++i) {
-                clients[ i ] = new Client("cliente", i, NODE_CLIENT, arrival_time);
+                clients[ i ] = new Client("cliente", i, NODE_CLIENT, arrival_time, endStream);
             }
+
+            handle<WSE> wse = new WSE("wse");
+            wse->SetIsp( 0 );
 
             // Iniciar Transporte
             handle<Transport> transport = new Transport("transporte", 0, 0);
             transport->SetClients(clients);
             transport->SetEdgeServers(edge_servers);
+            transport->SetWse(&wse);
             Transport::SetIsps(isps);
             transport->activate();
 
-            Dns *dns = new Dns();
+
+
+            Dns * dns = new Dns();
 
             for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
                 edge_servers[ i ]->SetTransport(&transport);
                 edge_servers[ i ]->SetIsp( ((double)i / (double)NUM_EDGE_SERVERS) * NUM_ISP );
-                edge_servers[ i ]->activate();
             }
             for (int i = 0; i < NUM_CLIENTS; ++i) {
                 clients[ i ]->SetTransport(&transport);
                 clients[ i ]->SetIsp( ((double)i / (double)NUM_CLIENTS) * NUM_ISP );
                 clients[ i ]->SetDns(dns);
-                clients[ i ]->activate();
             }
 
-            handle<WSE> wse = new WSE("wse");
+            wse->SetTransport(&transport);
             wse->activate();
+            ofstream * received_querys_by_edge_servers = new ofstream();
+            received_querys_by_edge_servers->open("charts/received_querys_by_edge_servers");
+            handle<Stats> stats = new Stats("stats", received_querys_by_edge_servers, edge_servers);
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+                edge_servers[ i ]->activate();
+            }
+            for (int i = 0; i < NUM_CLIENTS; ++i) {
+                clients[ i ]->activate();
+            }
+            stats->activate();
+
 
             char traces[2048];
             strcpy(traces, "partial3.DAT");
@@ -80,14 +97,14 @@ class Simulation : public process {
             int Nuser = 0;
             int nodes = 100;
             handle<Observer> obs = new Observer(nodes, "OBSERVER");
-            int *ends = new int[nodes + 1];
+            int * ends = new int[nodes + 1];
             for ( int i = 0; i < nodes + 1; i++)
                 ends[i] = 0;
 
-            ofstream *chart_file = new ofstream();
+            ofstream * chart_file = new ofstream();
             chart_file->open ("query_chart");
 
-            ofstream *querys_sended_stream = new ofstream();
+            ofstream * querys_sended_stream = new ofstream();
             querys_sended_stream->open ("querys_sended_stream");
 
             handle<Gen_rnd> generator = new Gen_rnd("GENERATOR", traces, &totalQueries, nodes,
@@ -98,16 +115,26 @@ class Simulation : public process {
 
             chart_file->close();
             querys_sended_stream->close();
+            received_querys_by_edge_servers->close();
 
             // Generar comandos
-            ofstream *comandos_charts_stream = new ofstream();
+            ofstream * comandos_charts_stream = new ofstream();
             comandos_charts_stream->open ("comandos_charts");
 
             (*comandos_charts_stream) << "plot ";
-            for (int i = 0; i < NUM_CLIENTS; ++i) {
-                (*comandos_charts_stream) << "'querys_sended_stream' using 1:" << (i+2) << " with lines, ";
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+                (*comandos_charts_stream) << "'querys_sended_stream' using 1:" << (i + 2) << " with lines, ";
             }
             (*comandos_charts_stream) << endl;
+
+            ofstream * comandos_received_querys_by_edge_servers = new ofstream();
+            comandos_received_querys_by_edge_servers->open ("comandos_received_querys_by_edge_servers");
+
+            (*comandos_received_querys_by_edge_servers) << "plot ";
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+                (*comandos_received_querys_by_edge_servers) << "'charts/received_querys_by_edge_servers' using 1:" << (i + 2) << " with lines title \"EdgeServer " << i << "\", ";
+            }
+            (*comandos_received_querys_by_edge_servers) << endl;
             // ! Generar comandos
 
             end_simulation( );
@@ -116,17 +143,19 @@ class Simulation : public process {
 
 void GenerateGraph();
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char const * argv[]) {
+    clock_t begin = clock();
+
     NUM_CLIENTS = argc > 1 ? atoi(argv[1]) : 100;
     NUM_EDGE_SERVERS = argc > 2 ? atoi(argv[2]) : 5;
-    DURACION_SIMULACION = argc > 3 ? atoi(argv[3]) : 300;
+    DURACION_SIMULACION = argc > 3 ? atoi(argv[3]) : 100;
     ARRIVAL_TIME = argc > 4 ? atoi(argv[4]) : 1;
 
     cout << "NUM_CLIENTS:         " << NUM_CLIENTS << endl;
     cout << "NUM_EDGE_SERVERS:    " << NUM_EDGE_SERVERS << endl;
     cout << "DURACION_SIMULACION: " << DURACION_SIMULACION << endl;
 
-    simulation *sim = simulation::instance();
+    simulation * sim = simulation::instance();
     sim->begin_simulation( new sqsDll() );
 
     handle<Simulation> simulation_handle = new Simulation( "source" );
@@ -135,7 +164,16 @@ int main(int argc, char const *argv[]) {
     sim->run();
     sim->end_simulation();
 
+    clock_t end = clock();
+    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+
+    cout << "Duracion en segundos: " << elapsed_secs << endl;
+
     cout << "Enf of Simulation" << endl;
+    cout << "NUM_CLIENTS:         " << NUM_CLIENTS << endl;
+    cout << "NUM_EDGE_SERVERS:    " << NUM_EDGE_SERVERS << endl;
+    cout << "DURACION_SIMULACION: " << DURACION_SIMULACION << endl;
+    cout << "Duracion Real: " << elapsed_secs << " ( 1 -> " << DURACION_SIMULACION / elapsed_secs << ")" << endl;
     cout << "===== Statistics =====" << endl;
     cout << "Edge Servers:" << endl;
     double total_idle_time_percentage  = 0;

@@ -3,13 +3,12 @@
 
 #include <string>
 #include <cstdlib>
+#include "wse/MessageWSE.h"
 
 using namespace std;
 
 class Message {
     private:
-        string * message;
-
         // from
         int id_from;
         int type_from;
@@ -20,8 +19,11 @@ class Message {
 
         double creation_time;
         int * count_pointer;
+        MessageWSE * message;
+        unsigned long int id;
+        static unsigned long int instances;
     public:
-        Message(int id_from, int type_from, int id_to, int type_to, double creation_time, string * message) {
+        Message(int id_from, int type_from, int id_to, int type_to, double creation_time, MessageWSE * message) {
             this->message = message;
 
             this->id_from = id_from;
@@ -32,17 +34,22 @@ class Message {
 
             this->creation_time = creation_time;
             this->count_pointer = count_pointer;
+
+            this->id = Message::instances;
+            Message::instances++;
         }
         virtual ~Message() {
             free(message);
         }
-        string GetMessage(){ return * message; }
+        MessageWSE GetMessage(){ return * message; }
+        MessageWSE * GetMessagePointer(){ return message; }
         int GetTypeFrom(){ return type_from; }
         int GetTypeTo(){ return type_to; }
         int GetIdFrom(){ return id_from; };
         int GetIdTo(){ return id_to; };
         int * GetCountPointer(){ return count_pointer; };
         double GetCreationTime(){ return creation_time ; }
+        unsigned long int GetId(){ return this->id; }
 };
 
 #endif

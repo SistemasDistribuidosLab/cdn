@@ -20,7 +20,7 @@ class MessageWSE {
 
 
         ~MessageWSE() {
-            //        free( src);
+            free( src);
             free(query);
             // BN_free(query);
         }

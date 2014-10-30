@@ -18,6 +18,7 @@
 					"--indent-classes",
 					"--indent-preprocessor",
 					"--indent-switches",
+					"--align-pointer=middle",
 				],
 				"indent-spaces": 4
 			}

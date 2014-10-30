@@ -10,13 +10,19 @@ void WSE::inner_body(void) {
         // ASSERT(!queue_in.empty());
 
 
-        MessageWSE *m = queue_in.front();
+        Message *mes = message_stack.back();
+        MessageWSE *m = mes->GetMessagePointer();
 
-        queue_in.pop_front();
-        cout << time() << " - ";
-        cout << time() << endl;
+        // MessageWSE *m = queue_in.front();
 
-        switch ( m->source ) {
+        // queue_in.pop_front();
+        message_stack.pop_back();
+
+        m->setAnswer(WSE::getVersion(m->getKey(), m->getQuery()));
+
+        this->SendMessage(new Message(this->GetId(), this->GetType(), mes->GetIdFrom(), mes->GetTypeFrom(), time(), m));
+
+        /*switch ( m->source ) {
             case PEER:
 
                 //           m->setAnswer(WSE::getVersion(m->getQuery()));
@@ -33,13 +39,16 @@ void WSE::inner_body(void) {
                 //chequea en la Rcache si esta la query, sino la inserta
 
                 //     m->setAnswer(WSE::getVersion(m->getQuery()));
+                cout << "Antes:   " << *(m->getQuery()) << endl;
                 m->setAnswer(WSE::getVersion(m->getKey(), m->getQuery()));
+                this->SendMessage(a);
+                cout << "Despues: " << *(m->getQuery()) << endl;
 
                 cout << "USER QUERY WSE" << endl;
                 break;
 
             default: cout << "ERROR: WSE Type o msg" << endl;
-        }
+        }*/
     }
 }
 

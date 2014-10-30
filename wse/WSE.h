@@ -2,14 +2,14 @@
 #define WSE_H
 
 #include "../glob.h"
+#include "../Node.h"
 #include "MessageWSE.h"
 #include "LruA.h"
 #include "../Constants.h"
 
 //#define WSECACHESIZE 8000
 
-class WSE: public process
-{
+class WSE: public Node {
 
     private:
         // ID_PAGE , (TTL, VERSION)
@@ -20,13 +20,13 @@ class WSE: public process
         bool busy;
         LRUA *ANSWERS;
     public:
-        WSE ( const string &name ): process ( name ){
+        WSE ( const string &name ): Node ( name, 0, NODE_ORIGIN_SERVER ) {
             busy = false;
             int cacheSize = WSECACHESIZE;
             ANSWERS = new LRUA(&cacheSize);
         }
 
-        ~WSE(){
+        ~WSE() {
             //  answers.clear();
             delete ANSWERS;
         }
@@ -34,15 +34,15 @@ class WSE: public process
 
         void inner_body ( void );
 
-        void add_request ( MessageWSE *bn ){
+        void add_request ( MessageWSE *bn ) {
             queue_in.push_back(bn);
         }
 
-        bool get_busy(){
+        bool get_busy() {
             return busy;
         }
 
-        void print(){
+        void print() {
             cout << "WSE" << endl;
         }
 

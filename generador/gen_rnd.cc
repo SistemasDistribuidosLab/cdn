@@ -9,7 +9,7 @@
 void Gen_rnd::inner_body( ) {
     // handle<TlcProtocol> *gq;
     string line, terms, line_querys_sended;
-    char *ptr;
+    char * ptr;
     // Query *q; // ============================
     int id = 0;
     int chosen = 0;
@@ -34,7 +34,7 @@ void Gen_rnd::inner_body( ) {
             accumulated_time = time();
 
             (*querys_sended_stream) << num_cycles;
-            for (int i = 0; i < NUM_CLIENTS; ++i){
+            for (int i = 0; i < NUM_CLIENTS; ++i) {
                 (*querys_sended_stream) << " " << clients[ i ]->GetNumberOfQuerysSendedThisCycle();
                 clients[ i ]->ResetCycle();
             }
@@ -68,14 +68,17 @@ void Gen_rnd::inner_body( ) {
 
 
         // ===== ELIJO UN CLIENTE AL AZAR Y ENVIO UN MENSAJE
-        #ifndef USERS_GENERATE_QUERYS
+#ifndef USERS_GENERATE_QUERYS
 
-            int id_client = random_client->value();
-            // cout << "Estoy generando una query en " << time() << " para el cliente " << id_client << endl;
-            clients[ id_client ]->activate();
+        int id_client = random_client->value();
+        // cout << "Estoy generando una query en " << time() << " para el cliente " << id_client << endl;
+        int * hashValue = new int(1);
+        MessageWSE * wseQuery = new MessageWSE(NULL, hashValue, ptr, USER);
+        clients[ id_client ]->AddMessageWse(wseQuery);
+        clients[ id_client ]->activate();
 
 
-        #endif
+#endif
         // ||||| ELIJO UN CLIENTE AL AZAR Y ENVIO UN MENSAJE
 
 
@@ -83,8 +86,8 @@ void Gen_rnd::inner_body( ) {
         double prob = SelectSource->value();
         if (prob > porcentaje_peers) { //viene fuera de la red peer
             // int *hashValue = h->GenerateKey(ptr);
-            int *hashValue = new int(1);
-            MessageWSE *wseQuery = new MessageWSE(NULL, hashValue, ptr, USER);
+            int * hashValue = new int(1);
+            MessageWSE * wseQuery = new MessageWSE(NULL, hashValue, ptr, USER);
 
             delete [] ptr;
 
@@ -96,32 +99,32 @@ void Gen_rnd::inner_body( ) {
             // gq = Peers[0]; // ============================
 
             switch ((int)Peer_Selection) {
-            case 0: {
-                //RANDOM SELECTION -> UNIFORM
-                int rnd = rand() % NP;
-                // gq = Peers[rnd]; // ============================
-                ends[rnd]++;
-                break;
-            }
-            case 1: {
-                //ZIPF SELECTION -> CLUSTERING
-                rand_val(1);
-                int zipf = getZipf(1.0, NP - 1);
-                //cout << "Peer " << zipf <<endl;
-                fflush(stdout);
-                // gq = Peers[zipf]; // ============================
-                ends[zipf]++;
-                break;
-            }
-            case 2: {
-                // STATIC DEBUG PROPOSE
-                // gq = Peers[chosen]; // ============================
-                ends[chosen]++;
-                chosen++;
-                if (chosen >= NP)
-                    chosen = 0;
-                break;
-            }
+                case 0: {
+                    //RANDOM SELECTION -> UNIFORM
+                    int rnd = rand() % NP;
+                    // gq = Peers[rnd]; // ============================
+                    ends[rnd]++;
+                    break;
+                }
+                case 1: {
+                    //ZIPF SELECTION -> CLUSTERING
+                    rand_val(1);
+                    int zipf = getZipf(1.0, NP - 1);
+                    //cout << "Peer " << zipf <<endl;
+                    fflush(stdout);
+                    // gq = Peers[zipf]; // ============================
+                    ends[zipf]++;
+                    break;
+                }
+                case 2: {
+                    // STATIC DEBUG PROPOSE
+                    // gq = Peers[chosen]; // ============================
+                    ends[chosen]++;
+                    chosen++;
+                    if (chosen >= NP)
+                        chosen = 0;
+                    break;
+                }
             }
 
             // int *hashValue = h->GenerateKey(ptr);
@@ -199,7 +202,6 @@ void Gen_rnd::inner_body( ) {
 
         id++;
     }
-    //endStream.close();
 }
 
 int Gen_rnd::getZipf (int alpha, int n) {
@@ -248,26 +250,26 @@ int Gen_rnd::getZipf (int alpha, int n) {
 void Gen_rnd::setQueryRate( int newRate) {
     // newRate queries/sec
     switch (QUERY_RATE_STRATEGY) {
-    // DELTA T TIME
-    case 0:
-        if (this->time() > QUERY_DELTA_T ) {
-            double lambda = (1.0 / newRate);
-            delete arrival_time;
-            arrival_time = new rngExp("Arrive Time", lambda);
-            arrival_time ->reset();
-        }
-        break;
+        // DELTA T TIME
+        case 0:
+            if (this->time() > QUERY_DELTA_T ) {
+                double lambda = (1.0 / newRate);
+                delete arrival_time;
+                arrival_time = new rngExp("Arrive Time", lambda);
+                arrival_time ->reset();
+            }
+            break;
 
-    // Q QUERIES
-    case 1:
-        if ( (lastStepQueries + QUERY_DELTA_Q) < sentQueries) {
-            lastStepQueries = sentQueries;
-            double lambda = (1.0 / newRate);
-            delete arrival_time;
-            arrival_time = new rngExp("Arrive Time", lambda);
-            arrival_time ->reset();
-        }
-        break;
+        // Q QUERIES
+        case 1:
+            if ( (lastStepQueries + QUERY_DELTA_Q) < sentQueries) {
+                lastStepQueries = sentQueries;
+                double lambda = (1.0 / newRate);
+                delete arrival_time;
+                arrival_time = new rngExp("Arrive Time", lambda);
+                arrival_time ->reset();
+            }
+            break;
     }
 }
 

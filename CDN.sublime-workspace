@@ -4,6 +4,86 @@
 		"selected_items":
 		[
 			[
+				"NUM",
+				"NUM_EDGE_SERVERS"
+			],
+			[
+				"Getid",
+				"GetId"
+			],
+			[
+				"mess",
+				"Message"
+			],
+			[
+				"mes",
+				"message_wse"
+			],
+			[
+				"NODE_",
+				"NODE_EDGE_SERVER"
+			],
+			[
+				"getty",
+				"GetTypeFrom"
+			],
+			[
+				"Getty",
+				"GetTypeFrom"
+			],
+			[
+				"GetTyp",
+				"GetType"
+			],
+			[
+				"messa",
+				"Message"
+			],
+			[
+				"id",
+				"id_message"
+			],
+			[
+				"getme",
+				"GetMessagePointer"
+			],
+			[
+				"GetMess",
+				"GetMessagePointer"
+			],
+			[
+				"un",
+				"unprocessed_message_stack"
+			],
+			[
+				"me",
+				"unprocessed_message_stack"
+			],
+			[
+				"Me",
+				"Message"
+			],
+			[
+				"wse",
+				"wseQuery"
+			],
+			[
+				"Message",
+				"MessageWSE"
+			],
+			[
+				"NUM_",
+				"num_cycles"
+			],
+			[
+				"num",
+				"num_cycles"
+			],
+			[
+				"cli",
+				"clients"
+			],
+			[
 				"se",
 				"sentQueries"
 			],
@@ -52,10 +132,6 @@
 				"delay_acum"
 			],
 			[
-				"id",
-				"id_to"
-			],
-			[
 				"isp",
 				"isp_from"
 			],
@@ -80,10 +156,6 @@
 				"type_to"
 			],
 			[
-				"cli",
-				"Client"
-			],
-			[
 				"N",
 				"NUM_EDGE_SERVERS"
 			],
@@ -94,22 +166,6 @@
 			[
 				"Geted",
 				"GetEdgeServerId"
-			],
-			[
-				"NUM",
-				"NUM_CLIENTS"
-			],
-			[
-				"mes",
-				"message"
-			],
-			[
-				"me",
-				"message"
-			],
-			[
-				"messa",
-				"message_stack"
 			],
 			[
 				"get",
@@ -138,10 +194,6 @@
 			[
 				"A",
 				"ARRIVAL_TIME"
-			],
-			[
-				"num",
-				"number_of_query_to_edge_servers"
 			],
 			[
 				"edge",
@@ -236,10 +288,6 @@
 				"EdgeServer"
 			],
 			[
-				"Getid",
-				"GetIdTo"
-			],
-			[
 				"Clie",
 				"Clients"
 			],
@@ -319,13 +367,186 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "main.cpp",
+			"settings":
+			{
+				"buffer_size": 11005,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "generador/query_charts.plot",
+			"settings":
+			{
+				"buffer_size": 29,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "comandos_charts",
+			"settings":
+			{
+				"buffer_size": 231,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "wse/WSE.cc",
+			"settings":
+			{
+				"buffer_size": 3043,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "dudas.markdown",
+			"settings":
+			{
+				"buffer_size": 483,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "por_hacer.markdown",
+			"settings":
+			{
+				"buffer_size": 101,
+				"line_ending": "Unix",
+				"name": "- CACHE"
+			}
+		},
+		{
+			"file": "Constants.h",
+			"settings":
+			{
+				"buffer_size": 1208,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Node.cpp",
+			"settings":
+			{
+				"buffer_size": 887,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Transport.h",
+			"settings":
+			{
+				"buffer_size": 1375,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Transport.cpp",
+			"settings":
+			{
+				"buffer_size": 2564,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "makefile",
+			"settings":
+			{
+				"buffer_size": 234,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "wse/WSE.h",
+			"settings":
+			{
+				"buffer_size": 1081,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "generador/gen_rnd.cc",
+			"settings":
+			{
+				"buffer_size": 9888,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Client.cpp",
+			"settings":
+			{
+				"buffer_size": 3643,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "EdgeServer.cpp",
+			"settings":
+			{
+				"buffer_size": 2699,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "EdgeServer.h",
+			"settings":
+			{
+				"buffer_size": 949,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Node.h",
+			"settings":
+			{
+				"buffer_size": 1495,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Message.h",
+			"settings":
+			{
+				"buffer_size": 1469,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Message.cpp",
+			"settings":
+			{
+				"buffer_size": 63,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "wse/MessageWSE.h",
+			"settings":
+			{
+				"buffer_size": 937,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 369.0,
+		"height": 75.0,
 		"selected_items":
 		[
+			[
+				"mark",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"markdo",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"markdown",
+				"Markdown Preview: Preview in Browser"
+			],
 			[
 				"package",
 				"Package Control: Install Package"
@@ -408,35 +629,61 @@
 	],
 	"file_history":
 	[
-		"/home/giovanni/Escritorio/cdn/main.cpp",
-		"/home/giovanni/Escritorio/cdn/generador/gen_rnd.cc",
-		"/home/giovanni/Escritorio/cdn/generador/query_charts.plot",
-		"/home/giovanni/Escritorio/cdn/makefile",
-		"/home/giovanni/Escritorio/cdn/comandos.txt",
-		"/home/giovanni/Escritorio/cdn/comandos.html",
-		"/home/giovanni/Escritorio/cdn/Constants.h",
-		"/home/giovanni/Escritorio/cdn/query_chart",
+		"/home/giovanni/Escritorio/cdn/notes.markdown",
+		"/home/giovanni/Escritorio/cdn/.gitignore",
 		"/home/giovanni/Escritorio/cdn/grafo.dot",
+		"/home/giovanni/Escritorio/cdn/wse/LruA.h",
+		"/home/giovanni/Escritorio/cdn/wse/LruA.cc",
+		"/home/giovanni/Escritorio/cdn/wse/Answer.h",
+		"/home/giovanni/Escritorio/cdn/comandos.html",
+		"/home/giovanni/Escritorio/cdn/comandos.txt",
+		"/home/giovanni/Escritorio/cdn/querys_sended_stream",
+		"/home/giovanni/Escritorio/cdn/query_chart",
+		"/home/giovanni/Escritorio/cdn/query_charts.plot",
+		"/home/giovanni/Escritorio/cdn/comandos_charts",
+		"/home/giovanni/Escritorio/cdn/CDN.sublime-project",
+		"/home/giovanni/Escritorio/cdn/EdgeServer.h",
+		"/home/giovanni/Escritorio/cdn/Constants.h",
+		"/home/giovanni/Escritorio/cdn/src/trace.cc",
+		"/home/giovanni/Escritorio/cdn/Node.h",
+		"/home/giovanni/Escritorio/cdn/Message.cpp",
+		"/home/giovanni/Escritorio/cdn/src/mean.hh",
+		"/home/giovanni/Escritorio/cdn/src/mean.cc",
+		"/home/giovanni/Escritorio/cdn/Message.h",
+		"/home/giovanni/Escritorio/cdn/Client.h",
+		"/home/giovanni/Escritorio/cdn/wse/WSE.h",
+		"/home/giovanni/Escritorio/cdn/wse/WSE.cc",
+		"/home/giovanni/Escritorio/cdn/makefile",
+		"/home/giovanni/Escritorio/cdn/Transport.cpp",
+		"/home/giovanni/Escritorio/cdn/Client.cpp",
+		"/home/giovanni/Escritorio/cdn/auxiliar/Util.cc",
+		"/home/giovanni/Escritorio/cdn/generador/gen_rnd.cc",
+		"/home/giovanni/Escritorio/cdn/src/main.cc",
+		"/home/giovanni/Escritorio/cdn/generador/gen_rnd.h",
+		"/home/giovanni/Escritorio/cdn/wse/ClientWSE.h",
+		"/home/giovanni/Escritorio/cdn/main.cpp",
+		"/home/giovanni/Escritorio/cdn/Node.cpp",
+		"/home/giovanni/Escritorio/cdn/dudas.markdown",
+		"/home/giovanni/Escritorio/cdn/Transport.h",
+		"/home/giovanni/Escritorio/cdn/EdgeServer.cpp",
+		"/home/giovanni/Escritorio/cdn/wse/MessageWSE.h",
+		"/home/giovanni/Escritorio/cdn/src/Makefile.am",
+		"/home/giovanni/Escritorio/Giovanni/Universidad/CDN/P2P/wse/WSE.h",
+		"/home/giovanni/.config/sublime-text-3/Packages/User/MarkdownPreview.sublime-settings",
+		"/home/giovanni/.config/sublime-text-3/Packages/Markdown Preview/MarkdownPreview.sublime-settings",
+		"/home/giovanni/Escritorio/cdn/generador/query_charts.plot",
+		"/home/giovanni/Escritorio/cdn/partial3.DAT",
+		"/home/giovanni/Escritorio/cdn/src/Makefile.in",
+		"/home/giovanni/Escritorio/cdn/MIDNS.h",
 		"/home/giovanni/.netbeans/8.0.1/config/GF_4.1_4/domain1/config/respaldo",
 		"/home/giovanni/GlassFish_Server/glassfish/domains/domain1/config/domain.xml",
 		"/home/giovanni/Descargas/domain.xml",
 		"/home/giovanni/.netbeans/8.0.1/config/GF_4.1_4/domain1/config/domain.xml",
-		"/home/giovanni/Escritorio/cdn/wse/Answer.h",
-		"/home/giovanni/Escritorio/cdn/wse/MessageWSE.h",
 		"/home/giovanni/Escritorio/Giovanni/Universidad/CDN/P2P/glob.h",
-		"/home/giovanni/Escritorio/cdn/wse/WSE.h",
-		"/home/giovanni/Escritorio/cdn/wse/LruA.h",
-		"/home/giovanni/Escritorio/cdn/wse/WSE.cc",
-		"/home/giovanni/Escritorio/cdn/wse/ClientWSE.h",
 		"/home/giovanni/Escritorio/cdn/auxiliar/Util.h",
-		"/home/giovanni/Escritorio/cdn/.gitignore",
 		"/home/giovanni/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
 		"/home/giovanni/maraton",
-		"/home/giovanni/Escritorio/cdn/generador/gen_rnd.h",
 		"/home/giovanni/Escritorio/Giovanni/Universidad/CDN/P2P/generador/gen_rnd.cc",
-		"/home/giovanni/Escritorio/cdn/partial3.DAT",
-		"/home/giovanni/Escritorio/cdn/CDN.sublime-project",
-		"/home/giovanni/Escritorio/cdn/dudas.markdown",
 		"/home/giovanni/Escritorio/cdn/auxiliar/Hash.cc",
 		"/home/giovanni/Escritorio/cdn/auxiliar/Hash.h",
 		"/home/giovanni/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
@@ -509,33 +756,7 @@
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/p2p/MessageWSE.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/pruebas/Client.cc",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/main.cc",
-		"/home/giovanni/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Node.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Node.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigInteger.hh",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigIntegerAlgorithms.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigIntegerUtils.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/BigInteger.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/grafo.dot",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/grafoman",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/nbproject/configurations.xml",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/.gitignore",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/bigint/ChangeLog",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/grafo.pl",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/nbproject/private/CodeAssistancePathMapper.properties",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/nbproject/project.xml",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN.sublime-project",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/partial.DAT",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/main_wse.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Client.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/Message.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/auxiliar/Util.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/auxiliar/Hash.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/p2p/LruA.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/nbproject/private/launcher.properties",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/p2p/WSE.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/p2p/ClientWSE.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/P2P/glob.h"
+		"/home/giovanni/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap"
 	],
 	"find":
 	{
@@ -553,6 +774,23 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"isp",
+			"ptr",
+			"tokens",
+			"ifstrea",
+			"clients",
+			"endstream",
+			"strea",
+			"endStrea",
+			"wse",
+			"emoji",
+			"key",
+			"ANSWERS",
+			"cache",
+			"gen_rnd",
+			"chart_file",
+			"stream",
+			"arrival_",
 			"password=",
 			"todoagil",
 			"total",
@@ -663,24 +901,7 @@
 			"nqueries",
 			"_sl",
 			"simle",
-			"leafset",
-			"crea peer",
-			"nodes",
-			"obs",
-			"simLen",
-			"tab",
-			"indent",
-			"iden",
-			"c++",
-			"˜",
-			"ImprimirInverso",
-			"Reiniciar",
-			"imprimir(",
-			"imprimirinverso",
-			"mydelay",
-			"it",
-			"_p",
-			"myproc"
+			"leafset"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -738,14 +959,602 @@
 	"groups":
 	[
 		{
+			"selected": 5,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11005,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3717,
+								3717
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1560.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "generador/query_charts.plot",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 29,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "comandos_charts",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 231,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								231,
+								231
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "wse/WSE.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3043,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1771,
+								1771
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 659.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "dudas.markdown",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 483,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								73,
+								73
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "por_hacer.markdown",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 101,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								56,
+								56
+							]
+						],
+						"settings":
+						{
+							"auto_name": "- CACHE",
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Constants.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1208,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								380,
+								380
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 17,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "Node.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 887,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								617,
+								617
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "Transport.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1375,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1197,
+								1197
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 251.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 19,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "Transport.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2564,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 15,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "makefile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 234,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								196,
+								196
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+						},
+						"translation.x": 40.0,
+						"translation.y": -0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "wse/WSE.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1081,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								378,
+								378
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 18,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "generador/gen_rnd.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9888,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1016,
+								1016
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 391.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "Client.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3643,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								679,
+								679
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 119.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "EdgeServer.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2699,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1310,
+								1310
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 417.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "EdgeServer.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 949,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								327,
+								327
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "Node.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1495,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								452,
+								452
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 16,
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"file": "Message.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1469,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1092,
+								1092
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 231.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"file": "Message.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 63,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								63,
+								63
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 19,
+					"file": "wse/MessageWSE.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 937,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								871,
+								871
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 447.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 25.0
+		"height": 34.0
 	},
 	"input":
 	{
@@ -790,24 +1599,172 @@
 		"selected_items":
 		[
 			[
-				"coma",
-				"comandos.txt"
+				"dudas",
+				"dudas.markdown"
 			],
 			[
-				"make",
-				"makefile"
+				"wse",
+				"wse/WSE.cc"
 			],
 			[
 				"gen",
 				"generador/gen_rnd.cc"
 			],
 			[
+				"coman",
+				"comandos_charts"
+			],
+			[
+				"query",
+				"generador/query_charts.plot"
+			],
+			[
+				"coa",
+				"generador/query_charts.plot"
+			],
+			[
 				"mai",
 				"main.cpp"
 			],
 			[
+				"messa",
+				"wse/MessageWSE.h"
+			],
+			[
+				"me",
+				"Message.h"
+			],
+			[
+				"cli",
+				"Client.cpp"
+			],
+			[
+				"node",
+				"Node.cpp"
+			],
+			[
+				"ed",
+				"EdgeServer.cpp"
+			],
+			[
+				".pro",
+				"CDN.sublime-project"
+			],
+			[
+				"edge",
+				"EdgeServer.h"
+			],
+			[
+				"make",
+				"makefile"
+			],
+			[
+				"ma",
+				"main.cpp"
+			],
+			[
+				"tra",
+				"Transport.cpp"
+			],
+			[
+				"cons",
+				"Constants.h"
+			],
+			[
+				"n",
+				"Node.cpp"
+			],
+			[
+				"",
+				"wse/WSE.cc"
+			],
+			[
+				"mes",
+				"Message.h"
+			],
+			[
+				"mess",
+				"wse/MessageWSE.h"
+			],
+			[
+				"cl",
+				"Client.cpp"
+			],
+			[
+				"ws",
+				"wse/WSE.cc"
+			],
+			[
 				"con",
 				"Constants.h"
+			],
+			[
+				"clien",
+				"Client.cpp"
+			],
+			[
+				"ge",
+				"generador/gen_rnd.cc"
+			],
+			[
+				"message",
+				"wse/MessageWSE.h"
+			],
+			[
+				"no",
+				"Node.h"
+			],
+			[
+				"tr",
+				"Transport.h"
+			],
+			[
+				"m",
+				"main.cpp"
+			],
+			[
+				"duda",
+				"dudas.markdown"
+			],
+			[
+				"trans",
+				"Transport.cpp"
+			],
+			[
+				"clientwse",
+				"wse/ClientWSE.h"
+			],
+			[
+				"plot",
+				"query_charts.plot"
+			],
+			[
+				"q",
+				"querys_sended_stream"
+			],
+			[
+				"maic",
+				"main.cpp"
+			],
+			[
+				"mi",
+				"src/main.cc"
+			],
+			[
+				".mark",
+				"notes.markdown"
+			],
+			[
+				"com",
+				"comandos.txt"
+			],
+			[
+				"trn",
+				"Transport.cpp"
+			],
+			[
+				"coma",
+				"comandos.txt"
 			],
 			[
 				"par",
@@ -818,20 +1775,12 @@
 				"query_chart"
 			],
 			[
-				"",
-				"query_chart"
-			],
-			[
 				"chart",
 				"query_chart"
 			],
 			[
 				".gi",
 				".gitignore"
-			],
-			[
-				"wse",
-				"wse/WSE.cc"
 			],
 			[
 				"lrua",
@@ -846,14 +1795,6 @@
 				"auxiliar/Util.h"
 			],
 			[
-				"cli",
-				"wse/ClientWSE.h"
-			],
-			[
-				"cons",
-				"Constants.h"
-			],
-			[
 				"has",
 				"auxiliar/Hash.cc"
 			],
@@ -862,60 +1803,16 @@
 				"wse/LruA.h"
 			],
 			[
-				"mess",
-				"wse/MessageWSE.h"
-			],
-			[
 				"ci",
 				"Client.cpp"
-			],
-			[
-				"ed",
-				"EdgeServer.cpp"
 			],
 			[
 				"dns",
 				"Dns.h"
 			],
 			[
-				"edge",
-				"EdgeServer.cpp"
-			],
-			[
-				"duda",
-				"dudas.markdown"
-			],
-			[
-				"cl",
-				"Client.cpp"
-			],
-			[
 				".mar",
 				"dudas.markdown"
-			],
-			[
-				"tr",
-				"Transport.h"
-			],
-			[
-				"tra",
-				"Transport.cpp"
-			],
-			[
-				"ma",
-				"main.cpp"
-			],
-			[
-				"no",
-				"Node.h"
-			],
-			[
-				"n",
-				"Node.cpp"
-			],
-			[
-				"node",
-				"Node.cpp"
 			],
 			[
 				"nde",
@@ -942,10 +1839,6 @@
 				"grafodot"
 			],
 			[
-				"coman",
-				"comandos.txt"
-			],
-			[
 				"co",
 				"comandos.txt"
 			],
@@ -958,20 +1851,12 @@
 				"grafo.dot"
 			],
 			[
-				"mes",
-				"Message.h"
-			],
-			[
 				"mak",
 				"makefile"
 			],
 			[
 				"c",
 				"Constants.h"
-			],
-			[
-				"me",
-				"Message.h"
 			],
 			[
 				"mae",
@@ -986,16 +1871,8 @@
 				"EdgeServer.cpp"
 			],
 			[
-				"clien",
-				"Client.h"
-			],
-			[
 				"clie",
 				"Client.h"
-			],
-			[
-				"com",
-				"comandos.txt"
 			],
 			[
 				"g",
@@ -1022,20 +1899,12 @@
 				"p2p/LruA.h"
 			],
 			[
-				"messa",
-				"p2p/MessageWSE.h"
-			],
-			[
 				"subl",
 				"pruebas/pruebas.sublime-project"
 			],
 			[
 				"w",
 				"WSE.cc"
-			],
-			[
-				"ws",
-				"WSE.h"
 			],
 			[
 				"hash",
@@ -1056,10 +1925,6 @@
 			[
 				"man",
 				"old/main.cc"
-			],
-			[
-				"trans",
-				"Transporte.h"
 			],
 			[
 				"client",
@@ -1112,10 +1977,6 @@
 			[
 				"node.c",
 				"Node.cc"
-			],
-			[
-				"message",
-				"Message.cc"
 			],
 			[
 				"si",
@@ -1232,7 +2093,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 209.0,
+	"side_bar_width": 225.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

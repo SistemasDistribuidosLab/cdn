@@ -21,6 +21,7 @@ class Node : public process {
         unsigned int num_messages_sended;
     protected:
         vector<Message *> message_stack;
+        vector<Message *> unprocessed_message_stack;
     public:
 
         Node(const string &name, int id, int type) : process(name) {
@@ -45,7 +46,7 @@ class Node : public process {
             this->delay_acum += delay;
             this->num_messages_sended++;
         }
-        void AddMessage(Message *message) {
+        virtual void AddMessage(Message *message) {
             message_stack.push_back(message);
         }
         double SendMessage(Message *message);

@@ -2,6 +2,7 @@
 #include "Transport.h"
 #include "Client.h"
 #include "EdgeServer.h"
+#include "wse/WSE.h"
 
 double Transport::isps[3][3];
 
@@ -25,13 +26,17 @@ void Transport::SetClients(handle<Client> *clients) {
     this->clients = clients;
 }
 
+void Transport::SetWse(handle<WSE> *wse) {
+    this->wse = wse;
+}
+
 Node *Transport::GetServer(int id, int type) {
     if (type == NODE_CLIENT)
         return clients[ id ];
     if (type == NODE_EDGE_SERVER)
         return edge_servers[ id ];
     if (type == NODE_ORIGIN_SERVER)
-        return NULL;
+        return *wse;
     return NULL;
 }
 
@@ -55,15 +60,15 @@ void Transport::inner_body(void) {
             // cout << time() << " - Transporte " << this->GetId() << ": Mensaje Enviado en tiempo " << message->GetCreationTime() << " desde el cliente " << message->GetIdFrom() << ": " << message->GetMessage() << endl;
             Node *servidor;
             switch (message->GetTypeTo()) {
-            case NODE_CLIENT:
-                servidor = clients[ message->GetIdTo() ];
-                break;
-            case NODE_EDGE_SERVER:
-                servidor = edge_servers[ message->GetIdTo() ];
-                break;
-            case NODE_ORIGIN_SERVER:
-                cout << "Origiiiiiiiiiim" << endl;
-                break;
+                case NODE_CLIENT:
+                    servidor = clients[ message->GetIdTo() ];
+                    break;
+                case NODE_EDGE_SERVER:
+                    servidor = edge_servers[ message->GetIdTo() ];
+                    break;
+                case NODE_ORIGIN_SERVER:
+                    servidor = (*wse);
+                    break;
             }
 
             // handle<EdgeServer> edge_server = edge_servers[ message->GetIdTo() ];
