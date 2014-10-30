@@ -30,7 +30,6 @@ void EdgeServer::inner_body(void) {
             message_stack.pop_back();
             // cout << time() << " - Edge Server " << this->GetId() << ": Mensaje Enviado en tiempo " << message->GetCreationTime() << " desde el cliente " << message->GetIdFrom() << ": " << message->GetMessage() << endl;
             received_querys_from_count[ message->GetIdFrom() ]++;
-            processed_querys++;
             hold(processing_time_per_query);
             busy_time += time() - time_aux;
 
@@ -38,6 +37,7 @@ void EdgeServer::inner_body(void) {
                 this->unprocessed_message_stack.push_back(message);
                 this->SendMessage(new Message(this->GetId(), this->GetType(), 0,
                                               NODE_ORIGIN_SERVER, message->GetCreationTime(), message->GetMessagePointer()));
+                processed_querys++;
             } else if (message->GetTypeFrom() == NODE_ORIGIN_SERVER) {
                 int id_message = -1;
                 for (int id = 0; id < unprocessed_message_stack.size(); ++id) {
