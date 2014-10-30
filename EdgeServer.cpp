@@ -26,18 +26,21 @@ void EdgeServer::inner_body(void) {
         // ===== BUSY TIME START =====
         while (!message_stack.empty()) {
             time_aux = time();
-            Message *message = message_stack.back();
-            message_stack.pop_back();
+            Message * message = this->GetMessage();
+
             // cout << time() << " - Edge Server " << this->GetId() << ": Mensaje Enviado en tiempo " << message->GetCreationTime() << " desde el cliente " << message->GetIdFrom() << ": " << message->GetMessage() << endl;
-            received_querys_from_count[ message->GetIdFrom() ]++;
             hold(processing_time_per_query);
-            busy_time += time() - time_aux;
+
+            this->SumToBusyTime( time() - time_aux );
 
             if (message->GetTypeFrom() == NODE_CLIENT) {
-                this->unprocessed_message_stack.push_back(message);
+                this->ReceiveANewMessageFromClient( message->GetIdFrom() );
+
+                this->AddANewUnprocessedMessage(message);
+
                 this->SendMessage(new Message(this->GetId(), this->GetType(), 0,
                                               NODE_ORIGIN_SERVER, message->GetCreationTime(), message->GetMessagePointer()));
-                processed_querys++;
+                this->SumToProcessedQuerys(1);
             } else if (message->GetTypeFrom() == NODE_ORIGIN_SERVER) {
                 int id_message = -1;
                 for (int id = 0; id < unprocessed_message_stack.size(); ++id) {
@@ -48,14 +51,40 @@ void EdgeServer::inner_body(void) {
                 }
                 Message * original = unprocessed_message_stack.at(id_message);
                 unprocessed_message_stack.erase(unprocessed_message_stack.begin() + id_message);
-                this->SendMessage(new Message(this->GetId(), this->GetType(), 
-                    original->GetIdFrom(), original->GetTypeFrom(), time(), original->GetMessagePointer()));
+                this->SendMessage(new Message(this->GetId(), this->GetType(),
+                                              original->GetIdFrom(), original->GetTypeFrom(), time(), original->GetMessagePointer()));
             }
         }
         // ===== BUSY TIME END =====
 
         time_aux = time();
         this->passivate();
-        idle_time += time() - time_aux;
+        this->SumToIdleTime( time() - time_aux );
     }
+}
+
+void EdgeServer::SumToIdleTime(double add_time) {
+    this->idle_time += add_time;
+}
+
+void EdgeServer::SumToBusyTime(double add_time) {
+    this->busy_time += add_time;
+}
+
+void EdgeServer::SumToProcessedQuerys(int add_value) {
+    this->processed_querys += add_value;
+}
+
+void EdgeServer::ReceiveANewMessageFromClient(int id_from) {
+    this->received_querys_from_count[ id_from ]++;
+}
+
+void EdgeServer::AddANewUnprocessedMessage(Message * message) {
+    this->unprocessed_message_stack.push_back(message);
+}
+
+Message * EdgeServer::GetMessage() {
+    Message * message = this->message_stack.back();
+    this->message_stack.pop_back();
+    return message;
 }
