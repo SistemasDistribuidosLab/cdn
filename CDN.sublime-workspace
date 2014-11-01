@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"Mes",
+				"Message"
+			],
+			[
+				"rece",
+				"ReceiveANewMessageFromClient"
+			],
+			[
+				"proce",
+				"processed_querys"
+			],
+			[
+				"sumto",
+				"SumToBusyTime"
+			],
+			[
+				"edge",
+				"EdgeServer"
+			],
+			[
 				"NUM",
 				"NUM_EDGE_SERVERS"
 			],
@@ -104,10 +124,6 @@
 				"GenerateChart"
 			],
 			[
-				"proce",
-				"processing_time_per_query"
-			],
-			[
 				"NU",
 				"NUM_CLIENTS"
 			],
@@ -196,10 +212,6 @@
 				"ARRIVAL_TIME"
 			],
 			[
-				"edge",
-				"edge_server"
-			],
-			[
 				"to",
 				"total_time"
 			],
@@ -246,10 +258,6 @@
 			[
 				"is",
 				"is_busy"
-			],
-			[
-				"Mes",
-				"MessageWSE"
 			],
 			[
 				"in",
@@ -379,8 +387,30 @@
 			"file": "makefile",
 			"settings":
 			{
-				"buffer_size": 244,
+				"buffer_size": 952,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "// genmake.cpp\n// version of 18 December, 2007\n\n// Generate a make file\n\n#define WANT_STREAM\n#define WANT_MATH\n#define WANT_TIME\n#define WANT_FSTREAM\n\n#include \"include.h\"\n#include \"str.h\"\n#include \"gstring.h\"\n#include \"commline.h\"\n\n\n// *** Classes to customise output for particular compilers and make files ***\n\nclass CompilerProperties\n{\n   String code;\npublic:\n   CompilerProperties(const char* c) : code(c) {}\n   virtual ~CompilerProperties() {}\n   void Preamble() const;\n   virtual void LinkStatement(const String& Name, const String& FN) const = 0;\n   virtual void LinkStatement(const String& Name, const StringList& Libraries)\n      const = 0;\n   virtual void LibStatement(const String& Name) const = 0;\n   virtual const char* ObjectType() const = 0;\n   virtual int ObjectSize() const = 0;\n   virtual const char* ExeType() const = 0;\n   virtual int ExeSize() const = 0;\n   virtual char FS() const = 0;\n   virtual bool DoLibrary() const { return true; }\n   virtual bool WantPlusVersion() const { return false; }\nprotected:\n   void LibraryList(const char* prefix, const StringList& Libraries,\n      const char* suffix) const;\n};\n\nclass WindowsCompiler : public CompilerProperties\n{\nprotected:\n   WindowsCompiler(const char* c) : CompilerProperties(c) {}\npublic:\n   const char* ObjectType() const { return \".obj\"; }\n   int ObjectSize() const { return 4; }\n   const char* ExeType() const { return \".exe\"; }\n   int ExeSize() const { return 4; }\n   char FS() const  { return '\\\\'; }\n};\n\nclass UnixCompiler : public CompilerProperties\n{\nprotected:\n   UnixCompiler(const char* c) : CompilerProperties(c) {}\npublic:\n   const char* ObjectType() const { return \".o\"; }\n   int ObjectSize() const { return 2; }\n   const char* ExeType() const { return \"\"; }\n   int ExeSize() const { return 0; }\n   char FS() const  { return '/'; }\n};\n\n\nclass GnuCompiler : public UnixCompiler\n{\npublic:\n   GnuCompiler(const char* c) : UnixCompiler(c) {}\n   void LinkStatement(const String& Name, const String& FN) const;\n   void LinkStatement(const String& Name, const StringList& Libraries) const;\n   void LibStatement(const String& Name) const;\n};\n\nclass GnuCompilerDynamic : public GnuCompiler\n{\npublic:\n   GnuCompilerDynamic(const char* c) : GnuCompiler(c) {}\n   void LinkStatement(const String& Name, const String& FN) const\n      { GnuCompiler::LinkStatement(Name, FN); }\n   void LinkStatement(const String& Name, const StringList& Libraries) const;\n   void LibStatement(const String& Name) const;\n};\n\nclass Borland55Compiler : public WindowsCompiler\n{\npublic:\n   Borland55Compiler(const char* c) : WindowsCompiler(c) {}\n   void LinkStatement(const String& Name, const String& FN) const;\n   void LinkStatement(const String& Name, const StringList& Libraries) const;\n   void LibStatement(const String& Name) const;\n};\n\nclass Borland50dCompiler : public WindowsCompiler\n{\npublic:\n   Borland50dCompiler(const char* c) : WindowsCompiler(c) {}\n   void LinkStatement(const String& Name, const String& FN) const;\n   void LinkStatement(const String& Name, const StringList& Libraries) const {}\n   void LibStatement(const String& Name) const {}\n   bool DoLibrary() const { return false; }  // don't do libraries\n};\n\nclass Borland50Compiler : public WindowsCompiler\n{\npublic:\n   Borland50Compiler(const char* c) : WindowsCompiler(c) {}\n   void LinkStatement(const String& Name, const String& FN) const;\n   void LinkStatement(const String& Name, const StringList& Libraries) const {}\n   void LibStatement(const String& Name) const {}\n   bool DoLibrary() const { return false; }  // don't do libraries\n};\n\nclass Borland31Compiler : public WindowsCompiler\n{\npublic:\n   Borland31Compiler(const char* c) : WindowsCompiler(c) {}\n   void LinkStatement(const String& Name, const String& FN) const;\n   void LinkStatement(const String& Name, const StringList& Libraries) const {}\n   void LibStatement(const String& Name) const {}\n   bool DoLibrary() const { return false; }  // don't do libraries\n};\n\nclass Microsoft6Compiler : public WindowsCompiler\n{\npublic:\n   Microsoft6Compiler(const char* c) : WindowsCompiler(c) {}\n   void LinkStatement(const String& Name, const String& FN) const;\n   void LinkStatement(const String& Name, const StringList& Libraries) const;\n   void LibStatement(const String& Name) const;\n};\n\nclass Watcom10Compiler : public WindowsCompiler\n{\npublic:\n   Watcom10Compiler(const char* c) : WindowsCompiler(c) {}\n   void LinkStatement(const String& Name, const String& FN) const;\n   void LinkStatement(const String& Name, const StringList& Libraries) const {}\n   void LibStatement(const String& Name) const {}\n   bool DoLibrary() const { return false; }  // don't do libraries\n};\n\nclass OpenWatcomCompiler : public WindowsCompiler\n{\npublic:\n   OpenWatcomCompiler(const char* c) : WindowsCompiler(c) {}\n   void LinkStatement(const String& Name, const String& FN) const;\n   void LinkStatement(const String& Name, const StringList& Libraries) const;\n   void LibStatement(const String& Name) const;\n   virtual bool WantPlusVersion() const { return true; } // lib list with +s\n};\n\n\n// elapsed time class\n\nclass time_lapse\n{\n   double start_time;\npublic:\n   time_lapse();\n   ~time_lapse();\n};\n\n\n// ************* function headers ********************\n\n// Does a string list, LS, contain a particular string S\n\nbool Contains(const StringList& LS, const String& S);\n\n// search a source file for header and body file names - then\n// search these files and so on. Return list of header and body\n// file names\n\nbool SearchHB(const String& SourceFile, StringList& Headers,\n   StringList& Bodies);\n\n// search a source file for header file names - then search\n// these files and so on. Return list of header file names\n\nbool SearchH(const String& SourceFile, StringList& Headers);\n\n// find header files in .lfl file then apply SearchHB to these\n// NewHeaders are the names just in the SourceFile\n// return false if source files missing\n\nbool SearchL(const String& SourceFile, StringList& Headers,\n   StringList& NewHeaders, StringList& Bodies);\n\n// find list of libraries required and purged list of headers\n// return true if any libraries found\n// no output if libraries not found\n\nbool IdentifyLibraries(\n   const StringList& Headers,       // input list of headers\n   const StringList& Libraries,     // library files available\n   const StringList& LibraryFiles,  // all headers whose body is in library\n   const StringList& LibraryFiles1, // headers which trigger inclusion\n   StringList& LibrariesWanted,     // return list of libraries required\n   StringList& PurgedHeaders);      // return headers which are not matched\n\n// find bodies referenced in a list of header files - no recursion\n\nvoid GetBodies(const StringList& Headers, StringList& Bodies);\n\n// output n spaces\n\nvoid Spaces(int n) { while (n-- > 0) cout << ' '; }\n\n\n// ************* main program section ********************\n\ntypedef StringList::iterator SLI;\ntypedef StringList::const_iterator SLCI;\n\nint main(int argc, char** argv)\n{\n   Try\n   {\n      time_lapse tl;      // measure program run time\n      CommandLine CL(argc, argv);\n      int N = CL.NumberOfArgs();\n\n      if (N <= 0) { cerr << \"No targets\" << endl; exit(1); }\n\n      bool WantCompare = CL.HasOption(\"!\");    // compare output with text file\n\n      // Get compiler type and construct corresponding class\n\n      CompilerProperties* CP;\n\n      if (CL.HasOptionCI(\"G\") && CL.HasOptionCI(\"D\"))\n         CP = new GnuCompilerDynamic(\"pre_g.txt\");\n\n      else if (CL.HasOptionCI(\"G\") && CL.HasOptionCI(\"2\"))\n         CP = new GnuCompiler(\"pre_g2.txt\");\n\n      else if (CL.HasOptionCI(\"G\"))\n         CP = new GnuCompiler(\"pre_g.txt\");\n\n      else if (CL.HasOptionCI(\"C\"))\n         CP = new GnuCompiler(\"pre_c.txt\");\n\n      else if (CL.HasOptionCI(\"B\") && CL.HasOptionCI(\"D\")  && CL.HasOption(\"0\"))\n         CP = new Borland50dCompiler(\"pre_b0d.txt\");\n\n      else if (CL.HasOptionCI(\"B\") && CL.HasOption(\"0\"))\n         CP = new Borland50Compiler(\"pre_b0.txt\");\n\n      else if (CL.HasOptionCI(\"B\") && CL.HasOption(\"8\"))\n         CP = new Borland55Compiler(\"pre_b8.txt\");\n\n      else if (CL.HasOptionCI(\"B\") && CL.HasOption(\"6\"))\n         CP = new Borland55Compiler(\"pre_b6.txt\");\n\n      else if (CL.HasOptionCI(\"B\") && CL.HasOption(\"5\"))\n         CP = new Borland55Compiler(\"pre_b5.txt\");\n\n      else if (CL.HasOptionCI(\"B\") && CL.HasOption(\"3\")&& CL.HasOption(\"1\"))\n         CP = new Borland31Compiler(\"pre_b31.txt\");\n\n      else if (CL.HasOptionCI(\"M\") && CL.HasOption(\"8\"))\n         CP = new Microsoft6Compiler(\"pre_m8.txt\");\n\n      else if (CL.HasOptionCI(\"M\") && CL.HasOption(\"6\"))\n         CP = new Microsoft6Compiler(\"pre_m6.txt\");\n\n      else if (CL.HasOptionCI(\"M\") && CL.HasOption(\"5\"))\n         CP = new Microsoft6Compiler(\"pre_m5.txt\");\n\n      else if (CL.HasOptionCI(\"I\") && CL.HasOptionCI(\"L\") && CL.HasOptionCI(\"D\")\n         && CL.HasOption(\"5\"))\n         CP = new GnuCompilerDynamic(\"pre_il5.txt\");\n\n      else if (CL.HasOptionCI(\"I\") && CL.HasOptionCI(\"L\") && CL.HasOptionCI(\"D\")\n         && CL.HasOption(\"8\"))\n         CP = new GnuCompilerDynamic(\"pre_il8.txt\");\n\n      else if (CL.HasOptionCI(\"I\") && CL.HasOptionCI(\"L\") && CL.HasOption(\"5\"))\n         CP = new GnuCompiler(\"pre_il5.txt\");\n\n      else if (CL.HasOptionCI(\"I\") && CL.HasOptionCI(\"L\") && CL.HasOption(\"8\"))\n         CP = new GnuCompiler(\"pre_il8.txt\");\n\n      else if (CL.HasOptionCI(\"I\") && CL.HasOption(\"5\"))\n         CP = new Microsoft6Compiler(\"pre_i5.txt\");\n\n      else if (CL.HasOptionCI(\"I\") && CL.HasOption(\"8\"))\n         CP = new Microsoft6Compiler(\"pre_i8.txt\");\n\n      else if (CL.HasOptionCI(\"I\") && CL.HasOption(\"1\") && CL.HasOption(\"0\"))\n         CP = new Microsoft6Compiler(\"pre_i10.txt\");\n\n      else if (CL.HasOptionCI(\"O\") && CL.HasOptionCI(\"W\"))\n         CP = new OpenWatcomCompiler(\"pre_ow.txt\");\n\n      else if (CL.HasOptionCI(\"W\") && CL.HasOptionCI(\"D\") && CL.HasOption(\"0\"))\n         CP = new Watcom10Compiler(\"pre_w0d.txt\");\n\n      else if (CL.HasOptionCI(\"W\") && CL.HasOption(\"0\"))\n         CP = new Watcom10Compiler(\"pre_w0.txt\");\n\n      else { cerr << \"Unrecognised compiler option\" << endl; exit(1); }\n\n      // print preamble\n\n      CP->Preamble();\n\n      // get targets; separate out libraries\n      // beginning with @ means argument file\n      // beginning with I= or L= means include or library directory\n\n      StringList Targets;\n      StringList Libraries;\n\n      StringList LibraryDirectories;\n      StringList IncludeDirectories;\n\n      cout << \"everything:    \\t\";\n\n      for (int ni = 1; ni <= N; ++ni)\n      {\n         String s = CL.GetArg(ni);\n         if (s[0] == '@')\n         {\n            ifstream is(String(s,1).c_str(),ios::in);\n            if (!is) { cerr << \"No argument file \" << s << endl; }\n            else\n            {\n               StringList Args; is >> Args;\n               if (Args.size() == 0 ||\n                  (Args.size() == 1 && Args.begin()->size() == 0))\n                  { cerr << \"File \" << s << \" has no data\" << endl; }\n\n               for (SLI ai = Args.begin(); ai != Args.end(); ++ai)\n               {\n                  if (ai->size() > 2 && ai->substr(0,2) == \"I=\")\n                     IncludeDirectories.push_back(ai->substr(2));\n                  else if (ai->size() > 2 && ai->substr(0,2) == \"L=\")\n                     LibraryDirectories.push_back(ai->substr(2));\n                  else\n                  {\n                     uint sf = ai->find(\".lfl\");\n                     if (sf != String::npos) Libraries.push_back(ai->erase(sf));\n                     else if (ai->find_first_not_of(' ') != String::npos)\n                     {\n                        Targets.push_back(*ai);\n                        String sx = *ai;\n                        sf = sx.find(\".c\");     // remove extension\n                        if (sf != String::npos) sx.erase(sf);\n                        if (WantCompare) cout << sx << \".txx \";\n                        else cout << sx << CP->ExeType() << \" \";\n                     }\n                  }\n               }\n            }\n         }\n         else if (s.size() > 2 && s.substr(0,2) == \"I=\")\n            IncludeDirectories.push_back(s.substr(2));\n         else if (s.size() > 2 && s.substr(0,2) == \"L=\")\n            LibraryDirectories.push_back(s.substr(2));\n         else\n         {\n            uint sf = s.find(\".lfl\");\n            if (sf != String::npos) Libraries.push_back(s.erase(sf));\n            else\n            {\n               Targets.push_back( s );\n               String sx = s;\n               sf = sx.find(\".c\");     // remove extension\n               if (sf != String::npos) sx.erase(sf);\n               if (WantCompare) cout << sx << \".txx \";\n               else cout << sx << CP->ExeType() << \" \";\n            }\n         }\n      }\n      cout << endl << endl;\n\n\n      // find the bodies corresponding to each library\n      // skip DoLibrary returns false\n\n      StringList Bodies;                // to hold names of .cpp files\n      StringList LibraryFiles;\n      StringList LibraryFiles1;\n\n      if (CP->DoLibrary())\n      {\n         for (SLI i = Libraries.begin(); i != Libraries.end(); ++i)\n         {\n            SLI j; bool found = true;\n            StringList NB;              // Bodies corresponding to this target\n            StringList NH;              // Headers including implied headers\n            StringList NH1;             // Headers excluding implied headers\n            String Main = *i+\".lfl\";\n            if (!SearchL(Main, NH, NH1, NB))\n            {\n               cerr << \"Assume library \" << *i << \" up-to-date\"\n                  << endl << endl;\n               cout << \"# Assume library \" << *i << \" up-to-date\"\n                  << endl << endl;\n               found = false;\n            }\n            cout << *i << \"_lobj =\";\n            for (j = NB.begin(); j != NB.end(); ++j)\n            {\n               String object = *j;\n               uint f = object.find(\".c\");\n               if (f == String::npos)\n                  { cerr << \"Invalid body type \" << object << endl; exit(1); }\n               cout << \" \" << object.erase(f) << CP->ObjectType();\n               if (!Contains(Bodies,*j)) Bodies.push_back(*j);\n            }\n            cout << endl << endl;\n            \n            if (CP->WantPlusVersion())\n            {\n               cout << *i << \"_pobj =\";\n               for (j = NB.begin(); j != NB.end(); ++j)\n               {\n                  String object = *j;\n                  uint f = object.find(\".c\");\n                  if (f == String::npos)\n                     { cerr << \"Invalid body type \" << object << endl; exit(1); }\n                  cout << \" +\" << object.erase(f) << CP->ObjectType();\n               }\n               cout << endl << endl;\n            }\n\n            String LF = \" \";            // names of files making up library\n            for (j = NH.begin(); j != NH.end(); ++j) LF += (*j + \" \");\n            LibraryFiles.push_back(LF);\n            LF = \" \";\n            for (j = NH1.begin(); j != NH1.end(); ++j) LF += (*j + \" \");\n            LibraryFiles1.push_back(LF);\n            if (found) CP->LibStatement(*i);\n         }\n      }\n\n      // find the bodies corresponding to each target\n\n      SLI i;\n      for (i = Targets.begin(); i != Targets.end(); ++i)\n      {\n         StringList NH;                 // Headers corresponding to this target\n         StringList NB;                 // Bodies corresponding to this target\n         StringList L;                  // Libraries\n         StringList LW;                 // Libraries wanted\n         StringList PH;                 // Purged headers\n         String Main = *i;              // target file name\n         uint f = Main.find(\".c\");\n         if (f == String::npos)         // no extension\n            Main += \".cpp\";             // standard extension\n         else i->erase(f);              // delete extension\n         NB.push_back(Main);\n         SearchHB(Main, NH, NB);\n\n         // find what libraries we need and what headers are left\n         bool WantLibraries = IdentifyLibraries(NH, Libraries,\n            LibraryFiles, LibraryFiles1, LW, PH);\n\n         if (WantLibraries)\n         {\n            NB.CleanUp();\n            NB.push_back(Main);\n            GetBodies(PH, NB);\n            cout << *i << \"_obj =\";\n            for (SLI j = NB.begin(); j != NB.end(); ++j)\n            {\n               String object = *j;\n               uint f = object.find(\".c\");\n               if (f == String::npos)\n                  { cerr << \"Invalid body type \" << object << endl; exit(1); }\n               object.erase(f);\n               cout << \" \" << object << CP->ObjectType();\n               if (!Contains(Bodies,*j)) Bodies.push_back(*j);\n            }\n            cout << endl << endl;\n            CP->LinkStatement(*i, LW);\n         }\n         else\n         {\n            String FN;   // list of file names; may be required by LinkStatement\n            cout << *i << \"_obj =\";\n            for (SLI j = NB.begin(); j != NB.end(); ++j)\n            {\n               String object = *j;\n               uint f = object.find(\".c\");\n               if (f == String::npos)\n                  { cerr << \"Invalid body type \" << object << endl; exit(1); }\n               object.erase(f);\n               cout << \" \" << object << CP->ObjectType();\n               if (!Contains(Bodies,*j)) Bodies.push_back(*j);\n               FN += (\" \" + object + CP->ObjectType());\n            }\n            cout << endl << endl;\n            CP->LinkStatement(*i, FN);\n         }\n      }\n\n\n      // find the headers corresponding to each body\n\n      for (i = Bodies.begin(); i != Bodies.end(); ++i)\n      {\n         String object = *i;\n         uint f = object.find(\".c\");\n         if (f == String::npos)\n           { cerr << \"Invalid body type \" << object << endl; exit(1); }\n         object.erase(f);\n         StringList Headers;\n         if (SearchH(*i, Headers))\n         {\n            cout << object << CP->ObjectType() << \":\";\n            Spaces(14 - object.size() - CP->ObjectSize());\n            cout << \"\\t\" << *i;\n            for (SLI j = Headers.begin(); j != Headers.end(); ++j)\n               cout << \" \" << *j;\n            cout << endl;\n         }\n         cout << endl;\n      }\n\n      // lines for checking output of program\n\n      for (i = Targets.begin(); i != Targets.end(); ++i)\n      {\n         cout << *i << \".txx:\";\n         Spaces(10 - i->size());\n         cout << \"\\t\" << *i << CP->ExeType() << endl;\n         cout << \"\\t\\t$(PRE)\" << *i << \" > \" << *i << \".txx\" << endl;\n         cout << \"\\t\\t$(DIFF) \" << *i << \".txt \" << *i << \".txx\" << endl;\n         cout << endl;\n      }\n   }\n   CatchAll\n   {\n      cerr << endl;\n      cerr << \"Program fails - exception thrown\" << endl;\n      cerr << Exception::what() << endl;\n   }\n\n   return 0;\n\n}\n\n// *************** function bodies ******************\n\n// Does a string list, LS, contain a particular string S\n\nbool Contains(const StringList& LS, const String& S)\n{\n   for (SLCI i = LS.begin(); i != LS.end(); ++i) { if (*i == S) return true; }\n   return false;\n}\n\n// search a source file for header and body file names - then\n// search these files and so on. Return list of header and body\n// file names\n\nbool SearchHB(const String& SourceFile, StringList& Headers, StringList& Bodies)\n{\n   StringList NewHeaders;\n   StringList NewBodies;\n\n   {\n      ifstream is(SourceFile.c_str(),ios::in);\n      if (!(is))\n      {\n         cerr << \"File \" << SourceFile << \" not found\" << endl;\n         return false;\n      }\n\n      StringList Source;                // to hold source of a file\n      is >> Source;                     // get the source\n      if (Source.size() == 0 ||\n         (Source.size() == 1 && Source.begin()->size() == 0))\n      {\n         cerr << \"File \" << SourceFile << \" has no data\" << endl;\n         return false;\n      }\n\n      for (SLI i = Source.begin(); i != Source.end(); ++i)\n      {\n         AnyString AS;\n         if (( OWS+\"#include\" > OWS+\"\\\"\"+AS+\"\\\"\"+DOTS ).Matches(*i)\n           && !Contains(Headers,AS.Value()))\n         {\n            Headers.push_back(AS.Value());\n            NewHeaders.push_back(AS.Value());\n         }\n         if (( OWS+\"// body file:\" > OWS+AS+OWS ).Matches(*i)\n           && !Contains(Bodies,AS.Value()))\n         {\n            Bodies.push_back(AS.Value());\n            NewBodies.push_back(AS.Value());\n         }\n      }\n   }\n\n   SLI i; bool found = true;\n   for (i = NewHeaders.begin(); i != NewHeaders.end(); ++i)\n      found = SearchHB(*i, Headers, Bodies) && found;\n   for (i = NewBodies.begin(); i != NewBodies.end(); ++i)\n      found = SearchHB(*i, Headers, Bodies) && found;\n\n   return found;\n}\n\n// search a source file for header file names - then search\n// these files and so on. Return list of header file names\n\nbool SearchH(const String& SourceFile, StringList& Headers)\n{\n   StringList NewHeaders;\n   StringList NewBodies;\n\n   {\n      ifstream is(SourceFile.c_str(),ios::in);\n\n      if (is)\n      {\n         StringList Source;                // to hold source of a file\n         is >> Source;                     // get the source\n         if (Source.size() == 0 ||\n            (Source.size() == 1 && Source.begin()->size() == 0))\n         {\n            cerr << \"File \" << SourceFile << \" has no data\" << endl;\n            return false;\n         }\n\n         for (SLI i = Source.begin(); i != Source.end(); ++i)\n         {\n            AnyString AS;\n            if (( OWS+\"#include\" > OWS+\"\\\"\"+AS+\"\\\"\"+DOTS ).Matches(*i)\n              && !Contains(Headers,AS.Value()))\n            {\n               Headers.push_back(AS.Value());\n               NewHeaders.push_back(AS.Value());\n            }\n         }\n      }\n      else\n      {\n         cerr << \"File \" << SourceFile << \" not found\" << endl;\n         return false;\n      }\n\n   }\n\n   bool found = true;\n   for (SLI i = NewHeaders.begin(); i != NewHeaders.end(); ++i)\n      found = SearchH(*i, Headers) && found;\n\n   return found;\n}\n\n// find header files in .lfl file then apply SearchHB to these\n// NewHeaders are the names just in the SourceFile\n// return false if source files missing\n\nbool SearchL(const String& SourceFile, StringList& Headers,\n   StringList& NewHeaders, StringList& Bodies)\n{\n\n   {\n      ifstream is(SourceFile.c_str(),ios::in);\n      if (!(is))\n      {\n         cerr << \"File \" << SourceFile << \" not found\" << endl;\n         return false;\n      }\n\n      StringList Source;                // to hold source of a file\n      is >> Source;                     // get the source\n      if (Source.size() == 0 ||\n         (Source.size() == 1 && Source.begin()->size() == 0))\n      {\n         cerr << \"File \" << SourceFile << \" has no data\" << endl;\n         return false;\n      }\n\n      for (SLI i = Source.begin(); i != Source.end(); ++i)\n      {\n         if (i->find(\".h\") != String::npos && !Contains(NewHeaders,*i))\n            { Headers.push_back(*i); NewHeaders.push_back(*i); }\n      }\n   }\n\n   bool found = true;\n   for (SLI i = NewHeaders.begin(); i != NewHeaders.end(); ++i)\n      found = SearchHB(*i, Headers, Bodies) && found;\n\n   return found;\n}\n\n// find list of libraries required and purged list of headers\n// return true if any libraries found\n// no output if libraries not found\n\nbool IdentifyLibraries(const StringList& Headers,\n   const StringList& Libraries,\n   const StringList& LibraryFiles,\n   const StringList& LibraryFiles1,\n   StringList& LibrariesWanted,\n   StringList& PurgedHeaders)\n{\n   SLCI j;\n   String LFA;                                // Header files available\n   bool found = false;\n   // see what libraries we want\n   for (j = Headers.begin(); j != Headers.end(); ++j)\n   {\n      for ( SLCI L = Libraries.begin(), LF = LibraryFiles.begin(),\n         LF1 = LibraryFiles1.begin(); L != Libraries.end();\n         ++L, ++LF, ++LF1)\n      {\n         if (LF1->find(' ' + *j + ' ') != String::npos)\n         {\n            if (!Contains(LibrariesWanted, *L))\n               { LibrariesWanted.push_back(*L); LFA += *LF; }\n            found = true; break;\n         }\n      }\n   }\n   if (!found)                                 // no libraries\n   {\n      for (SLCI j = Headers.begin(); j != Headers.end(); ++j)\n         PurgedHeaders.push_back(*j);\n      return false;\n   }\n\n   // see what headers are left\n   for (j = Headers.begin(); j != Headers.end(); ++j)\n   {\n      if (LFA.find(' ' + *j + ' ') == String::npos)\n         PurgedHeaders.push_back(*j);\n   }\n\n   return true;\n\n}\n\n// find bodies referenced in a list of header files - no recursion\n\nvoid GetBodies(const StringList& Headers, StringList& Bodies)\n{\n   for (SLCI i = Headers.begin(); i != Headers.end(); ++i)\n   {\n      ifstream is(i->c_str(),ios::in);\n      if (!(is))\n         { cerr << \"File \" << *i << \" not found\" << endl; break; }\n\n      StringList Source;                // to hold source of a file\n      is >> Source;                     // get the source\n      if (Source.size() == 0 ||\n         (Source.size() == 1 && Source.begin()->size() == 0))\n      {\n         cerr << \"File \" << *i << \" has no data\" << endl;\n         break;\n      }\n\n      for (SLI j = Source.begin(); j != Source.end(); ++j)\n      {\n         AnyString AS;\n         if (( OWS+\"// body file:\" > OWS+AS+OWS ).Matches(*j)\n            && !Contains(Bodies,AS.Value()))\n            Bodies.push_back(AS.Value());\n      }\n   }\n}\n\n\n// **************** Compiler properties *****************\n\nvoid CompilerProperties::Preamble() const\n{\n   StringList SL;\n   ifstream is(code.c_str(),ios::in);\n   if (!(is)) { cerr << \"File \" << code << \" not found\" << endl; exit(1); }\n   is >> SL;\n   if (SL.size() == 0 || (SL.size() == 1 && SL.begin()->size() == 0))\n       { cerr << \"File \" << code << \" has no data\" << endl; exit(1); }\n   cout << SL;\n}\n\n// print a list of libraries\n\nvoid CompilerProperties::LibraryList(const char* prefix,\n   const StringList& Libraries, const char* suffix) const\n{\n   for (SLCI j = Libraries.begin(); j != Libraries.end(); ++j)\n      cout << prefix << *j << suffix;\n}\n\n\n// *************** Gnu G++ compiler **********************\n\nvoid GnuCompiler::LinkStatement(const String& Name, const String&) const\n{\n   cout << Name << \":\";\n   Spaces(14 - Name.size());\n   cout << \"\\t$(\" << Name << \"_obj)\" << endl;\n   cout << \"\\t\\t$(CXX) -o $@ $(\" << Name << \"_obj) -L. -lm\" << endl;\n   cout << endl;\n}\n\nvoid GnuCompiler::LinkStatement(const String& Name,\n   const StringList& Libraries) const\n{\n   cout << Name << \":\";\n   Spaces(14 - Name.size());\n   cout << \"\\t$(\" << Name << \"_obj)\";\n   LibraryList(\" lib\", Libraries, \".a\");\n   cout << endl;\n   cout << \"\\t\\t$(CXX) -o $@ $(\" << Name << \"_obj) -L.\";\n   LibraryList(\" -l\", Libraries, \"\");\n   cout << \" -lm\" << endl;\n   cout << endl;\n}\n\nvoid GnuCompiler::LibStatement(const String& Name) const\n{\n   cout << \"lib\" << Name << \".a:\";\n   Spaces(9 - Name.size());\n   cout << \"\\t$(\" << Name << \"_lobj)\" << endl;\n   cout << \"\\t\\t$(AR) -cr $@ $(\" << Name << \"_lobj)\" << endl;\n   cout << \"\\t\\tranlib $@\" << endl;\n   cout << endl;\n}\n\n// ********** Gnu G++ compiler, Dynamic version ***********\n\nvoid GnuCompilerDynamic::LinkStatement(const String& Name,\n   const StringList& Libraries) const\n{\n   cout << Name << \":\";\n   Spaces(14 - Name.size());\n   cout << \"\\t$(\" << Name << \"_obj)\";\n   LibraryList(\" lib\", Libraries, \".so\");\n   cout << endl;\n   cout << \"\\t\\t$(CXX) -o $@ $(\" << Name << \"_obj) -L.\";\n   LibraryList(\" -l\", Libraries, \"\");\n   cout << \" -lm\" << endl;\n   cout << endl;\n}\n\nvoid GnuCompilerDynamic::LibStatement(const String& Name) const\n{\n   String libname = \"lib\" + Name + \".so\";\n   cout << libname << ':';\n   Spaces(8 - Name.size());\n   cout << \"\\t$(\" << Name << \"_lobj)\" << endl;\n   cout << \"\\t\\t$(CXX) -shared -W1,-soname,\";\n   cout << libname << \".$(MAJOR) -o \";\n   cout << libname << \".$(MAJOR).$(MINOR) $(\" << Name << \"_lobj) -lc\" << endl;\n   cout << \"\\t\\trm -f \" << libname << \".$(MAJOR)\" << endl;\n   cout << \"\\t\\trm -f \" << libname << endl;\n   cout << \"\\t\\tln -s \" << libname << \".$(MAJOR).$(MINOR) \"\n      << libname << \".$(MAJOR)\" << endl;\n   cout << \"\\t\\tln -s \" << libname << \".$(MAJOR) \" << libname << endl;\n   cout << endl;\n}\n\n// ****************** Borland 5.0 **********************\n\nvoid Borland50dCompiler::LinkStatement(const String& Name, const String& FN)\n   const\n{\n   cout << Name << \".exe:\";\n   Spaces(10 - Name.size());\n   cout << \"\\t$(\" << Name << \"_obj)\" << endl;\n   cout << \"   $(TLINK) /x/L$(LIBPATH) -c -Tde @&&|\" << endl;\n   cout << \"c0l.obj\";\n   for (unsigned int i = 0; i < FN.size(); ++i)\n      { if (FN[i]==' ') cout << '+' << endl; else cout << FN[i]; }\n   cout << endl << \"$<,$*\" << endl;\n   cout << \"bidsl.lib+emu.lib+mathl.lib+cl.lib\" << endl;\n   cout << endl;\n   cout << \"|\" << endl << endl;\n}\n\nvoid Borland50Compiler::LinkStatement(const String& Name, const String& FN)\n   const\n{\n   cout << Name << \".exe:\";\n   Spaces(10 - Name.size());\n   cout << \"\\t$(\" << Name << \"_obj)\" << endl;\n   cout << \"   $(TLINK) /x/L$(LIBPATH) -Tpe -ap -c @&&|\" << endl;\n   cout << \"c0x32.obj\";\n   // Borland requires separate lines\n   for (unsigned int i = 0; i < FN.size(); ++i)\n      { if (FN[i]==' ') cout << '+' << endl; else cout << FN[i]; }\n   cout << endl << \"$<,$*\" << endl;\n   cout << \"bidsf.lib+\" << endl;\n   cout << \"import32.lib+\" << endl;\n   cout << \"cw32.lib\" << endl;\n   cout << endl;\n   cout << \"|\" << endl << endl;\n}\n\n// ****************** Borland 5.5 **********************\n\nvoid Borland55Compiler::LinkStatement(const String& Name, const String&)\n   const\n{\n   cout << Name << \".exe:\";\n   Spaces(10 - Name.size());\n   cout << \"\\t$(\" << Name << \"_obj)\" << endl;\n   cout << \"   $(TLINK) /x/L$(LIBPATH)/Gn -Tpe -ap -c @&&|\" << endl;\n   cout << \"c0x32.obj $(\" << Name << \"_obj),$@,,import32.lib cw32.lib\" << endl;\n   cout << \"|\" << endl << endl;\n}\n\nvoid Borland55Compiler::LinkStatement(const String& Name,\n   const StringList& Libraries) const\n{\n   cout << Name << \".exe:\";\n   Spaces(10 - Name.size());\n   cout << \"\\t$(\" << Name << \"_obj)\";\n   LibraryList(\" \", Libraries, \".lib\");\n   cout << endl;\n   cout << \"   $(TLINK) /x/L$(LIBPATH)/Gn -Tpe -ap -c @&&|\" << endl;\n   cout << \"c0x32.obj $(\" << Name << \"_obj),$@,,\";\n   LibraryList(\" \", Libraries, \".lib\");\n   cout << \" import32.lib cw32.lib\" << endl;\n   cout << \"|\" << endl << endl;\n}\n\nvoid Borland55Compiler::LibStatement(const String& Name) const\n{\n   cout << Name << \".lib:\";\n   Spaces(10 - Name.size());\n   cout << \"\\t$(\" << Name << \"_lobj)\" << endl;\n   cout << \"   $(TLIB) $@ /P32 /u $(\" << Name << \"_lobj)\" << endl;\n   cout << endl;\n}\n\n// ****************** Borland 3.1 **************************\n\nvoid Borland31Compiler::LinkStatement(const String& Name, const String& FN)\n   const\n{\n   cout << Name << \".exe:\";\n   Spaces(10 - Name.size());\n   cout << \"\\t$(\" << Name << \"_obj)\" << endl;\n   cout << \"   $(TLINK) /x -c -Tde @&&|\" << endl;\n   cout << \"c0l.obj\";\n   for (unsigned int i = 0; i < FN.size(); ++i)\n      { if (FN[i]==' ') cout << '+' << endl; else cout << FN[i]; }\n   cout << endl << \"$<,$*\" << endl;\n   cout << \"emu.lib+mathl.lib+cl.lib\" << endl;\n   cout << endl;\n   cout << \"|\" << endl << endl;\n}\n\n\n// ****************** Microsoft 6 **************************\n\nvoid Microsoft6Compiler::LinkStatement(const String& Name, const String&)\n   const\n{\n   cout << Name << \".exe:\";\n   Spaces(10 - Name.size());\n   cout << \"\\t$(\" << Name << \"_obj)\" << endl;\n   cout << \"\\t\\tlink -Out:$@ $(conlibs) $(\" << Name << \"_obj)\" << endl;\n   cout << endl;\n}\n\nvoid Microsoft6Compiler::LinkStatement(const String& Name,\n   const StringList& Libraries) const\n{\n   cout << Name << \".exe:\";\n   Spaces(10 - Name.size());\n   cout << \"\\t$(\" << Name << \"_obj)\";\n   LibraryList(\" \", Libraries, \".lib\");\n   cout << endl;\n   cout << \"\\t\\tlink -Out:$@ $(conlibs) $(\" << Name << \"_obj)\";\n   LibraryList(\" \", Libraries, \".lib\");\n   cout << endl << endl;\n}\n\nvoid Microsoft6Compiler::LibStatement(const String& Name) const\n{\n   cout << Name << \".lib:\";\n   Spaces(10 - Name.size());\n   cout << \"\\t$(\" << Name << \"_lobj)\" << endl;\n   cout << \"\\t\\tlib -Out:$@ $(\" << Name << \"_lobj)\" << endl;\n   cout << endl;\n}\n\n// *************** Watcom 10 **********************\n\nvoid Watcom10Compiler::LinkStatement(const String& Name, const String& FN)\n   const\n{\n   cout << Name << \".exe:\";\n   Spaces(10 - Name.size());\n   cout << \"\\t$(\" << Name << \"_obj)\" << endl;\n   int k = 0;\n   for (unsigned int i = 0; i < FN.size(); ++i)\n   {\n      if (FN[i]==' ')\n      {\n         if (k == 1) cout << \" > link.tmp\" << endl;\n         else if (k >= 2) cout << \" >> link.tmp\" << endl;\n         ++k;\n         cout << \"\\t\\techo file \";\n      }\n      else cout << FN[i];\n   }\n   if (k == 1) cout << \" > link.tmp\" << endl;\n   else if (k >= 2) cout << \" >> link.tmp\" << endl;\n   cout << \"\\t\\techo name \" << Name << \".exe >> link.tmp\" << endl;\n   cout << \"\\t\\techo $(link_option) >> link.tmp\" << endl;\n   cout << \"\\t\\t$(LINK) @link.tmp\" << endl;\n   cout << endl;\n}\n\n// *************** Open Watcom *********************\n\nvoid OpenWatcomCompiler::LinkStatement(const String& Name, const String&)\n   const\n{\n   cout << Name << \".exe:\";\n   Spaces(10 - Name.size());\n   cout << \"\\t$(\" << Name << \"_obj)\" << endl;\n   cout << \"\\t\\twcl386 -fe=$@ $(\" << Name << \"_obj)\" << endl;\n   cout << endl;\n}\n\nvoid OpenWatcomCompiler::LinkStatement(const String& Name,\n   const StringList& Libraries) const\n{\n   cout << Name << \".exe:\";\n   Spaces(10 - Name.size());\n   cout << \"\\t$(\" << Name << \"_obj)\";\n   LibraryList(\" \", Libraries, \".lib\");\n   cout << endl;\n   cout << \"\\t\\twcl386 -fe=$@ $(\" << Name << \"_obj)\";\n   LibraryList(\" \", Libraries, \".lib\");\n   cout << endl << endl;\n}\n\nvoid OpenWatcomCompiler::LibStatement(const String& Name) const\n{\n   cout << Name << \".lib:\";\n   Spaces(10 - Name.size());\n   cout << \"\\t$(\" << Name << \"_lobj)\" << endl;\n   cout << \"\\t\\twlib -n $@ $(\" << Name << \"_pobj)\" << endl;\n   cout << endl;\n}\n\n\n\n\n\n\n\n//************** elapsed time class ****************\n\ntime_lapse::time_lapse()\n{\n   start_time = ((double)clock())/(double)CLOCKS_PER_SEC;\n}\n\ntime_lapse::~time_lapse()\n{\n   double time = ((double)clock())/(double)CLOCKS_PER_SEC - start_time;\n   cerr << \"Elapsed (processor) time = \" << setw(10) << setprecision(2)\n      << time << \" seconds\" << endl;\n   cerr << endl;\n}\n\n",
+			"file": "/home/giovanni/Descargas/genmake.cpp",
+			"file_size": -1,
+			"file_write_time": -1,
+			"settings":
+			{
+				"buffer_size": 34171,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "// character string manipulation library\n// Copyright (c) R B Davies 1996\n\n// The is a string library that is intended to be compatible with the\n// \"class string\" library in the April 1995 draft of the C++ standard.\n\n// Parts are based on Tony Hansen s \"The C++ Answer Book\"\n\n\n#define WANT_STREAM\n#define WANT_MATH\n#define WANT_STRING\n\n#include <stdio.h>\n#include \"include.h\"\n\n#include \"str.h\"\n\n\n#ifdef use_namespace\nnamespace RBD_STRING { using namespace RBD_COMMON; }\nnamespace RBD_LIBRARIES { using namespace RBD_STRING; }\nnamespace RBD_STRING {\n#endif\n\n\n//******************************* globals ********************************\n\nuint String::npos = (uint)(-1);\n                        // also initialised to -1 by StringPackageInitialise\nuint String::s_index;\nStrNull* String::ASN;\n\n// string bodies\n\nconst char* String::StringType() const { return px->StringType(); }\n\nStrBase* String::Clone() const { return px->Clone(&(StrBase*&)px); }\n\nunsigned int String::refcount() const { return px->refcount(); }\n\nvoid String::CleanUp() { if (px) px->Drop(); px = ASN; }\n\nStrRep* String::GetStrRep() const\n   { return px->GetStrRep(&(StrBase*&)px); }\n\nStrRep* String::GetStrRepW() { return px->GetStrRepW(&px); }\n\nchar* String::GetData() const { return GetStrRep()->s; }\n\nStrRep* String::Protect() const { return px->Protect(&(StrBase*&)px); }\n\nbool String::HasCapacity() const { return px->HasCapacity(); }\n\nString::String(StrBase* sb) : px(sb) {}\n\nString::String() : px(ASN) {}\n\nString::String(const String& str) { px = ASN; px = str.Clone(); }\n\nString::String(const String& str, uint pos, uint n)\n{\n   px = ASN;                            // in case of later failure\n   StrRep* str_p = str.GetStrRep();\n   uint sz = str.size();\n   if (pos > sz) Throw(Out_of_range(\"string index error\\n\"));\n   sz -=  pos;                          // length of new string\n   if (n < sz) sz = n;\n   if (sz == 0) px = ASN;\n   else px = new StrRepMult(str_p->s+pos, sz);\n}\n\nString::String(const char* s, uint n)\n{\n   px = ASN;                            // in case of later failure\n   if (!s) Throw(Invalid_argument(\"string constructor: char* s = 0\\n\"));\n   uint sz = 0; const char* S = s;\n   while (*S++) { if (sz >= n) break; sz++; }\n   if (sz == 0) px = ASN;\n   else px = new StrRepMult(s, sz);\n}\n\nString::String(const char* s)\n{\n   px = ASN;                            // in case of later failure\n   if (!s) Throw(Invalid_argument(\"string constructor: char* s = 0\\n\"));\n   uint sz = strlen(s);\n   if (sz == 0) px = ASN;\n   else px = new StrRepMult(s, sz);\n}\n\nString::String(uint n, char c)\n{\n   px = ASN;                            // in case of later failure\n   if (n == npos) Throw(Length_error(\"string length = npos\\n\"));\n   if (n == 0) px = ASN;\n   else if (n == 1) px = new CharSingle(c);\n   else px = new CharRepeated(n, c);\n}\n\nString::~String() { if (px) px->Drop(); }\n\n// do the operator= separately from assign because we do not ever\n// want to just copy into existing memory space. ie we do not\n// maintain capacity when we use operator= .\n\nString& String::operator=(const String& str)\n   { StrBase* p = px; px = str.Clone(); p->Drop(); return *this; }\n\nString& String::operator=(const char* s)\n{\n   StrBase* p = px;\n   if (strlen(s) == 0) px = ASN;\n   else px = new StrRepMult(s);\n   p->Drop(); return *this;\n}\n\n\nString& String::operator=(const char c)\n{\n   px->Drop(); px = new CharSingle(c);\n   return *this;\n}\n\nuint String::size() const { return px->size(); }\n\nuint String::length() const { return px->size(); }\n\nuint String::max_size() const { return npos-1; }\n\nvoid String::resize(uint n, char c)\n{\n   if (n == npos) Throw(Length_error(\"string length = npos\\n\"));\n   if (n == 0) { px->Drop(); px = ASN; return; }\n   StrRep* p = GetStrRep();\n   if (n <= p->sz) px = new StrRepMult(p->s, n);\n   else px = new StrRepMult(p->s, p->sz, n, c);\n   p->Drop();\n}\n\nuint String::capacity() const { return px->capacity(); }\n\nvoid String::reserve(uint res_arg)\n{\n   if (res_arg == 0)                        // remove capacity\n   {\n      StrRep* p = new StrRepMult(size());\n      char* target = p->s; px->Load(target); px->Drop(); px = p;\n   }\n   else if ( res_arg > size() || capacity() != size() )\n                                            // need to change storage\n   {\n      if (res_arg < size()) res_arg = size();\n      StrRep* p = new StrRepCap(size(), res_arg);\n      char* target = p->s; px->Load(target); px->Drop(); px = p;\n   }\n   else px->WithCapacity(&(StrBase*&)px);   // convert to string with capacity\n\n}\n\nvoid String::clear() { if (px) px->Drop(); px = ASN; }\n\nbool String::empty() const { return px->size() == 0; }\n\nchar String::operator[](uint pos) const\n{\n   StrRep* p = GetStrRep();\n   if (pos >= p->size())\n   {\n      if (pos == p->size()) return 0;\n      else Throw(Out_of_range(\"string index error\\n\"));\n   }\n   return (p->s)[pos];\n}\n\nchar& String::operator[](uint pos)\n{\n   StrRep* p = GetStrRepW();\n   if (pos >= p->size()) Throw(Out_of_range(\"string index error\\n\"));\n   return p->s[pos];\n}\n\nchar String::at(uint n) const\n{\n   StrRep* p = GetStrRep();\n   if (n >= p->size())\n   {\n      if (n == p->size()) return 0;\n      else Throw(Out_of_range(\"string index error\\n\"));\n   }\n   return p->s[n];\n}\n\nchar& String::at(uint n)\n{\n   StrRep* p = GetStrRepW();\n   if (n >= p->size()) Throw(Out_of_range(\"string index error\\n\"));\n   return p->s[n];\n}\n\n\n//******************** the line editing functions ************************\n\nString& String::operator+=(const String& rhs) { return append(rhs); }\n\nString& String::operator+=(const char* s) { return append(s); }\n\nString& String::operator+=(char c)\n{\n   if (HasCapacity()) return my_append(CharSingle(c));\n   else\n   {\n      if (size() >= npos - 1) Throw(Length_error(\"string length >= npos\\n\"));\n      px = new StrSumRC(px ,c);\n      return *this;\n   }\n}\n\n\nString& String::my_append(const StrBase& sb)\n{\n   StrRep* p = GetStrRep();\n   uint sz = size(); uint rlen =sb.size();\n   if (sz >= npos - rlen) Throw(Length_error(\"string length >= npos\\n\"));\n   rlen += sz;\n   if (rlen > capacity() || refcount() != 0)\n   {\n      // must make new string\n      StrRep* oldp = p; p = new StrRepMult(rlen);\n      memcpy(p->s, oldp->s, sz); oldp->Drop(); px = p;\n   }\n   char* target = p->s+sz; sb.Load(target); p->sz = rlen; return *this;\n}\n\nString& String::append(const String& str)\n{\n   if (HasCapacity()) return my_append(CharSeq(str));\n   else\n   {\n      if (size() >= npos - str.size())\n         Throw(Length_error(\"string length >= npos\\n\"));\n      px = new StrSum(px, str.Clone());\n      return *this;\n   }\n}\n\nString& String::append(const String& str, uint pos, uint n)\n{\n   if (HasCapacity()) return my_append(CharSeq(str, pos, n));\n   else\n   {\n      CharSeq CS(str, pos, n);\n      if (size() >= npos - CS.sz)\n         Throw(Length_error(\"string length >= npos\\n\"));\n      StrBase* rhs = new StrRep(CS.s, CS.sz);\n      px = new StrSum(px, rhs);\n      return *this;\n   }\n}\n\nString& String::append(const char* s, uint n)\n{\n   if (HasCapacity()) return my_append(CharSeq((char*)s, n));\n   else\n   {\n      StrBase* rhs = new StrRep(s, n);\n      if (size() >= npos - rhs->size())\n      {\n         delete rhs;\n         Throw(Length_error(\"string length >= npos\\n\"));\n      }\n      px = new StrSum(px, rhs);\n      return *this;\n   }\n}\n\nString& String::append(const char* s)\n{\n   if (HasCapacity()) return my_append(CharSeq((char*)s));\n   else\n   {\n      StrBase* rhs = new StrRep(s);\n      if (size() >= npos - rhs->size())\n      {\n         delete rhs;\n         Throw(Length_error(\"string length >= npos\\n\"));\n      }\n      px = new StrSum(px, rhs);\n      return *this;\n   }\n}\n\nString& String::append(uint n, char c)\n{\n   if (size() >= npos - n)\n      Throw(Length_error(\"string length >= npos\\n\"));\n\n   if (HasCapacity()) return my_append(CharRepeated(n, c));\n   else if (n == 1)\n   {\n      px = new StrSumRC(px ,c);\n   }\n   else\n   {\n      StrBase* rhs = new CharRepeated(n, c);\n      px = new StrSum(px, rhs);\n   }\n   return *this;\n}\n\n// assign with argument being all or part of the target string\n// should not be a problem under HasCapacity since Load uses\n// memmove.\n\nString& String::assign(const String& str)\n{\n   if (HasCapacity() && str.size() <= capacity())\n   {\n      StrRep* p = GetStrRep(); char* target = p->s;\n      str.px->Load(target); p->sz = str.size();\n   }\n   else if (px != str.px) { px->Drop(); px = str.Clone(); }\n   return *this;\n}\n\nString& String::my_assign(const StrBase& sb)\n{\n   uint sz = sb.size(); StrRep* p;\n   if (HasCapacity() && sz <= capacity())\n   {\n      p = GetStrRep(); char* target = p->s;\n      sb.Load(target); p->sz = sz; return *this;\n   }\n   else if (sz == 0) p = ASN;\n   else\n   {\n      p = new StrRepMult(sb.size());\n      char* target = p->s; sb.Load(target);\n   }\n   px->Drop(); px = p; return *this;\n}\n\nString& String::assign(const String& str, uint pos, uint n)\n   { return my_assign(CharSeq(str, pos, n)); }\n\nString& String::assign(const char* s, uint n)\n   { return my_assign(CharSeq((char*)s, n)); }\n\nString& String::assign(const char* s)\n   { return my_assign(CharSeq((char*)s)); }\n\nString& String::assign(uint n, char c)\n   { return my_assign(CharRepeated(n, c)); }\n\nString& String::my_insert(uint pos, const StrBase& sb)\n{\n   uint sz = size(); uint rlen =sb.size();\n   if (pos > sz) Throw(Out_of_range(\"string index error\\n\"));\n   if (sz >= npos - rlen) Throw(Length_error(\"string length >= npos\\n\"));\n   StrRep* oldp = GetStrRep();\n   if (HasCapacity() && sz + rlen <= capacity())\n   {\n      // must allow for possibility that sb is part of *this\n      char* target = oldp->s + pos;\n      StrRep tail(target, sz-pos);\n      sb.Load(target); tail.Load(target); oldp->sz = sz + rlen;\n   }\n   else\n   {\n      StrRep* p = new StrRepMult(sz + rlen); px = p;\n      char* target = p->s; memcpy(target, oldp->s, pos);\n      target += pos; sb.Load(target);\n      memcpy(target, oldp->s + pos, sz-pos);\n      oldp->Drop();\n   }\n   return *this;\n}\n\nString& String::insert(uint pos1, const String& str)\n   { return my_insert(pos1, *(str.px)); }\n\nString& String::insert(uint pos1, const String& str, uint pos2, uint n)\n   { return my_insert(pos1, CharSeq(str, pos2, n)); }\n\nString& String::insert(uint pos, const char* s, uint n)\n   { return my_insert(pos, CharSeq((char*)s, n)); }\n\nString& String::insert(uint pos, uint n, char c)\n   { return my_insert(pos, CharRepeated(n, c)); }\n\nString& String::erase(uint pos, uint n)\n{\n   uint sz = size();\n   if (pos > sz) Throw(Out_of_range(\"string index error\\n\"));\n   uint xlen = sz-pos; if (xlen > n) xlen = n; sz -= xlen;\n   if (sz == 0)\n   {\n      if (HasCapacity()) GetStrRep()->sz = 0;\n      else { px->Drop(); px = ASN; return *this; }\n   }\n   StrRep* oldp = GetStrRep();\n   if (HasCapacity())\n   {\n      char* target = oldp->s + pos;\n      memmove(target, target + xlen, sz-pos);\n      oldp->sz = sz;\n   }\n   else\n   {\n      StrRep* p = new StrRepMult(sz);\n      px = p;\n      char* target = p->s; memcpy(target, oldp->s, pos);\n      target += pos; memcpy(target, oldp->s+pos+xlen, sz-pos);\n      oldp->Drop();\n   }\n   return *this;\n}\n\nString& String::my_replace(uint pos, uint n, const StrBase& sb)\n{\n   uint sz = size(); uint rlen =sb.size();\n   if (pos > sz) Throw(Out_of_range(\"string index error\\n\"));\n   uint xlen = sz-pos; if (xlen > n) xlen = n; sz -= xlen;\n   if (sz >= npos - rlen) Throw(Length_error(\"string length >= npos\\n\"));\n   StrRep* oldp = GetStrRep();\n   if (rlen == xlen && refcount() == 0)          // in-place replace OK\n      { char* target = oldp->s+pos; sb.Load(target); }\n   else\n   if (HasCapacity() && sz + rlen <= capacity())\n   {\n      // must allow for possibility that sb is part of *this\n      char* target = oldp->s + pos;\n      StrRep tail(target + xlen, sz-pos);\n      sb.Load(target); tail.Load(target); oldp->sz = sz + rlen;\n   }\n   else if (sz + rlen == 0) { px->Drop(); px = ASN; return *this; }\n   else\n   {\n      StrRep* p = new StrRepMult(sz+rlen); px = p;\n      char* target = p->s; memcpy(target, oldp->s, pos);\n      target += pos; sb.Load(target);\n      memcpy(target, oldp->s+pos+xlen, sz-pos);\n      oldp->Drop();\n   }\n   return *this;\n}\n\nString& String::replace(uint pos1, uint n1, const String& str)\n   { return my_replace(pos1, n1, *(str.px)); }\n\nString& String::replace(uint pos1, uint n1, const String& str, uint pos2,\n   uint n2)\n   { return my_replace(pos1, n1, CharSeq(str, pos2, n2)); }\n\nString& String::replace(uint pos, uint n1, const char* s, uint n2)\n   { return  my_replace(pos, n1, CharSeq((char*)s, n2)); }\n\nString& String::replace(uint pos, uint n1, uint n2, char c)\n   { return my_replace(pos, n1, CharRepeated(n2, c)); }\n\n\n//************************* some odds and sods ***************************\n\nuint String::copy(char* s, uint n, uint pos) const\n{\n   StrRep* p = GetStrRep(); uint rlen = size();\n   if (pos > rlen) Throw(Out_of_range(\"string index error\\n\"));\n   rlen -= pos; if (rlen > n) rlen = n;\n   memcpy(s, p->s+pos, rlen); return rlen;\n}\n\nvoid String::swap(String& str)\n{\n   StrBase* oldp = px->UnProtect(); px = str.px->UnProtect(); str.px = oldp;\n}\n\nconst char* String::c_str() const\n   { return px->NullTerminate(&(StrBase*&)px); }\n\nconst char* String::data() const\n   { StrRep* p = Protect(); ((String&)*this).px = p; return p->s; }\n\n\n//***************************** the find functions ***********************\n\nuint String::find(const CharSeq& str, uint pos) const\n{\n   uint str_sz = str.size(); uint sz = size();\n   if (sz < str_sz || pos > sz - str_sz) return npos;\n      // need both checks to avoid overflows or negatives\n   if (str_sz == 0) return pos;\n   const char* start = GetData(); const char* newstart = start+pos;\n   const char* str_loc = str.s;\n   if (str_sz == 1)\n   {\n      newstart = (const char*)memchr(newstart, *str_loc, sz-pos);\n      if (!newstart) return npos; else return (uint)(newstart-start);\n   }\n   uint sindx = s_index;   // otherwise may get problems if multithreading\n   for (;;)\n   {\n      if (sindx >= str_sz) sindx = 0;\n      uint m = sz+1-str_sz-(uint)(newstart-start);\n      if (m==0) { s_index = sindx; return npos; }\n      newstart = (const char*)memchr(newstart+sindx, str_loc[sindx], m);\n      if (!newstart) { s_index = sindx; return npos; }\n      newstart -= sindx;\n      if (memcmp(newstart, str_loc, str_sz) == 0)\n         { s_index = sindx; return (uint)(newstart-start); }\n      sindx++; newstart++;\n   }\n}\n\nuint String::find(const String& str, uint pos) const\n   { return find(*(str.GetStrRep()), pos); }\n\nuint String::find(const char* s, uint pos, uint n) const\n   { return find(CharSeq((char*)s,n),pos); }\n\nuint String::find(const char* s, uint pos) const\n   { return find(CharSeq((char*)s),pos); }\n\nuint String::find(const char c, uint pos) const\n{\n   uint sz = size();\n   if (pos >= sz) return npos;     // also ensures sz != 0\n   const char* start = GetData(); const char* newstart = start+pos;\n   newstart = (const char*)memchr(newstart, c, sz-pos);\n   if (!newstart) return npos; else return (uint)(newstart-start);\n}\n\nuint String::rfind(const CharSeq& str, uint pos) const\n{\n   // can return sz if searching for a zero length string\n   // is this what the committee wants?\n   uint str_sz = str.size(); uint sz = size();\n   if (sz < str_sz) return npos;\n   sz -= str_sz; if (pos > sz) pos = sz;\n   if (str_sz == 0) return pos;\n   const char* start = GetData(); const char* newstart = start+pos;\n   const char* str_loc = str.s;\n   uint sindx = s_index;\n   for (;;)\n   {\n      if (sindx >= str_sz) sindx = 0;\n      uint i = (uint)(newstart-start);\n      char c = str_loc[sindx]; newstart += sindx;\n      while (*newstart != c)\n      {\n         if (i-- == 0) { s_index = sindx; return npos; }\n         newstart--;\n      }\n      newstart -= sindx;\n      if (!memcmp(newstart, str_loc, str_sz))\n         { s_index = sindx; return (uint)(newstart-start); }\n      if (--newstart < start) { s_index = sindx; return npos; }\n      sindx++;\n   }\n}\n\nuint String::rfind(const String& str, uint pos) const\n   { return rfind(*(str.GetStrRep()), pos); }\n\nuint String::rfind(const char* s, uint pos, uint n) const\n   { return rfind(CharSeq((char*)s,n),pos); }\n\nuint String::rfind(const char* s, uint pos) const\n   { return rfind(CharSeq((char*)s),pos); }\n\nuint String::rfind(const char c, uint pos) const\n{\n   uint i = size(); if (i > pos) i = pos + 1;\n   char* s = GetData() + i;\n   while (i-- > 0) { if (*(--s) == c) return i; }\n   return npos;\n}\n\nuint String::find_first_of(const CharSeq& str, uint pos) const\n{\n   // this should be done without memchr at least when str is long\n   uint sz = size(); uint str_sz = str.size();\n   if (str_sz == 0 || pos >= sz) return npos;  // also ensures sz != 0\n   const char* start = GetData(); const char* newstart = start+pos;\n   const char* str_loc = str.s; sz -= pos;\n   while (sz--)\n   {\n      if (memchr(str_loc, *newstart, str_sz)) return (uint)(newstart-start);\n      newstart++;\n   }\n   return npos;\n}\n\nuint String::find_first_of(const String& str, uint pos) const\n   { return find_first_of(*(str.GetStrRep()), pos); }\n\nuint String::find_first_of(const char* s, uint pos, uint n) const\n   { return find_first_of(CharSeq((char*)s,n),pos); }\n\nuint String::find_first_of(const char* s, uint pos) const\n   { return find_first_of(CharSeq((char*)s),pos); }\n\nuint String::find_first_of(const char c, uint pos) const\n   { return find(c, pos); }\n\nuint String::find_last_of(const CharSeq& str, uint pos) const\n{\n   uint sz = size(); if (sz > pos) sz = pos + 1;\n   uint str_sz = str.size(); if (str_sz == 0) return npos;\n   const char* start = GetData(); const char* newstart = start+sz;\n   const char* str_loc = str.s;\n   while (sz--)\n   {\n      if (memchr(str_loc, *(--newstart), str_sz))\n         return (uint)(newstart-start);\n   }\n   return npos;\n}\n\nuint String::find_last_of(const String& str, uint pos) const\n   { return find_last_of(*(str.GetStrRep()), pos); }\n\nuint String::find_last_of(const char* s, uint pos, uint n) const\n   { return find_last_of(CharSeq((char*)s,n),pos); }\n\nuint String::find_last_of(const char* s, uint pos) const\n   { return find_last_of(CharSeq((char*)s),pos); }\n\nuint String::find_last_of(const char c, uint pos) const\n   { return rfind(c, pos); }\n\nuint String::find_first_not_of(const CharSeq& str, uint pos) const\n{\n   uint sz = size(); uint str_sz = str.size();\n   if (pos >= sz) return npos;  // also ensures sz != 0\n   if (str_sz == 0 ) return pos;\n   const char* start = GetData(); const char* newstart = start+pos;\n   const char* str_loc = str.s; sz -= pos;\n   while (sz--)\n   {\n      if (!memchr(str_loc, *newstart, str_sz)) return (uint)(newstart-start);\n      newstart++;\n   }\n   return npos;\n}\n\nuint String::find_first_not_of(const String& str, uint pos) const\n   { return find_first_not_of(*(str.GetStrRep()), pos); }\n\nuint String::find_first_not_of(const char* s, uint pos, uint n) const\n   { return find_first_not_of(CharSeq((char*)s,n),pos); }\n\nuint String::find_first_not_of(const char* s, uint pos) const\n   { return find_first_not_of(CharSeq((char*)s),pos); }\n\nuint String::find_first_not_of(const char c, uint pos) const\n{\n   uint sz = size();\n   if (pos >= sz) return npos;     // also ensures sz != 0\n   char* s = GetData() + pos; uint i = sz - pos;\n   while (i > 0) { if (*(s++) != c) return sz - i; i--; }\n   return npos;\n}\n\nuint String::find_last_not_of(const CharSeq& str, uint pos) const\n{\n   uint sz = size(); if (sz > pos) sz = pos + 1;\n   if (sz == 0) return npos;\n   uint str_sz = str.size(); if (str_sz == 0) return sz - 1;\n   const char* start = GetData(); const char* newstart = start+sz;\n   const char* str_loc = str.s;\n   while (sz--)\n   {\n      if (!memchr(str_loc, *(--newstart), str_sz))\n         return (uint)(newstart-start);\n   }\n   return npos;\n}\n\nuint String::find_last_not_of(const String& str, uint pos) const\n   { return find_last_not_of(*(str.GetStrRep()), pos); }\n\nuint String::find_last_not_of(const char* s, uint pos, uint n) const\n   { return find_last_not_of(CharSeq((char*)s,n),pos); }\n\nuint String::find_last_not_of(const char* s, uint pos) const\n   { return find_last_not_of(CharSeq((char*)s),pos); }\n\nuint String::find_last_not_of(const char c, uint pos) const\n{\n   uint i = size(); if (i > pos) i = pos + 1;\n   char* s = GetData() + i;\n   while (i-- > 0) { if (*(--s) != c) return i; }\n   return npos;\n}\n\nString String::substr(uint pos, uint n) const\n   { return String(*this, pos, n); }\n\n\n//***************************** the booleans *****************************\n\nint String::compare(uint pos, uint n, const CharSeq& sb) const\n{\n   StrRep* p = GetStrRep(); uint sz = size(); uint str_sz = sb.size();\n   if (pos > sz) Throw(Out_of_range(\"string index error\\n\"));\n   sz -= pos;\n   if (sz > n) sz = n; else n = sz;\n   if (n > str_sz) n = str_sz;\n   int m = memcmp(p->s+pos, sb.s, n); if (m) return m;\n   if (sz < str_sz) return -1;\n   if (sz > str_sz) return 1;\n   return 0;\n}\n\nint String::compare(const String& str) const\n   { return compare(0, npos, CharSeq(str)); }\n\nint String::compare(uint pos1, uint n1, const String& str) const\n   { return compare(pos1, n1, CharSeq(str)); }\n\nint String::compare(uint pos1, uint n1,\n   const String& str, uint pos2, uint n2) const\n   { return compare(pos1, n1, CharSeq(str, pos2, n2)); }\n\nint String::compare(uint pos, uint n1, const char* s, uint n2) const\n   { return compare(pos, n1, CharSeq((char*)s, n2)); }\n\nint String::compare(const char* s) const\n   { return compare(0, npos, CharSeq((char*)s)); }\n\n\nbool operator==(const String& lhs, const String& rhs)\n   { return lhs.compare(rhs) == 0; }\n\nbool operator==(const char* lhs, const String& rhs)\n   { return rhs.compare(lhs) == 0; }\n\nbool operator==(const String& lhs, const char* rhs)\n   { return lhs.compare(rhs) == 0; }\n\nbool operator!=(const String& lhs, const String& rhs)\n   { return lhs.compare(rhs) != 0; }\n\nbool operator!=(const char* lhs, const String& rhs)\n   { return rhs.compare(lhs) != 0; }\n\nbool operator!=(const String& lhs, const char* rhs)\n   { return lhs.compare(rhs) != 0; }\n\nbool operator<(const String& lhs, const String& rhs)\n   { return lhs.compare(rhs) < 0; }\n\nbool operator<(const char* lhs, const String& rhs)\n   { return rhs.compare(lhs) > 0; }\n\nbool operator<(const String& lhs, const char* rhs)\n   { return lhs.compare(rhs) < 0; }\n\nbool operator>(const String& lhs, const String& rhs)\n   { return lhs.compare(rhs) > 0; }\n\nbool operator>(const char* lhs, const String& rhs)\n   { return rhs.compare(lhs) < 0; }\n\nbool operator>(const String& lhs, const char* rhs)\n   { return lhs.compare(rhs) > 0; }\n\nbool operator<=(const String& lhs, const String& rhs)\n   { return lhs.compare(rhs) <= 0; }\n\nbool operator<=(const char* lhs, const String& rhs)\n   { return rhs.compare(lhs) >= 0; }\n\nbool operator<=(const String& lhs, const char* rhs)\n   { return lhs.compare(rhs) <= 0; }\n\nbool operator>=(const String& lhs, const String& rhs)\n   { return lhs.compare(rhs) >= 0; }\n\nbool operator>=(const char* lhs, const String& rhs)\n   { return rhs.compare(lhs) <= 0; }\n\nbool operator>=(const String& lhs, const char* rhs)\n   { return lhs.compare(rhs) >= 0; }\n\n\n//****************** the io routines (need more work) ********************\n\nistream& operator>>(istream& is, String& str)\n{\n   char buf[1024];\n   is.width(1024);\n   is >> buf; str = buf;\n   is.width(0);\n   return is;\n}\n\nostream& operator<<(ostream& os, const String& str)\n{ return os << str.c_str(); }\n\n\n// from Alain Decamps\nistream& getline(istream& is, String& str, char delim)\n{\n  int token;\n  str.reserve(2048);\n  str.erase();  // with current implementation no reallocation here\n  while (((token = is.get()) != EOF) && (token != delim))\n     { str += char(token); }\n  if (token == EOF)\n     { is.clear(ios::eofbit|is.rdstate()); }\n  // str.reserve(0); // waste of time if used in a \"while not EOF\"\n  return is;\n}\n\n\n//******************** bodies of the helper classes **********************\n\n// the virtual functions - do not inline\n\nuint StrSum::size() const { return lhs->size() + rhs->size(); }\nuint StrSumLC::size() const { return 1 + rhs->size(); }\nuint StrSumRC::size() const { return lhs->size() + 1; }\nuint CharSeq::size() const { return sz; }\nuint CharSingle::size() const { return 1; }\nuint CharRepeated::size() const { return n; }\nuint StrNull::size() const { return 0; }\n\n\nuint StrBase::capacity() const { return size(); }\nuint CharSeq::capacity() const { return sz; }\nuint StrRepCap::capacity() const { return cpx; }\n\n\nvoid StrSum::Load(char*& ps) const { lhs->Load(ps); rhs->Load(ps); }\nvoid StrSumLC::Load(char*& ps) const { *ps++ = lhs; rhs->Load(ps); }\nvoid StrSumRC::Load(char*& ps) const { lhs->Load(ps); *ps++ = rhs; }\nvoid CharSeq::Load(char*& ps) const { memmove(ps, s, sz); ps += sz; }\nvoid CharSingle::Load(char*& ps) const { *ps++ = c; }\nvoid CharRepeated::Load(char*& ps) const { memset(ps, c, n); ps += n; }\nvoid StrNull::Load(char*&) const {}\n\n\nStrRep* StrBase::GetStrRep(StrBase** px)\n{\n   StrRep* p = new StrRepMult(size()); char* target = p->s;\n   Load(target); (*px)->Drop(); *px = p; return p;\n}\n\nStrRep* StrRep::GetStrRep(StrBase**) { return this; }\n\nStrRep* StrBase::GetStrRepW(StrBase** px)\n{\n   StrRep* p = new StrRepMult(size()); char* target = p->s;\n   Load(target); (*px)->Drop(); *px = p; return p;\n}\n\nStrRep* StrRep::GetStrRepW(StrBase**) { return this; }\n\nStrRep* StrRepMult::GetStrRepW(StrBase** px)\n{\n   if (refcnt == 0) return this;\n   StrRep* p = new StrRepMult(s, sz);\n   (*px)->Drop(); *px = p; return p;\n}\n\nStrRep* StrBase::Protect(StrBase** px)\n{\n   StrRep* p = new StrRep(size()); char* target = p->s;\n   Load(target); (*px)->Drop(); *px = p; return p;\n}\n\nStrRep* StrRep::Protect(StrBase**) { return this; }\n\nStrRep* StrRepMult::Protect(StrBase** px)\n{\n   StrRep* p;\n   if (refcnt == 0)\n   {\n      p = new StrRep();\n      p->sz = sz; sz = 0; char* s1 = p->s; p->s = s; s = s1;\n   }\n   else\n   {\n      p = new StrRep(s, sz);\n   }\n   (*px)->Drop(); *px = p; return p;\n}\n\nStrBase* StrBase::UnProtect() { return this; }\n\nStrBase* StrRep::UnProtect()\n{\n   StrRepMult* p = new StrRepMult();\n   p->sz = sz; sz = 0; char* s1 = p->s; p->s = s; s = s1;\n   p->refcnt = 0; delete this; return p;\n}\n\nStrBase* StrRepMult::UnProtect() { return this; }\n\nStrBase* StrRepCap::UnProtect()\n{\n   StrRepMult* p = new StrRepMult(s, sz);\n   delete this; return p;\n}\n\nStrBase* StrRepNullTerm::UnProtect()\n{\n   StrRepMult* p = new StrRepMult(s, sz);\n   delete this; return p;\n}\n\nStrBase* StrNull::UnProtect() { return this; }\n\nvoid StrBase::WithCapacity(StrBase** px)\n{\n   uint sz1 = size();\n   StrRepCap* p = new StrRepCap(sz1,sz1); char* target = p->s;\n   Load(target); (*px)->Drop(); *px = p;\n}\n\nvoid StrRepCap::WithCapacity(StrBase**) {}\n\nvoid StrRep::WithCapacity(StrBase** px)\n{\n   StrRepCap* p = new StrRepCap();\n   p->cpx = p->sz = sz;  sz = 0;  char* s1 = p->s;  p->s = s;  s = s1;\n   (*px)->Drop(); *px = p;\n}\n\nvoid StrRepMult::WithCapacity(StrBase** px)\n{\n   StrRepCap* p;\n   if (refcnt == 0)\n   {\n      p = new StrRepCap();\n      p->cpx = p->sz = sz; sz = 0; char* s1 = p->s; p->s = s; s = s1;\n   }\n   else\n   {\n      p = new StrRepCap(s, sz);\n   }\n   (*px)->Drop(); *px = p;\n}\n\nvoid StrRepNullTerm::WithCapacity(StrBase** px)\n{\n   StrRepCap* p = new StrRepCap(s, sz);\n   (*px)->Drop(); *px = p;\n}\n\n\nconst char* StrBase::NullTerminate(StrBase** px)\n{\n   StrRep* p = new StrRepNullTerm(size());\n   char* target = p->s; char* t = target; Load(target); *target = 0;\n   (*px)->Drop(); *px = p; return t;\n}\n\nconst char* StrRepNullTerm::NullTerminate(StrBase**) { return s; }\n\nconst char* StrRepCap::NullTerminate(StrBase** px)\n{\n   if (cpx > sz) { s[sz] = 0; return s; }\n   else return StrBase::NullTerminate(px);\n}\n\n\nvoid StrSum::Drop()\n   { if (ref) ref = false; else { lhs->Drop(); rhs->Drop(); delete this; } }\n\nvoid StrSumLC::Drop()\n   { if (ref) ref = false; else { rhs->Drop(); delete this; } }\n\nvoid StrSumRC::Drop()\n   { if (ref) ref = false; else { lhs->Drop(); delete this; } }\n\nvoid StrBase::Drop() { delete this; }\nvoid StrRepMult::Drop() { if (refcnt-- == 0) delete this; }\nvoid StrNull::Drop() {}\n\n\nStrBase* StrSumBase::Clone(StrBase** px)\n{\n   if (ref)\n   {\n      StrRepMult* p = new StrRepMult(size());\n      p->refcnt++;\n      char* target = p->s; Load(target); (*px)->Drop(); *px = p;\n      return p;\n   }\n   else { ref = true; return this; }\n}\n\nStrBase* CharSeq::Clone(StrBase**)\n{\n   StrBase* sb = new StrRep(s,sz);\n   return sb;\n}\n\nStrBase* StrRep::Clone(StrBase**)\n{\n   StrRepMult* p = new StrRepMult(s, size());\n   return p;\n}\n\nStrBase* StrRepMult::Clone(StrBase**) { refcnt++; return this; }\n\nStrBase* CharSingle::Clone(StrBase**)\n{\n   StrBase* sb = new CharSingle(c);\n   return sb;\n}\n\nStrBase* CharRepeated::Clone(StrBase**)\n{\n   StrBase* sb = new CharRepeated(n,c);\n   return sb;\n}\n\nStrBase* StrNull::Clone(StrBase**) { return this; }\n\nbool StrBase::HasCapacity() const { return false; }\nbool StrRepCap::HasCapacity() const { return true; }\n\n\nunsigned int StrBase::refcount() const { return 0; }\nunsigned int StrRepMult::refcount() const { return refcnt; }\nunsigned int StrSumBase::refcount() const { return (ref) ? 1 : 0; }\n\n\n\n//***************************** constructors *****************************\n\nStrRep::StrRep(uint SZ) : CharSeq(SZ)\n{\n   s = new char[sz];\n}\n\nStrRep::StrRep(uint n, char c) : CharSeq(n)\n{\n   s = new char[sz];\n   memset(s, c, sz);\n}\n\nStrRep::StrRep(const char* x)\n{\n   sz = strlen(x);\n   s = new char[sz];\n   memcpy(s, x, sz);\n}\n\nStrRep::StrRep(const char* x, uint len) : CharSeq(len)\n{\n   s = new char[sz];\n   memcpy(s, x, sz);\n}\n\nStrRep::StrRep(const char* x, uint len, uint n, char c)\n   : CharSeq(n)\n{\n   s = new char[sz];\n   memcpy(s, x, len); memset(s+len, c, n-len);\n}\n\nStrRep::~StrRep() { if (s) delete [] s; }\n\n\nStrRepMult::StrRepMult(uint SZ) : StrRep(SZ), refcnt(0) {}\nStrRepMult::StrRepMult(uint n, char c) : StrRep(n, c), refcnt(0) {}\nStrRepMult::StrRepMult(const char* x) : StrRep(x), refcnt(0) {}\n\nStrRepMult::StrRepMult(const char* x, uint len)\n   : StrRep(x, len), refcnt(0) {}\n\nStrRepMult::StrRepMult(const char* x, uint len, uint n, char c)\n   : StrRep(x, len, n, c), refcnt(0) {}\n\n\nStrRepCap::StrRepCap(uint len, uint cp) : StrRep(cp), cpx(cp) { sz = len; }\n\nStrRepCap::StrRepCap(const char* x, uint len) : StrRep(x, len), cpx(len) {}\n\n\nStrRepNullTerm::StrRepNullTerm(uint len) : StrRep(len + 1) { sz = len; }\n\nStrNull::StrNull() : StrRepNullTerm(0) { *s = 0; }\n\nCharSeq::CharSeq(char* S) : sz(strlen(S)), s(S) {}\n\nCharSeq::CharSeq(char* S, uint n) : s(S)\n{ uint i = 0; while (*S++) { if (i >= n) break; i++; }  sz = i; }\n\nCharSeq::CharSeq(const String& str) : sz(str.size()), s(str.GetData())  {}\n\nCharSeq::CharSeq(const String& str, uint pos, uint n)\n{\n   sz =str.size(); if (pos > sz) Throw(Out_of_range(\"string index error\\n\"));\n   sz -= pos; if (sz > n) sz = n;\n   s = str.GetData()+pos;\n}\n\nCharRepeated::CharRepeated(int N, char C) : CharSingle(C), n(N)\n   { if (n==String::npos) Throw(Length_error(\"string length = npos\\n\")); }\n\nStrSum::StrSum(StrBase* L, StrBase* R) : lhs(L), rhs(R) {}\nStrSumLC::StrSumLC(char L, StrBase* R) : lhs(L), rhs(R) {}\nStrSumRC::StrSumRC(StrBase* L, char R) : lhs(L), rhs(R) {}\nStrSumBase::StrSumBase() : ref(false) {}\n\n\n//******************************** operator+ *****************************\n\nString operator+(const String& lhs, const String& rhs)\n{\n   StrSum* sos = new StrSum(lhs.Clone(), rhs.Clone());\n   return String(sos);\n}\n\nString operator+(const char* lhs, const String& rhs)\n{\n   StrRep* lhscs = new StrRep((char*)lhs);\n   StrSum* sos = new StrSum(lhscs, rhs.Clone());\n   return String(sos);\n}\n\nString operator+(char lhs, const String& rhs)\n{\n   StrSumLC* sos = new StrSumLC(lhs, rhs.Clone());\n   return String(sos);\n}\n\nString operator+(const String& lhs, const char* rhs)\n{\n   StrRep* rhscs = new StrRep((char*)rhs);\n   StrSum* sos = new StrSum(lhs.Clone(), rhscs);\n   return String(sos);\n}\n\nString operator+(const String& lhs, char rhs)\n{\n   StrSumRC* sos = new StrSumRC(lhs.Clone(), rhs);\n   return String(sos);\n}\n\n//******************** initialise string package **********************\n\n// this is called whenever str.h is loaded; this ensures that npos is set to\n// -1  and ASN is initialised before any globals involving strings get\n// initialised.\n\nStringPackageInitialise::StringPackageInitialise()\n{\n   if (!String::ASN)\n      { String::ASN = new StrNull; String::npos = (uint)(-1); }\n}\n\n//*********************************************************************\n\n\n#ifdef use_namespace\n}\n#endif\n",
+			"file": "/home/giovanni/Descargas/str.cpp",
+			"file_size": -1,
+			"file_write_time": -1,
+			"settings":
+			{
+				"buffer_size": 32421,
+				"line_ending": "Windows"
 			}
 		},
 		{
@@ -411,7 +441,7 @@
 			"file": "charts/received_querys_by_edge_servers",
 			"settings":
 			{
-				"buffer_size": 310,
+				"buffer_size": 135,
 				"line_ending": "Unix"
 			}
 		},
@@ -459,7 +489,7 @@
 			"file": "EdgeServer.cpp",
 			"settings":
 			{
-				"buffer_size": 2461,
+				"buffer_size": 3139,
 				"line_ending": "Unix"
 			}
 		},
@@ -467,7 +497,7 @@
 			"file": "EdgeServer.h",
 			"settings":
 			{
-				"buffer_size": 949,
+				"buffer_size": 1200,
 				"line_ending": "Unix"
 			}
 		},
@@ -592,9 +622,12 @@
 	],
 	"file_history":
 	[
+		"/home/giovanni/Descargas/genmake/genmake.cpp",
+		"/home/giovanni/Escritorio/cdn/src/cppsim.hh",
+		"/home/giovanni/Escritorio/cdn/CDN.sublime-project",
+		"/home/giovanni/Escritorio/cdn/Constants.h",
 		"/home/giovanni/Escritorio/cdn/comandos_charts",
 		"/home/giovanni/Escritorio/cdn/comandos.txt",
-		"/home/giovanni/Escritorio/cdn/Constants.h",
 		"/home/giovanni/Escritorio/cdn/generador/query_charts.plot",
 		"/home/giovanni/Escritorio/cdn/query_chart",
 		"/home/giovanni/Escritorio/cdn/querys_sended_stream",
@@ -624,7 +657,6 @@
 		"/home/giovanni/Escritorio/cdn/wse/Answer.h",
 		"/home/giovanni/Escritorio/cdn/comandos.html",
 		"/home/giovanni/Escritorio/cdn/query_charts.plot",
-		"/home/giovanni/Escritorio/cdn/CDN.sublime-project",
 		"/home/giovanni/Escritorio/cdn/src/trace.cc",
 		"/home/giovanni/Escritorio/cdn/src/mean.hh",
 		"/home/giovanni/Escritorio/cdn/src/mean.cc",
@@ -717,9 +749,7 @@
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/auxiliar/Util.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/p2p/LruA.h",
 		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/p2p/Answer.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/p2p/MessageWSE.h",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/pruebas/Client.cc",
-		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/main.cc"
+		"/home/giovanni/Escritorio/Universidad/CDN/CDN/CDN/p2p/MessageWSE.h"
 	],
 	"find":
 	{
@@ -737,6 +767,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"cppsim.",
+			"cpp",
+			"+=",
+			"++",
+			"processed_querys",
+			"busy_time",
+			"idle_ti",
 			"previous_query_number",
 			"querys_sended_stream",
 			"<<",
@@ -857,14 +894,7 @@
 			"_traces",
 			"traces",
 			"Simulador_LDFLAGS",
-			"cxxflags",
-			"-ldl -lcrypto",
-			"g++",
-			"g++  -g -Wall -O3 -ldl -lcrypto  -o Simulador  obj/Simulador.o obj/util.o obj/gen_rnd.o obj/Observer.o obj/hash.o transportLayer/obj/redtubo.o  p2pLayer/obj/pastryProtocol.o p2pLayer/obj/leafset.o p2pLayer/obj/routingtable.o p2pLayer/obj/statebuilder.o applicationLayer/obj/ComunidadP2P.o applicationLayer/obj/tlcProtocol.o applicationLayer/obj/lru.o applicationLayer/obj/lrulcache.o applicationLayer/obj/inlink.o applicationLayer/obj/clienttlcwse.o applicationLayer/obj/replicator.o applicationLayer/obj/amortiguador.o   wse/obj/wse.o wse/obj/lruA.o  ../../src/libcppsim.a ",
-			"rep_s",
-			"partial",
-			"acumulado",
-			"nqueries"
+			"cxxflags"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -872,6 +902,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"o",
 			"previous_query_number_by_edge_server",
 			"int",
 			"long long",
@@ -923,7 +954,7 @@
 	"groups":
 	[
 		{
-			"selected": 11,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -939,8 +970,8 @@
 						"selection":
 						[
 							[
-								4831,
-								4831
+								10,
+								10
 							]
 						],
 						"settings":
@@ -950,7 +981,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1883.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
@@ -962,30 +993,90 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 244,
+						"buffer_size": 952,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								160,
-								160
+								278,
+								278
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Makefile/Makefile.tmLanguage"
 						},
-						"translation.x": 663.0,
+						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
+					"file": "/home/giovanni/Descargas/genmake.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 34171,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								172,
+								172
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/giovanni/Descargas/str.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 32421,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								354,
+								354
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
 					"file": "Node.h",
 					"semi_transient": false,
 					"settings":
@@ -1011,11 +1102,11 @@
 						"translation.y": 265.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 5,
 					"file": "Stats.h",
 					"semi_transient": false,
 					"settings":
@@ -1040,11 +1131,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 6,
 					"file": "Stats.cpp",
 					"semi_transient": false,
 					"settings":
@@ -1069,24 +1160,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 7,
 					"file": "charts/received_querys_by_edge_servers",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 310,
+						"buffer_size": 135,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								37,
-								37
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1098,11 +1189,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 8,
 					"file": "comandos_received_querys_by_edge_servers",
 					"semi_transient": false,
 					"settings":
@@ -1126,11 +1217,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 9,
 					"file": "wse/WSE.cc",
 					"semi_transient": false,
 					"settings":
@@ -1156,11 +1247,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 10,
 					"file": "Client.cpp",
 					"semi_transient": false,
 					"settings":
@@ -1186,11 +1277,11 @@
 						"translation.y": 255.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 11,
 					"file": "por_hacer.markdown",
 					"semi_transient": false,
 					"settings":
@@ -1214,11 +1305,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 12,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 12,
 					"file": "generador/gen_rnd.cc",
 					"semi_transient": false,
 					"settings":
@@ -1244,71 +1335,71 @@
 						"translation.y": 277.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "EdgeServer.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2461,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1501,
-								1501
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 247.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "EdgeServer.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 949,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								327,
-								327
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
 					"buffer": 13,
+					"file": "EdgeServer.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3139,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2931,
+								2931
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 859.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "EdgeServer.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1200,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1190,
+								1190
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 10.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
 					"file": "Message.h",
 					"semi_transient": false,
 					"settings":
@@ -1334,11 +1425,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 14,
+					"stack_index": 16,
 					"type": "text"
 				},
 				{
-					"buffer": 14,
+					"buffer": 16,
 					"file": "wse/MessageWSE.h",
 					"semi_transient": false,
 					"settings":
@@ -1364,7 +1455,7 @@
 						"translation.y": 102.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 13,
+					"stack_index": 15,
 					"type": "text"
 				}
 			]
@@ -1417,6 +1508,22 @@
 		"selected_items":
 		[
 			[
+				"make",
+				"makefile"
+			],
+			[
+				"ma",
+				"main.cpp"
+			],
+			[
+				"ed",
+				"EdgeServer.h"
+			],
+			[
+				"mai",
+				"main.cpp"
+			],
+			[
 				"sta",
 				"Stats.cpp"
 			],
@@ -1433,10 +1540,6 @@
 				"comandos_received_querys_by_edge_servers"
 			],
 			[
-				"ma",
-				"main.cpp"
-			],
-			[
 				"s",
 				"Stats.cpp"
 			],
@@ -1449,10 +1552,6 @@
 				"charts/received_querys_by_edge_servers"
 			],
 			[
-				"ed",
-				"EdgeServer.h"
-			],
-			[
 				"node",
 				"Node.h"
 			],
@@ -1463,14 +1562,6 @@
 			[
 				"cli",
 				"Client.cpp"
-			],
-			[
-				"mai",
-				"main.cpp"
-			],
-			[
-				"make",
-				"makefile"
 			],
 			[
 				"eg",

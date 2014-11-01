@@ -1,10 +1,15 @@
 CPPSIM=-Isrc
 
-all: main.o Client.o EdgeServer.o Node.o Transport.o Message.o DNS.o
-	main.o Client.o EdgeServer.o Node.o Transport.o Message.o DNS.o wse/WSE.cc wse/LruA.cc generador/gen_rnd.cc auxiliar/Util.cc Stats.cpp Observer.cc src/libcppsim.a -Isrc  -o main
+all: Client.o EdgeServer.o Node.o Transport.o Message.o DNS.o WSE.o LruA.o
+	@g++ main.o Client.o EdgeServer.o Node.o Transport.o Message.o DNS.o WSE.o LruA.o generador/gen_rnd.cc auxiliar/Util.cc Stats.cpp Observer.cc src/libcppsim.a -Isrc  -o main
+	clear
+	@./main
 
-main.o: Client.o EdgeServer.o Node.o Transport.o Message.o DNS.o
-	g++ main.o Client.o EdgeServer.o Transport.o Message.o DNS.o wse/WSE.cc wse/LruA.cc generador/gen_rnd.cc auxiliar/Util.cc Stats.cpp Observer.cc src/libcppsim.a -Isrc  -o main
+WSE.o: wse/WSE.cc
+	g++ $(CPPSIM) -c wse/WSE.cc
+
+LruA.o: wse/LruA.cc
+	g++ $(CPPSIM) -c wse/LruA.cc
 
 Client.o: Client.cpp
 	@g++ $(CPPSIM) -c Client.cpp
@@ -13,7 +18,7 @@ EdgeServer.o: EdgeServer.cpp
 	@g++ $(CPPSIM) -c EdgeServer.cpp 
 
 Node.o: Node.cpp 
-	@g++ $(CPPSIM) -c Node.cpp 
+	@g++ $(CPPSIM) -c Node.cpp
 
 Transport.o: Transport.cpp
 	@g++ $(CPPSIM) -c Transport.cpp
