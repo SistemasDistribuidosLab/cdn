@@ -15,6 +15,7 @@ class EdgeServer : public Node {
         double busy_time;
         unsigned int processed_querys;
         unsigned int *received_querys_from_count;
+        unsigned int received_queries_by_clients_cycle;
         // Client *client;
     public:
         EdgeServer(const string &name, int id, int type) : Node(name, id, type) {
@@ -25,6 +26,7 @@ class EdgeServer : public Node {
             for (int i = 0; i < NUM_CLIENTS; ++i) {
                 received_querys_from_count[ i ] = 0;
             }
+            this->received_queries_by_clients_cycle = 0;
         }
         ~EdgeServer() {
         }
@@ -35,9 +37,11 @@ class EdgeServer : public Node {
         void inner_body(void);
         void SumToIdleTime(double);
         void SumToBusyTime(double);
-        void SumToProcessedQuerys(int);
+        void SumToProcessedQuerys();
         void ReceiveANewMessageFromClient(int);
         Message * GetMessage();
         void AddANewUnprocessedMessage(Message * message);
+        void ResetReceivedQueriesByClients();
+        unsigned int GetReceivedQueriesByClients();
 };
 #endif

@@ -2,6 +2,7 @@
 #define STATS
 
 #include "cppsim.hh"
+#include "Constants.h"
 
 class EdgeServer;
 
@@ -27,6 +28,16 @@ class Stats : public process {
         }
         void CloseAll() {
             received_querys_by_edge_servers->close();
+
+            ofstream comandos;
+            comandos.open("charts/comandos");
+
+            comandos << "plot ";
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+                comandos << "'charts/received_querys_by_edge_servers' using 1:" << (i + 2) << " with lines title \"EdgeServer " << i << "\", ";
+            }
+            comandos << "'charts/received_querys_by_edge_servers' using 1:" << (NUM_EDGE_SERVERS + 2) << " with lines title \"Total\", ";
+            comandos << endl;
         }
 
 };
