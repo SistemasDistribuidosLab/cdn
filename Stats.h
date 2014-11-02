@@ -10,10 +10,13 @@ class Stats : public process {
         ofstream * output;
         handle<EdgeServer> * edge_servers;
         static unsigned int cycles;
+        ofstream * received_querys_by_edge_servers;
     public:
-        Stats(const string &name, ofstream * output, handle<EdgeServer> * edge_servers) : process(name) {
+        Stats(const string &name, handle<EdgeServer> * edge_servers) : process(name) {
             this->output = output;
             this->edge_servers = edge_servers;
+            received_querys_by_edge_servers = new ofstream();
+            received_querys_by_edge_servers->open("charts/received_querys_by_edge_servers");
         }
         ~Stats() {
 
@@ -21,6 +24,9 @@ class Stats : public process {
         void inner_body();
         unsigned int GetCycles() {
             return this->cycles;
+        }
+        void CloseAll() {
+            received_querys_by_edge_servers->close();
         }
 
 };

@@ -10,12 +10,12 @@ void Stats::inner_body() {
         previous_query_number_by_edge_server[ i ] = 0;
     }
     while (1) {
-    	(*output) << cycles << ", ";
+    	(*received_querys_by_edge_servers) << time() << ", ";
         for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
-            (*output) << ( edge_servers[ i ]->GetProcessedQuerys() - previous_query_number_by_edge_server[ i ] ) << ", ";
+            (*received_querys_by_edge_servers) << ( edge_servers[ i ]->GetProcessedQuerys() - previous_query_number_by_edge_server[ i ] ) << ", ";
             previous_query_number_by_edge_server[ i ] = edge_servers[ i ]->GetProcessedQuerys();
         }
-        (*output) << endl;
+        (*received_querys_by_edge_servers) << endl;
         cycles++;
         hold(10);
     }

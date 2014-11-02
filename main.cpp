@@ -78,9 +78,8 @@ class Simulation : public process {
 
             wse->SetTransport(&transport);
             wse->activate();
-            ofstream * received_querys_by_edge_servers = new ofstream();
-            received_querys_by_edge_servers->open("charts/received_querys_by_edge_servers");
-            handle<Stats> stats = new Stats("stats", received_querys_by_edge_servers, edge_servers);
+            
+            handle<Stats> stats = new Stats("stats", edge_servers);
             for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
                 edge_servers[ i ]->activate();
             }
@@ -91,7 +90,7 @@ class Simulation : public process {
 
 
             char traces[2048];
-            strcpy(traces, "partial3.DAT");
+            strcpy(traces, "../../RISE_16M.DAT");
             unsigned long int totalQueries = 1000000;
             int Peer_Selection = 0;
             int Nuser = 0;
@@ -115,9 +114,8 @@ class Simulation : public process {
 
             chart_file->close();
             querys_sended_stream->close();
-            received_querys_by_edge_servers->close();
 
-            // Generar comandos
+            // Generar procecomandos
             ofstream * comandos_charts_stream = new ofstream();
             comandos_charts_stream->open ("comandos_charts");
 
