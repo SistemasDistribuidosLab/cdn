@@ -114,6 +114,7 @@ class Simulation : public process {
 
             chart_file->close();
             querys_sended_stream->close();
+            stats->CloseAll();
 
             // Generar procecomandos
             ofstream * comandos_charts_stream = new ofstream();
