@@ -36,16 +36,7 @@ void Client::inner_body(void) {
             delay = this->SendMessage(message);
             unprocessed_message_stack.push_back(message);
         }
-
-#ifdef USERS_GENERATE_QUERYS
-        double sleep = arrival_time->value();
-        sleep = sleep > delay ? sleep : delay;
-        // cout << "Sleep: " << sleep << " - " << delay << endl;
-
-        hold(sleep);
-#else
         this->passivate();
-#endif
     }
 }
 

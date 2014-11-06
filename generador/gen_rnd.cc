@@ -68,17 +68,13 @@ void Gen_rnd::inner_body( ) {
 
 
         // ===== ELIJO UN CLIENTE AL AZAR Y ENVIO UN MENSAJE
-#ifndef USERS_GENERATE_QUERYS
 
         int id_client = random_client->value();
-        // cout << "Estoy generando una query en " << time() << " para el cliente " << id_client << endl;
         int * hashValue = new int(1);
         MessageWSE * wseQuery = new MessageWSE(NULL, hashValue, ptr, USER);
         clients[ id_client ]->AddMessageWse(wseQuery);
         clients[ id_client ]->activate();
 
-
-#endif
         // ||||| ELIJO UN CLIENTE AL AZAR Y ENVIO UN MENSAJE
 
 
