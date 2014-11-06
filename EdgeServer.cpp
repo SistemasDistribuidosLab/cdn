@@ -46,7 +46,7 @@ void EdgeServer::inner_body(void)
                 this->AddANewUnprocessedMessage(message);
                 this->SendMessage(new Message(this->GetId(), this->GetType(), 0,
                                               NODE_ORIGIN_SERVER, message->GetCreationTime(), message->GetMessagePointer()));
-                this->SumToProcessedQuerys();
+                this->SumToReceivedQuerys();
             }
             else if (message->GetTypeFrom() == NODE_ORIGIN_SERVER)
             {
@@ -83,7 +83,7 @@ void EdgeServer::SumToBusyTime(double add_time)
     this->busy_time += add_time;
 }
 
-void EdgeServer::SumToProcessedQuerys()
+void EdgeServer::SumToReceivedQuerys()
 {
     this->processed_querys++;
     this->received_queries_by_clients_cycle++;

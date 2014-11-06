@@ -127,7 +127,10 @@ class Simulation : public process {
             (*comandos_charts_stream) << endl;
             // ! Generar comandos
 
-            end_simulation( );
+
+            generator->cancel();
+            hold(1000);
+            end_simulation();
         }
 };
 
@@ -168,6 +171,7 @@ int main(int argc, char const * argv[]) {
     cout << "Edge Servers:" << endl;
     double total_idle_time_percentage  = 0;
     double total_busy_time_percentage  = 0;
+    unsigned long int total_received_queries = 0;
 
     streamsize default_precision = cout.precision();
     for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
@@ -188,8 +192,10 @@ int main(int argc, char const * argv[]) {
         cout << "\t\tBusy Percentage:  " << busy_time_percentage << " %" << endl;
         cout << fixed << setprecision(0);
         cout << "\t\tProcessed Querys: " << edge_servers[ i ]->GetProcessedQuerys() << endl;
+        total_received_queries += edge_servers[ i ]->GetProcessedQuerys();
     }
     cout << endl;
+    cout << "\tTotal Received Queries: " << total_received_queries << endl;
     cout << "\tAverage Idle Percentage: " << ( (total_idle_time_percentage / NUM_EDGE_SERVERS) ) << "%" << endl;
     cout << "\tAverage Processing Time: " << ( (total_busy_time_percentage / NUM_EDGE_SERVERS) ) << "%" << endl;
     cout << endl;
@@ -199,7 +205,7 @@ int main(int argc, char const * argv[]) {
     // Total consultas enviadas
     unsigned int total_num_messages_sended = 0;
     for (int i = 0; i < NUM_CLIENTS; ++i) {
-        total_num_messages_sended += clients[ i ]->GetNumMessagesSended();
+        total_num_messages_sended += clients[ i ]->GetQuerysSended();
     }
     cout << "\tTotal querys sended:   " << total_num_messages_sended << endl;
     cout << fixed << setprecision(2);

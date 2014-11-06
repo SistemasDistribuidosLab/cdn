@@ -6,7 +6,6 @@ void WSE::inner_body(void) {
 
         if (queue_in.empty() )
             passivate();
-
         // ASSERT(!queue_in.empty());
 
 

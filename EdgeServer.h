@@ -45,7 +45,7 @@ class EdgeServer : public Node {
         void inner_body(void);
         void SumToIdleTime(double);
         void SumToBusyTime(double);
-        void SumToProcessedQuerys();
+        void SumToReceivedQuerys();
         void ReceiveANewMessageFromClient(int);
         Message * GetMessage();
         void AddANewUnprocessedMessage(Message * message);
