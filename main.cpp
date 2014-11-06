@@ -79,7 +79,7 @@ class Simulation : public process {
             wse->SetTransport(&transport);
             wse->activate();
 
-            handle<Stats> stats = new Stats("stats", edge_servers);
+            handle<Stats> stats = new Stats("stats", DURACION_SIMULACION, edge_servers);
             for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
                 edge_servers[ i ]->activate();
             }
@@ -129,7 +129,9 @@ class Simulation : public process {
 
 
             generator->cancel();
+            stats->cancel();
             hold(1000);
+            cout << endl;
             end_simulation();
         }
 };

@@ -13,10 +13,13 @@ class Stats : public process {
         static unsigned int cycles;
         ofstream * received_querys_by_edge_servers;
         ofstream cache_hits_by_edge_servers;
+        int DURACION_SIMULACION;
     public:
-        Stats(const string &name, handle<EdgeServer> * edge_servers) : process(name) {
+        Stats(const string &name, int DURACION_SIMULACION, handle<EdgeServer> * edge_servers) : process(name) {
             this->output = output;
             this->edge_servers = edge_servers;
+            this->DURACION_SIMULACION = DURACION_SIMULACION;
+            
             received_querys_by_edge_servers = new ofstream();
             received_querys_by_edge_servers->open("charts/received_querys_by_edge_servers");
 

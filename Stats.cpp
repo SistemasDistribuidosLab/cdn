@@ -4,9 +4,34 @@
 
 unsigned int Stats::cycles = 0;
 
+static inline void loadBar(int x, int n, int w, double time) {
+    // ANSI Control codes to go back to the
+    // previous line and clear it.
+    printf("\n\033[F\033[J");
+
+    // Calculuate the ratio of complete-to-incomplete.
+    float ratio = x / (float)n;
+    int   c     = ratio * w;
+
+    // Show the percentage complete.
+    printf("%5.3f %3d%% [", time, (int)(ratio * 100) );
+
+    // Show the load bar.
+    for (int x = 0; x < c; x++)
+        printf("=");
+
+    for (int x = c; x < w; x++)
+        printf(" ");
+
+    printf("]");
+}
+
 void Stats::inner_body() {
+    clock_t begin = clock();
     unsigned int total_received_queries_by_edge_servers;
+    cout << ".";
     while (1) {
+        loadBar(time(), DURACION_SIMULACION, 100, double(clock() - begin) / CLOCKS_PER_SEC);
         total_received_queries_by_edge_servers = 0;
         (*received_querys_by_edge_servers) << time() << ", ";
         cache_hits_by_edge_servers << time() << ", ";
