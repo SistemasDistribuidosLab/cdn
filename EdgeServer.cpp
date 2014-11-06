@@ -106,10 +106,23 @@ Message *EdgeServer::GetMessage()
     return message;
 }
 
-void EdgeServer::ResetReceivedQueriesByClients(){
-    this->received_queries_by_clients_cycle = 0;
+unsigned int EdgeServer::GetReceivedQueriesByClientsCycle()
+{
+    return this->received_queries_by_clients_cycle;
 }
 
-unsigned int EdgeServer::GetReceivedQueriesByClients(){
-    return this->received_queries_by_clients_cycle;
+unsigned int EdgeServer::GetCacheHitsReceivedQueriesByClientsCycle()
+{
+    return this->cache_hits_received_queries_by_clients_cycle;
+}
+
+void EdgeServer::AddANewCacheHit()
+{
+    this->cache_hits_received_queries_by_clients_cycle++;
+}
+
+void EdgeServer::ResetCycle()
+{
+    this->received_queries_by_clients_cycle = 0;
+    this->cache_hits_received_queries_by_clients_cycle = 0;
 }

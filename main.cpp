@@ -78,7 +78,7 @@ class Simulation : public process {
 
             wse->SetTransport(&transport);
             wse->activate();
-            
+
             handle<Stats> stats = new Stats("stats", edge_servers);
             for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
                 edge_servers[ i ]->activate();
@@ -90,7 +90,7 @@ class Simulation : public process {
 
 
             char traces[2048];
-            strcpy(traces, "../../RISE_16M.DAT");
+            strcpy(traces, "../RISE_16M.DAT");
             unsigned long int totalQueries = 1000000;
             int Peer_Selection = 0;
             int Nuser = 0;

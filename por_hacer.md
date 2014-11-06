@@ -1,1 +1,0 @@
-crear modelo que genera consultas y selecciona a los cleintes

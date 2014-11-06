@@ -1,7 +1,7 @@
-CPPSIM=-Isrc
+CPPSIM=-Isrc -g
 
 all: main.o Client.o EdgeServer.o Node.o Transport.o Message.o DNS.o WSE.o LruA.o gen_rnd.o Util.o Stats.o Observer.o
-	@g++ objects/main.o objects/Client.o objects/EdgeServer.o objects/Node.o objects/Transport.o objects/Message.o objects/DNS.o objects/WSE.o objects/LruA.o objects/gen_rnd.o objects/Util.o objects/Stats.o objects/Observer.o src/libcppsim.a -Isrc  -o main
+	@g++ objects/main.o objects/Client.o objects/EdgeServer.o objects/Node.o objects/Transport.o objects/Message.o objects/DNS.o objects/WSE.o objects/LruA.o objects/gen_rnd.o objects/Util.o objects/Stats.o objects/Observer.o src/libcppsim.a $(CPPSIM) -o main
 	clear
 	@./main
 

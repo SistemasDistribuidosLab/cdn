@@ -3,6 +3,7 @@
 
 #include "Node.h"
 #include "Constants.h"
+#include "wse/LruA.h"
 
 using namespace std;
 
@@ -14,9 +15,10 @@ class EdgeServer : public Node {
         double idle_time;
         double busy_time;
         unsigned int processed_querys;
-        unsigned int *received_querys_from_count;
+        unsigned int * received_querys_from_count;
         unsigned int received_queries_by_clients_cycle;
-        // Client *client;
+        unsigned int cache_hits_received_queries_by_clients_cycle;
+        LRUA * ANSWERS;
     public:
         EdgeServer(const string &name, int id, int type) : Node(name, id, type) {
             idle_time = 0;
@@ -26,9 +28,15 @@ class EdgeServer : public Node {
             for (int i = 0; i < NUM_CLIENTS; ++i) {
                 received_querys_from_count[ i ] = 0;
             }
-            this->received_queries_by_clients_cycle = 0;
+
+            this->received_queries_by_clients_cycle            = 0;
+            this->cache_hits_received_queries_by_clients_cycle = 0;
+
+            int cacheSize = WSECACHESIZE;
+            ANSWERS = new LRUA(&cacheSize);
         }
         ~EdgeServer() {
+            delete ANSWERS;
         }
         double GetIdleTime();
         double GetBusyTime();
@@ -41,7 +49,10 @@ class EdgeServer : public Node {
         void ReceiveANewMessageFromClient(int);
         Message * GetMessage();
         void AddANewUnprocessedMessage(Message * message);
-        void ResetReceivedQueriesByClients();
-        unsigned int GetReceivedQueriesByClients();
+        unsigned int GetReceivedQueriesByClientsCycle();
+        int getVersion(string, int *);
+        void AddANewCacheHit();
+        unsigned int GetCacheHitsReceivedQueriesByClientsCycle();
+        void ResetCycle();
 };
 #endif
