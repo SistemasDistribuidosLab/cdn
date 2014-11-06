@@ -14,7 +14,7 @@ static inline void loadBar(int x, int n, int w, double time) {
     int   c     = ratio * w;
 
     // Show the percentage complete.
-    printf("%5.3f %3d%% [", time, (int)(ratio * 100) );
+    printf("Elapsed: %4.2f Left: %4.2f %3d%% [", time, ( time * 100 / (int)(ratio * 100) ) - time, (int)(ratio * 100) );
 
     // Show the load bar.
     for (int x = 0; x < c; x++)
