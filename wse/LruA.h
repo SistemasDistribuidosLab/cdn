@@ -71,29 +71,11 @@ class LRUA
             }
 
         }
-        // void deleteCache()
-        // {
-        //    cache.clear();
-        // }
-
-        // Returns the max number of cache entries
-        // int getMaxCacheSize()
-        //  {
-        //     return *cacheSize;
-        //  }
-        // bool hit( long long* /*key*/ );
-        //void insert( string /*key*/, long long*,  int/*size*/, long int );
-        // void insert (Entry);
         void insertAnswer(Answer *);
-        // void updateFrequency(long long*);
-        // void update( long long* /*key*/ );
         bool isFreeSpace( int/*size*/ );
         void createSpace( int/*size*/ );
         void remove(Answer *);
-        // int count(long long*);
-
         Answer *check(string);
-        //Answer* check(long long*);
         void cacheErase(Answer *);
         void getSize(){
             cout << "LruA:cache.size()=" << cache.size( ) << endl;

@@ -3,50 +3,52 @@
 
 #include "../glob.h"
 #include "../auxiliar/Util.h"
-// #include "../auxiliar/Hash.h"
+#include "../auxiliar/Hash.h"
 #include "../Observer.h"
 #include "../wse/WSE.h"
 #include "../wse/MessageWSE.h"
+#include "../bigint/BigInteger.hh"
 
 class Client;
 
 // class TlcProtocol;
 
-class Gen_rnd: public process {
-        handle<Client> *clients;
-        rng<double> *random_client;
+class Gen_rnd: public process
+{
+        handle<Client> * clients;
+        rng<double> * random_client;
 
-        ofstream *chart_file;
-        ofstream *querys_sended_stream;
+        ofstream * chart_file;
+        ofstream * querys_sended_stream;
         //  list<handle<TlcProtocol> *> queue_thread;
 
-        unsigned long int *totalQueries;
+        unsigned long int * totalQueries;
         int sentQueries, lastStepQueries;
 
         // vector<handle<TlcProtocol> *> Peers;
-
+        Hash * h;
         int NP;
-        UTIL *util;
+        UTIL * util;
         // Hash* h;
         char traces_file[2048];
-        rng<double> *arrival_time;
+        rng<double> * arrival_time;
         bool phase; //rafaga when true is a flash crowd, when false its normal time
 
-        rng<double> *SelectSource;
+        rng<double> * SelectSource;
 
         double prev, actual;
         ifstream endStream;
         vector<string> tokens;
 
         double CTE;
-        double *init_time;
+        double * init_time;
 
-        handle<Observer> *observer;
+        handle<Observer> * observer;
 
-        handle<WSE> *wse;
+        handle<WSE> * wse;
 
         //ends simulation
-        int *ends;
+        int * ends;
         int Nuser;
         int Totaluser; //Usuarios + peers
         int porcentaje_peers;
@@ -58,7 +60,8 @@ class Gen_rnd: public process {
 
     public:
 
-        void freeGen_rnd() {
+        void freeGen_rnd()
+        {
             // Peers.clear();
             delete util;
             // delete h;
@@ -69,12 +72,13 @@ class Gen_rnd: public process {
             //free(wse);
         }
 
-        Gen_rnd ( const string &name, char *_traces_file, unsigned long int *_totalQueries,
-                  int _NP, handle<Observer> *obs, int *_ends, int _Nuser,
-                  handle<WSE> *_wse, int _PS, ofstream *chart_file, ofstream *querys_sended_stream): process( name ) {
+        Gen_rnd ( const string &name, char * _traces_file, unsigned long int * _totalQueries,
+                  int _NP, handle<Observer> * obs, int * _ends, int _Nuser,
+                  handle<WSE> * _wse, int _PS, ofstream * chart_file, ofstream * querys_sended_stream): process( name )
+        {
             this-> chart_file = chart_file;
             this->querys_sended_stream = querys_sended_stream;
-            
+
             totalQueries    = _totalQueries;
             sentQueries     = 0;
             wse             = _wse;
@@ -86,7 +90,7 @@ class Gen_rnd: public process {
             porcentaje_peers = (NP * 100) / Totaluser;
 
             util            = new UTIL();
-            // h               = new Hash();
+            h               = new Hash();
             strcpy( traces_file, _traces_file );
             ends            = _ends;
             Peer_Selection = _PS;
@@ -109,7 +113,8 @@ class Gen_rnd: public process {
             actual   = 0.0;
             observer = obs;
         }
-        void SetClients(handle<Client> *clients) {
+        void SetClients(handle<Client> * clients)
+        {
             this->clients = clients;
         }
 

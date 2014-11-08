@@ -1,55 +1,57 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include <vector>
-#include <string>
 #include "../glob.h"
 // #include "../p2pLayer/NodeEntry.h"
+#include <openssl/bn.h>
+#include <vector>
+#include <string>
 
 using namespace std;
 
-class UTIL {
+class UTIL
+{
 
-    public:
+public:
+   
+   static BIGNUM* EMPTY;
+   static BIGNUM* MAX;
+   static BIGNUM* MIN;
+   static BIGNUM BNZERO;
+  
+   UTIL();
 
-        static int *EMPTY;
-        static int *MAX;
-        static int *MIN;
-        static int BNZERO;
+   ~UTIL();
 
-        UTIL();
+   static char* obtain_terms ( vector<string> t );
 
-        ~UTIL();
+   static void Tokenize ( const string&,
+                          vector<string>&,
+                          const string& );
 
-        static char *obtain_terms ( vector<string> t );
+   static bool startWith( BIGNUM*, char );
 
-        static void Tokenize ( const string &,
-                               vector<string> &,
-                               const string &);
+   static bool startWith( const char*, char );
 
-        static bool startWith( int *, char );
+   // static string truncateNodeId( NodeEntry* );
 
-        static bool startWith( const char *, char );
+   static string truncateNodeId( BIGNUM* );
 
-        // static string truncateNodeId( NodeEntry *);
+   static int chartoIndex( char );
 
-        static string truncateNodeId( int *);
+   static char getDigit( int );
+	
+   // static int prefixLen  ( BIGNUM*, NodeEntry* );
+   
+   static const char* myBN2HEX( BIGNUM* );
+  
+   static const char* myBN2HEX2( BIGNUM* );
 
-        static int chartoIndex( char );
+   static int charSize(const char*);
 
-        static char getDigit( int );
+   static bool hasDigitAt( BIGNUM*, int, char );
 
-        // static int prefixLen( int *, NodeEntry *);
-
-        // static const char *myBN2HEX( int *);
-
-        // static const char *myBN2HEX2( int *);
-
-        static int charSize(const char *);
-
-        static bool hasDigitAt( int *, int, char );
-
-        static bool hasDigitAt( const char *, int, char );
+   static bool hasDigitAt( const char*, int, char );
 };
 
 #endif

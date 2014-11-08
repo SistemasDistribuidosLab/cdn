@@ -1,62 +1,68 @@
 #ifndef ANSWER_H
 #define ANSWER_H
-#include "../glob.h"
+// #include "../glob.h"
 
-#include <cstdlib>
 
-class Answer {
+class Answer
+{
 
     public:
         long priority;
         string key;
-        int *hashValue;
+        BIGNUM * hashValue;
         int size;
 
         int version;
         long int timeOut;
 
-        ~Answer() {
-            // BN_free(hashValue);
-            free(hashValue);
+        ~Answer()
+        {
+            BN_free(hashValue);
         }
 
-        Answer(double _priority, string s,  int *_hashValue,
-               long int _tout, int _version, int _size) {
+        Answer(double _priority, string s,  BIGNUM * _hashValue,
+               long int _tout, int _version, int _size)
+        {
             priority = _priority;
 
-            // hashValue = BN_dup(_hashValue);
-            hashValue = new int(*_hashValue);
+            hashValue = BN_dup(_hashValue);
             size = _size;
             timeOut = _tout;
             version = _version;
-            key = s;
+            key.assign(s);
         }
 
-        string getKey() {
+        string getKey()
+        {
             return key;
         }
-        void update (long timestamps) {
+        void update (long timestamps)
+        {
             priority = timestamps;
         }
 
-        Answer *clone() {
-            Answer *tmp = new Answer(this->priority, this->key, this->hashValue, this->timeOut,
-                                     this->version, this->size);
+        Answer * clone()
+        {
+            Answer * tmp = new Answer(this->priority, this->key, this->hashValue, this->timeOut,
+                                      this->version, this->size);
 
             return tmp;
         }
 
-        long int getTimeOut() {
+        long int getTimeOut()
+        {
 
             return timeOut;
 
         }
 
-        int getVersion() {
+        int getVersion()
+        {
             return version;
         }
 
-        void setNewVersion(long int ttl) {
+        void setNewVersion(long int ttl)
+        {
             timeOut = ttl;
             version = version + 1;
         }

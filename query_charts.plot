@@ -1,1 +1,0 @@
-plot "query_chart" with lines

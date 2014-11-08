@@ -2,155 +2,65 @@
 #include "LruA.h"
 
 
-Answer *LRUA::check(string hashValue) {
-    list<Answer *>::iterator iter;
-    for (iter = cache.begin(); iter != cache.end(); iter ++) {
-        string tmp = (*iter)->getKey();
-        if (tmp.compare(hashValue) == 0) {
-            (*iter)->update(timestamps);
-            return (*iter);
+Answer * LRUA::check(string hashValue)
+{
+    string tmp;
+    for (list<Answer *>::iterator cache_entry_pointer = cache.begin(); cache_entry_pointer != cache.end(); cache_entry_pointer++)
+    {
+        tmp = (*cache_entry_pointer)->getKey();
+        if (tmp.compare(hashValue) == 0)
+        {
+            (*cache_entry_pointer)->update(timestamps);
+            return (*cache_entry_pointer);
         }
     }
     return NULL;
 }
 
-void LRUA::cacheErase(Answer *a) {
+/*Answer * LRUA::check(string hashValue)
+{
     list<Answer *>::iterator iter;
-    for (iter = cache.begin(); iter != cache.end(); iter ++) {
+    for (iter = cache.begin(); iter != cache.end(); iter ++)
+    {
         string tmp = (*iter)->getKey();
-        if (tmp.compare(a->key) == 0) {
+        if (tmp.compare(hashValue) == 0)
+        {
+            (*iter)->update(timestamps);
+            return (*iter);
+        }
+    }
+    return NULL;
+}*/
+
+void LRUA::cacheErase(Answer * a)
+{
+    list<Answer *>::iterator iter;
+    for (iter = cache.begin(); iter != cache.end(); iter ++)
+    {
+        string tmp = (*iter)->getKey();
+        if (tmp.compare(a->key) == 0)
+        {
             cache.erase(iter);
             break;
         }
     }
 }
 
-
-
-
-/*
-Answer* LRUA::check(BIGNUM* hashValue)
+void LRUA::insertAnswer(Answer * a)
 {
-   if(hit(hashValue))
-   {
-      map<BIGNUM*,Answer*>::iterator iter;
-
-      for(iter = cache.begin(); iter != cache.end(); iter ++)
-      {
-         BIGNUM* tmp= iter->first;
-         if(BN_cmp(tmp,hashValue) == 0)
-     {
-        update(tmp);
-        return iter->second;
-     }
-      }
-   }
-   else
-   {
-      return NULL;
-   }
-   return NULL;
-}
-
-void LRUA::remove(Answer* e)
-{
-   freeCache += e->size;
-    map<BIGNUM*,Answer*>::iterator it;
-    it=cache.begin();
-
-    while(it!=cache.end())
+    if (!this->isFreeSpace (a->size))
     {
-       if(BN_cmp(e->hashValue, it->first)==0)
-       {
-           BIGNUM * tmp= it->first;
-
-           cache.erase(it->first);
-       delete tmp;
-       break;
-       }
-       else
-       {
-       it++;
-       }
-    }
-  // delete e;
-}
-
-
-bool LRUA::hit( BIGNUM* hashValue )
-{
-   if( cache.empty( ) )
-      return false;
-
-   if( LRUA::count( hashValue  ) == 0 )
-      return false;
-   else
-      return true;
-}
-
-int LRUA::count(BIGNUM* b)
-{
-   int count=0;
-   map<BIGNUM*,Answer*>::iterator it;
-   it=cache.begin();
-
-   while(it!=cache.end())
-   {
-      if(BN_cmp(b, it->first)==0)
-      {
-         count++;
-     return count;
-      }
-      it++;
-   }
-   return count;
-
-}
-*/
-
-void LRUA::insertAnswer(Answer *a) {
-    // if (LRUA::count(a->hashValue)==0)
-    // {
-    if (!this->isFreeSpace (a->size)) {
         this->createSpace(a->size);
     }
 
     ptr = a;
     pq.push(ptr);
     freeCache -= a->size;
-    //  cout << "debug 3 " << endl;
-    //   cache[e->hashValue] = ptr;
     cache.push_front( a);
-    // }
 }
 
-/*
-
-void LRUA::update( BIGNUM* hashValue )
+bool LRUA::isFreeSpace( int size )
 {
-
-//   updateFrequency(hashValue);
-   //it=cache.find(hashValue);
-
-   //if (it!=cache.end())
-   //{
-    map<BIGNUM*,Answer*>::iterator it;
-    it=cache.begin();
-
-    while(it!=cache.end())
-    {
-       if(BN_cmp(hashValue, it->first)==0)
-       {
-          (it->second)->update(timestamps);
-      break;
-       }
-       it++;
-    }
-
-   timestamps++;
-}
-*/
-bool LRUA::isFreeSpace( int size ) {
     if ( freeCache >= size )
         return true;
     return false;
@@ -158,13 +68,16 @@ bool LRUA::isFreeSpace( int size ) {
 
 //---------------------------------------------------
 
-void LRUA::createSpace( int size ) {
-    do {
+void LRUA::createSpace( int size )
+{
+    do
+    {
         ptr = pq.top();
         pq.pop();
         freeCache += ptr->size;
         cacheErase( ptr );
         delete ptr ;
-    }  while ( freeCache < size );
+    }
+    while ( freeCache < size );
 }
 

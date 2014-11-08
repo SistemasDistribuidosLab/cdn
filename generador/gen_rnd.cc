@@ -2,11 +2,16 @@
 #include "../Client.h"
 #include "../Constants.h"
 #include <cmath>
+#include <openssl/sha.h>
+#include <sstream>
+#include "../bigint/BigInteger.hh"
+#include <openssl/bn.h>
 // #include "../applicationLayer/TlcProtocol.h"
 // #include "../applicationLayer/Query.h"
 
 
-void Gen_rnd::inner_body( ) {
+void Gen_rnd::inner_body( )
+{
     // handle<TlcProtocol> *gq;
     string line, terms, line_querys_sended;
     char * ptr;
@@ -27,21 +32,25 @@ void Gen_rnd::inner_body( ) {
     double accumulated_time = time();
     double query_in_interval = 0;
     int num_cycles = 0;
-    while ( 1 ) {
-        if (time() - accumulated_time > 10) {
+    while ( 1 )
+    {
+        if (time() - accumulated_time > 10)
+        {
             (*chart_file) << time() << " " << query_in_interval << endl;
             query_in_interval = 0;
             accumulated_time = time();
 
             (*querys_sended_stream) << num_cycles;
-            for (int i = 0; i < NUM_CLIENTS; ++i) {
+            for (int i = 0; i < NUM_CLIENTS; ++i)
+            {
                 (*querys_sended_stream) << " " << clients[ i ]->GetNumberOfQuerysSendedThisCycle();
                 clients[ i ]->ResetCycle();
             }
             (*querys_sended_stream) << endl;
             num_cycles++;
         }
-        if ( ! getline( endStream, line ) ) {
+        if ( ! getline( endStream, line ) )
+        {
             passivate();
         }
         // cout << ".";
@@ -71,8 +80,8 @@ void Gen_rnd::inner_body( ) {
 #ifndef USERS_GENERATE_QUERYS
 
         int id_client = random_client->value();
-        // cout << "Estoy generando una query en " << time() << " para el cliente " << id_client << endl;
-        int * hashValue = new int(1);
+
+        BIGNUM * hashValue = h->GenerateKey(ptr);
         MessageWSE * wseQuery = new MessageWSE(NULL, hashValue, ptr, USER);
         clients[ id_client ]->AddMessageWse(wseQuery);
         clients[ id_client ]->activate();
@@ -83,80 +92,18 @@ void Gen_rnd::inner_body( ) {
 
 
 
-        double prob = SelectSource->value();
-        if (prob > porcentaje_peers) { //viene fuera de la red peer
-            // int *hashValue = h->GenerateKey(ptr);
-            int * hashValue = new int(1);
-            MessageWSE * wseQuery = new MessageWSE(NULL, hashValue, ptr, USER);
-
-            delete [] ptr;
-
-            (*wse)->add_request(wseQuery);
-            if ((*wse)->idle() && !(*wse)->get_busy())
-                (*wse)->activateAfter(current());
-        } else { // la consulta llega a un peer
-            envP2P = 1;
-            // gq = Peers[0]; // ============================
-
-            switch ((int)Peer_Selection) {
-                case 0: {
-                    //RANDOM SELECTION -> UNIFORM
-                    int rnd = rand() % NP;
-                    // gq = Peers[rnd]; // ============================
-                    ends[rnd]++;
-                    break;
-                }
-                case 1: {
-                    //ZIPF SELECTION -> CLUSTERING
-                    rand_val(1);
-                    int zipf = getZipf(1.0, NP - 1);
-                    //cout << "Peer " << zipf <<endl;
-                    fflush(stdout);
-                    // gq = Peers[zipf]; // ============================
-                    ends[zipf]++;
-                    break;
-                }
-                case 2: {
-                    // STATIC DEBUG PROPOSE
-                    // gq = Peers[chosen]; // ============================
-                    ends[chosen]++;
-                    chosen++;
-                    if (chosen >= NP)
-                        chosen = 0;
-                    break;
-                }
-            }
-
-            // int *hashValue = h->GenerateKey(ptr);
-            // cout << " Saliendo Query " << sentQueries << "-" <<id << endl;
-            // q = new Query(sentQueries, ptr, hashValue,  this->time()); // ==================
-            // cout << "debug1" << endl;
-            (*observer)->addNQueriesOut();
-            // cout << "debug2" << endl;
-            delete [] ptr;
-            //  cout << "debug3" << endl;
-            //cout << id << " : " << q->term << endl;
-
-            // (*gq)->add_query( q ); // ============================
-            //  cout << "debug5" << endl;
-            /*If node is sleeping it weaks it up*/
-
-            // if ( (*gq)->idle()) { // && !(*gq)->get_busy() ) // ============================
-            //     //   cout << "debug6" << endl;
-            //     (*gq)->activateAfter( current() );
-            // }
-            // cout << "debug7" << endl;
-        }//else
 
         ///CTE = arrival_time->value();
         sentQueries++;
         query_in_interval++;
 
         //cout<<"Generador envia "<<sentQueries<<endl;
-        if (sentQueries >= (*totalQueries) ) {
+        if (sentQueries >= (*totalQueries) )
+        {
             ends[NP] = 1; //Indica que se ha enviado la ultima consulta
             //cout<<"ULTIMA CONSULTA "<<endl;
-            if ( envP2P == 0 ) { //No se enviaron consultas a los peers
+            if ( envP2P == 0 )   //No se enviaron consultas a los peers
+            {
                 //Apaga replicadores
                 // for ( int i = 0 ; i < (int)Peers.size(); i++) { // ============================
                 //     gq = Peers[i];
@@ -169,12 +116,15 @@ void Gen_rnd::inner_body( ) {
 
         }
 
-        if (FLASH_CROWD) {
+        if (FLASH_CROWD)
+        {
 
             double elapsed_time = this->time() - phase_time;
             //    cout << "elapsed: " << elapsed_time << endl;
-            if (!phase) {
-                if (elapsed_time > NORMAL_TIME) {
+            if (!phase)
+            {
+                if (elapsed_time > NORMAL_TIME)
+                {
                     cout << "change to crowd " << this->time() << ", processed: " << sentQueries << endl;
                     phase = true;
                     phase_time = this->time();
@@ -183,8 +133,11 @@ void Gen_rnd::inner_body( ) {
                     arrival_time = new rngExp("Arrive Time", newRate);
                     arrival_time->reset();
                 }
-            } else {
-                if (elapsed_time > CROWD_TIME) {
+            }
+            else
+            {
+                if (elapsed_time > CROWD_TIME)
+                {
                     cout << "change to normal" << this->time() << ", processed: " << sentQueries << endl;
                     phase = false;
                     phase_time = this->time();
@@ -204,7 +157,8 @@ void Gen_rnd::inner_body( ) {
     }
 }
 
-int Gen_rnd::getZipf (int alpha, int n) {
+int Gen_rnd::getZipf (int alpha, int n)
+{
 
     static bool first = true;      // Static first time flag
     static double c = 0;          // Normalization constant
@@ -214,7 +168,8 @@ int Gen_rnd::getZipf (int alpha, int n) {
     int i;                        // Loop counter
 
     // Compute normalization constant on first call only
-    if (first == true) {
+    if (first == true)
+    {
         for (i = 1; i <= n; i++)
             c = c + (1.0 / pow((double) i, alpha));
         c = 1.0 / c;
@@ -223,19 +178,23 @@ int Gen_rnd::getZipf (int alpha, int n) {
     }
 
     // Pull a uniform random number (0 < z < 1)
-    do {
+    do
+    {
         z = (((double) rand()) / (RAND_MAX + 1.0));
         // cout << "Z VALUE " << z << endl;
-    } while ((z == 0) || (z == 1));
+    }
+    while ((z == 0) || (z == 1));
     // Map z to the value
     sum_prob = 0;
-    for (i = 1; i <= n; i++) {
+    for (i = 1; i <= n; i++)
+    {
         //      cout <<"Z " << z << endl;
         //     cout << "SUM PROB: " << sum_prob << endl;
         //      cout << "C " << c <<endl;
         //      cout << "ALPHA " << alpha << endl;
         sum_prob = sum_prob + (c / pow((double) i, alpha));
-        if (sum_prob >= z) {
+        if (sum_prob >= z)
+        {
             zipf_value = i;
             break;
         }
@@ -247,12 +206,15 @@ int Gen_rnd::getZipf (int alpha, int n) {
 }
 
 
-void Gen_rnd::setQueryRate( int newRate) {
+void Gen_rnd::setQueryRate( int newRate)
+{
     // newRate queries/sec
-    switch (QUERY_RATE_STRATEGY) {
+    switch (QUERY_RATE_STRATEGY)
+    {
         // DELTA T TIME
         case 0:
-            if (this->time() > QUERY_DELTA_T ) {
+            if (this->time() > QUERY_DELTA_T )
+            {
                 double lambda = (1.0 / newRate);
                 delete arrival_time;
                 arrival_time = new rngExp("Arrive Time", lambda);
@@ -262,7 +224,8 @@ void Gen_rnd::setQueryRate( int newRate) {
 
         // Q QUERIES
         case 1:
-            if ( (lastStepQueries + QUERY_DELTA_Q) < sentQueries) {
+            if ( (lastStepQueries + QUERY_DELTA_Q) < sentQueries)
+            {
                 lastStepQueries = sentQueries;
                 double lambda = (1.0 / newRate);
                 delete arrival_time;
@@ -274,7 +237,8 @@ void Gen_rnd::setQueryRate( int newRate) {
 }
 
 
-double Gen_rnd::rand_val(int seed) {
+double Gen_rnd::rand_val(int seed)
+{
     const long a = 16807; // Multiplier
     const long m = 2147483647;// Modulus
     const long q = 127773;// m div a
@@ -285,7 +249,8 @@ double Gen_rnd::rand_val(int seed) {
     long x_new; // New x value
 
     // Set the seed if argument is non-zero and then return zero
-    if (seed > 0) {
+    if (seed > 0)
+    {
         x = seed;
         return (0.0);
     }

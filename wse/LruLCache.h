@@ -23,7 +23,7 @@ protected:
    priority_queue <LCache*, vector<LCache*>, CompareLCache> pq;
 
    // Cache is form with entries
-   map<BIGNUM* /*key*/,LCache* /*ptr*/> cache;
+   map<BigInteger* /*key*/,LCache* /*ptr*/> cache;
    int *cacheSize;
    int freeCache;
 
@@ -46,7 +46,7 @@ public:
 
    ~LRULCACHE( )
    {
-      map<BIGNUM*, LCache*>::iterator it;
+      map<BigInteger*, LCache*>::iterator it;
       it= cache.begin();
 
       while(cache.size()>0)
@@ -73,22 +73,22 @@ public:
       return *cacheSize;
    }
    
-   bool hit( BIGNUM* /*key*/ );
-  // void insert(string,  BIGNUM* /*key*/, int/*size*/, NodeEntry*, NodeEntry*, long int );
+   bool hit( BigInteger* /*key*/ );
+  // void insert(string,  BigInteger* /*key*/, int/*size*/, NodeEntry*, NodeEntry*, long int );
   
    void insertLCache(LCache*);
 
-   void update( BIGNUM* /*key*/ );
+   void update( BigInteger* /*key*/ );
    bool isFreeSpace( int/*size*/ );
    void createSpace( int/*size*/ );
    void remove(LCache*);
-   int count(BIGNUM* );
+   int count(BigInteger* );
    void getSize( )
    {
       cout << "LruLCache: cache.size()=" << cache.size( ) << endl;
    }
 
-   LCache* check(BIGNUM* /* key*/ );
+   LCache* check(BigInteger* /* key*/ );
 
 };
 #endif

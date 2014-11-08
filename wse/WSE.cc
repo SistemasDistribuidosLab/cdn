@@ -52,20 +52,25 @@ void WSE::inner_body(void) {
     }
 }
 
-int WSE::getVersion(string s, int *b) {
+int WSE::getVersion(string s, BIGNUM * b)
+{
     int ttl;
-    Answer *a = ANSWERS->check(s);
-    if (a != NULL) {
-        if (a->getTimeOut() < this->time()) {
+    Answer * a = ANSWERS->check(s);
+    if (a != NULL)
+    {
+        if (a->getTimeOut() < this->time())
+        {
             ttl = (this->time()) + TTL_WSE;
             // TTL es igual a new random number
             a->setNewVersion(ttl);
             //version +1
         }
-    } else {
+    }
+    else
+    {
         // TTL es igual a new random number y version = 1
         ttl = (this->time()) + TTL_WSE;
-        Answer *tmp = new Answer(this->time(), s, b, ttl, 1, SIZE_ANSWER);
+        Answer * tmp = new Answer(this->time(), s, b, ttl, 1, SIZE_ANSWER);
         a = tmp;
         ANSWERS->insertAnswer(tmp);
     }

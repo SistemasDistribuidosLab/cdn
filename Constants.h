@@ -21,6 +21,7 @@ extern int DURACION_SIMULACION;
 
 #define WSECACHESIZE 8000
 #define SIZE_ANSWER 1
+#define STATIC_TIMEOUT 100 // cambiar por dinamico
 
 #define TTL_WSE 180 // 3min
 

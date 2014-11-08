@@ -2,11 +2,11 @@
 #include "LruLCache.h"
 
 
-LCache* LRULCACHE::check(BIGNUM* hashValue)
+LCache* LRULCACHE::check(BigInteger* hashValue)
 {
    if(hit(hashValue))
    {
-      map<BIGNUM*,LCache*>::iterator iter;
+      map<BigInteger*,LCache*>::iterator iter;
     
       for(iter = cache.begin(); iter != cache.end(); iter ++)	
       {
@@ -24,7 +24,7 @@ LCache* LRULCACHE::check(BIGNUM* hashValue)
    return NULL;
 }
 
-bool LRULCACHE::hit( BIGNUM* hashValue )
+bool LRULCACHE::hit( BigInteger* hashValue )
 {
    if( cache.empty( ) )
       return false;
@@ -36,10 +36,10 @@ bool LRULCACHE::hit( BIGNUM* hashValue )
 }
 
 
-int LRULCACHE::count(BIGNUM* b)
+int LRULCACHE::count(BigInteger* b)
 {
    int count =0;
-   map<BIGNUM*, LCache*>::iterator it;
+   map<BigInteger*, LCache*>::iterator it;
    it=cache.begin();
    while(it!=cache.end())
    {
@@ -53,7 +53,7 @@ int LRULCACHE::count(BIGNUM* b)
 }
 
 //---------------------------------------------------
-//void LRULCACHE::insert( string key, BIGNUM* hashValue, int size, NodeEntry* loc, NodeEntry* ns, long int timestamps )
+//void LRULCACHE::insert( string key, BigInteger* hashValue, int size, NodeEntry* loc, NodeEntry* ns, long int timestamps )
 //{
  //  if ( cache.count( hashValue )!= 0 )
  //  {
@@ -92,13 +92,13 @@ void LRULCACHE::insertLCache(LCache *e)
    ptr =e;
    pq.push(ptr);
    freeCache-=e->size;
-   cache.insert(pair<BIGNUM*, LCache*>(e->hashValue,e));
+   cache.insert(pair<BigInteger*, LCache*>(e->hashValue,e));
    }
 }
 
 //---------------------------------------------------
 
-void LRULCACHE::update( BIGNUM* hashValue )
+void LRULCACHE::update( BigInteger* hashValue )
 {
   //marcar la entrada
  //  cache[hashValue]->update(timestamps);
@@ -112,7 +112,7 @@ void LRULCACHE::update( BIGNUM* hashValue )
   //datos
  // cache[key] = ptr;
 
-   map<BIGNUM*,LCache*>::iterator it;
+   map<BigInteger*,LCache*>::iterator it;
    it=cache.begin();
 
    while(it!=cache.end())
@@ -143,14 +143,14 @@ bool LRULCACHE::isFreeSpace( int size )
 void LRULCACHE::remove(LCache* e)
 {
    freeCache +=e->size;
-   map<BIGNUM*,LCache*>::iterator it;
+   map<BigInteger*,LCache*>::iterator it;
    it=cache.begin();
 
    while(it!=cache.end())
    {
       if(BN_cmp(e->hashValue, it->first)==0)
       { 
-         BIGNUM* tmp = it->first;
+         BigInteger* tmp = it->first;
 	 cache.erase(it->first);
 	 delete tmp;
       }

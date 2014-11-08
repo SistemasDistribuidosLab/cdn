@@ -33,7 +33,6 @@ class Message {
             this->type_to = type_to;
 
             this->creation_time = creation_time;
-            this->count_pointer = count_pointer;
 
             this->id = Message::instances;
             Message::instances++;

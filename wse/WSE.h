@@ -48,7 +48,7 @@ class WSE: public Node {
 
         long int getTTL(int *);
         //int getVersion(int*);
-        int getVersion(string, int *);
+        int getVersion(string, BIGNUM *);
         long int randomTTL();
 };
 

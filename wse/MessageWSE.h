@@ -3,6 +3,10 @@
 
 #include "../glob.h"
 #include "ClientWSE.h"
+#include <openssl/bn.h>
+#include <string>
+
+using namespace std;
 
 // Message sent by WSE
 
@@ -12,7 +16,7 @@ class MessageWSE {
 
         handle<ClientWSE> *src;
         string key;
-        int *query;
+        BIGNUM *query;
 
         int version;
 
@@ -20,15 +24,13 @@ class MessageWSE {
 
 
         ~MessageWSE() {
-            free( src);
-            free(query);
-            // BN_free(query);
+            //        free( src);
+            BN_free(query);
         }
 
-        MessageWSE(handle<ClientWSE> *_src,  int *_query, string _key, int _srcK) {
+        MessageWSE(handle<ClientWSE> *_src,  BIGNUM *_query, string _key, int _srcK) {
             src    = _src;
-            // query  = BN_dup(_query);
-            query = new int(*_query);
+            query  = BN_dup(_query);
             key.assign(_key);
             source = _srcK;
         }
@@ -36,12 +38,12 @@ class MessageWSE {
         string getKey() {
             return key;
         }
-        int *getQuery() {
+        BIGNUM *getQuery() {
             return query;
         }
 
         void setAnswer(int _version) {
-            version = version;
+            version = _version;
         }
 
         int getVersion() {
