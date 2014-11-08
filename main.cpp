@@ -91,7 +91,7 @@ class Simulation : public process {
 
             char traces[2048];
             strcpy(traces, "../RISE_16M.DAT");
-            strcpy(traces, "../partial3.DAT");
+            // strcpy(traces, "../partial3.DAT");
             // strcpy(traces, "../../../Descargas/partial3.DAT");
             unsigned long int totalQueries = 1000000;
             int Peer_Selection = 0;

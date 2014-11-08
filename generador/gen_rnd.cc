@@ -125,7 +125,7 @@ void Gen_rnd::inner_body( )
             {
                 if (elapsed_time > NORMAL_TIME)
                 {
-                    cout << "change to crowd " << this->time() << ", processed: " << sentQueries << endl;
+                    // cout << "change to crowd " << this->time() << ", processed: " << sentQueries << endl;
                     phase = true;
                     phase_time = this->time();
                     double newRate = (1.0 / CROWDED_RATE);
@@ -138,7 +138,7 @@ void Gen_rnd::inner_body( )
             {
                 if (elapsed_time > CROWD_TIME)
                 {
-                    cout << "change to normal" << this->time() << ", processed: " << sentQueries << endl;
+                    // cout << "change to normal" << this->time() << ", processed: " << sentQueries << endl;
                     phase = false;
                     phase_time = this->time();
                     double newRate = (1.0 / NORMAL_RATE);

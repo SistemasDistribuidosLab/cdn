@@ -18,13 +18,11 @@ private:
     double busy_time;
     unsigned int processed_querys;
     unsigned int *received_querys_from_count;
+    unsigned int received_queries_by_clients;
     unsigned int received_queries_by_clients_cycle;
     unsigned int cache_hits_received_queries_by_clients_cycle;
     unsigned int cache_miss_received_queries_by_clients_cycle;
     LRU *ANSWERS;
-    typedef plb::LRUCacheH4<BIGNUM *, Entry *> lru_cache;
-    lru_cache * cache;
-
 public:
     EdgeServer(const string &name, int id, int type) : Node(name, id, type)
     {
@@ -37,19 +35,19 @@ public:
             received_querys_from_count[ i ] = 0;
         }
 
+        this->received_queries_by_clients                  = 0;
         this->received_queries_by_clients_cycle            = 0;
         this->cache_hits_received_queries_by_clients_cycle = 0;
         this->cache_miss_received_queries_by_clients_cycle = 0;
 
         int cacheSize = WSECACHESIZE;
         ANSWERS = new LRU(&cacheSize);
-        cout << "================ LRU: " << cacheSize << endl;
-        cache = new lru_cache(WSECACHESIZE);
     }
     ~EdgeServer()
     {
         delete ANSWERS;
     }
+    int GetUnprocessedMessageId(MessageWSE *);
     double GetIdleTime();
     double GetBusyTime();
     double GetProcessedQuerys();
@@ -59,16 +57,17 @@ public:
     void SumToBusyTime(double);
     void SumToProcessedQuerys();
     void ReceiveANewMessageFromClient(int);
-    Message *GetMessage();
-    void AddANewUnprocessedMessage(Message *message);
+    Message *GetMessageFromMessageStack();
+    void AddANewUnprocessedMessage(Message *);
     unsigned int GetReceivedQueriesByClients();
+    unsigned int GetReceivedQueriesByClientsCycle();
     int getVersion(string, int *);
     void AddANewCacheHit();
     void AddANewCacheMiss();
-    unsigned int GetCacheHitsCycle();
-    unsigned int GetCacheMissCycle();
+    unsigned int GetCacheHitsReceivedQueriesByClientsCycle();
+    unsigned int GetCacheMissReceivedQueriesByClientsCycle();
     void ResetCycle();
-    long int getTTL(BIGNUM *b);
-    long int getTimeIncremental(long int last_TTL);
+    long int getTTL(BIGNUM *);
+    long int getTimeIncremental(long int);
 };
 #endif

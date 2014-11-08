@@ -8,23 +8,6 @@
 
 using namespace std;
 
-double EdgeServer::GetIdleTime()
-{
-    return this->idle_time;
-}
-double EdgeServer::GetBusyTime()
-{
-    return this->busy_time;
-}
-double EdgeServer::GetProcessedQuerys()
-{
-    return this->processed_querys;
-}
-int EdgeServer::GetQuerysByClient(int j)
-{
-    return received_querys_from_count[ j ];
-}
-
 void EdgeServer::inner_body(void)
 {
     double time_aux;
@@ -37,7 +20,7 @@ void EdgeServer::inner_body(void)
         while (!message_stack.empty())
         {
             time_aux = time();
-            Message *message = this->GetMessage();
+            Message *message = this->GetMessageFromMessageStack();
 
             // cout << time() << " - Edge Server " << this->GetId() << ": Mensaje Enviado en tiempo " << message->GetCreationTime() << " desde el cliente " << message->GetIdFrom() << ": " << message->GetMessage() << endl;
             hold(processing_time_per_query);
@@ -46,68 +29,50 @@ void EdgeServer::inner_body(void)
 
             MessageWSE *message_wse = message->GetMessagePointer();
 
-
-            // cout << "=========================== " << time() << " ========================" << endl;
             int ttl;
-            // if (message->GetTypeFrom() == NODE_ORIGIN_SERVER)
-            // {
-            //     cout << "WSE: ";
-            // }
-            // cout << message_wse->getKey() << endl;
-            cout << "====================-------------------------------" << endl;
-            cout << "Query: " << BN_bn2dec(message_wse->getQuery()) << endl;
             Entry *a = ANSWERS->check( message_wse->getQuery() );
 
-            // lru_cache::const_iterator it = cache->find( message_wse->getQuery() );
-            // lru_cache::const_iterator it = cache->mru_begin();
-            // cache->find( message_wse->getQuery() );
-
-            // if (it != cache->end())
-            // {
-            //     cout << "HIT" << endl;
-            // }
-            // if (a != NULL)
-            //     cout << "Ttl: " << a->getTimeOut() << endl;
             if (message->GetTypeFrom() == NODE_CLIENT)
             {
                 this->ReceiveANewMessageFromClient( message->GetIdFrom() );
                 this->AddANewUnprocessedMessage(message);
                 this->SumToProcessedQuerys();
-                // cout << "A" << endl;
                 if (a != NULL && a->old( time() ))
                 {
-                    // cout << "B" << endl;
                     ANSWERS->remove(a);
                     a = NULL;
                 }
                 if (a == NULL)
                 {
-                    // cout << "C" << endl;
                     this->AddANewCacheMiss();
-                    // message_wse->setAnswer( a->getVersion() );
-                    this->SendMessage(new Message(this->GetId(), this->GetType(), 0,
-                                                  NODE_ORIGIN_SERVER, message->GetCreationTime(), message_wse));
+                    this->SendMessage(
+                        new Message(
+                            this->GetId(),
+                            this->GetType(),
+                            0,
+                            NODE_ORIGIN_SERVER,
+                            message->GetCreationTime(),
+                            message_wse)
+                    );
                 }
                 else
                 {
-                    // cout << "D" << endl;
                     this->AddANewCacheHit();
-                    this->SendMessage(new Message(this->GetId(), this->GetType(), message->GetIdFrom(),
-                                                  message->GetTypeFrom(), message->GetCreationTime(), message_wse));
+                    this->SendMessage(
+                        new Message(
+                            this->GetId(),
+                            this->GetType(),
+                            message->GetIdFrom(),
+                            message->GetTypeFrom(),
+                            message->GetCreationTime(),
+                            message_wse)
+                    );
                 }
             }
 
             else if (message->GetTypeFrom() == NODE_ORIGIN_SERVER)
             {
-                int id_message = -1;
-                for (int id = 0; id < unprocessed_message_stack.size(); ++id)
-                {
-                    if (unprocessed_message_stack.at(id)->GetMessagePointer() == message->GetMessagePointer())
-                    {
-                        id_message = id;
-                        break;
-                    }
-                }
+                int id_message = GetUnprocessedMessageId(message->GetMessagePointer());
                 Message *original = unprocessed_message_stack.at(id_message);
                 unprocessed_message_stack.erase(unprocessed_message_stack.begin() + id_message);
 
@@ -133,6 +98,18 @@ void EdgeServer::inner_body(void)
     }
 }
 
+int EdgeServer::GetUnprocessedMessageId(MessageWSE *message_pointer)
+{
+    for (int id = 0; id < unprocessed_message_stack.size(); ++id)
+    {
+        if (unprocessed_message_stack.at(id)->GetMessagePointer() == message_pointer)
+        {
+            return id;
+        }
+    }
+    return -1;
+}
+
 void EdgeServer::SumToIdleTime(double add_time)
 {
     this->idle_time += add_time;
@@ -146,6 +123,7 @@ void EdgeServer::SumToBusyTime(double add_time)
 void EdgeServer::SumToProcessedQuerys()
 {
     this->processed_querys++;
+    this->received_queries_by_clients++;
     this->received_queries_by_clients_cycle++;
 }
 
@@ -159,7 +137,7 @@ void EdgeServer::AddANewUnprocessedMessage(Message *message)
     this->unprocessed_message_stack.push_back(message);
 }
 
-Message *EdgeServer::GetMessage()
+Message *EdgeServer::GetMessageFromMessageStack()
 {
     Message *message = this->message_stack.back();
     this->message_stack.pop_back();
@@ -168,33 +146,37 @@ Message *EdgeServer::GetMessage()
 
 unsigned int EdgeServer::GetReceivedQueriesByClients()
 {
+    return this->received_queries_by_clients;
+}
+
+unsigned int EdgeServer::GetReceivedQueriesByClientsCycle()
+{
     return this->received_queries_by_clients_cycle;
 }
 
 void EdgeServer::AddANewCacheHit()
 {
-    cout << "HIT" << endl;
     this->cache_hits_received_queries_by_clients_cycle++;
 }
 
 void EdgeServer::AddANewCacheMiss()
 {
-    cout << "MISS" << endl;
     this->cache_miss_received_queries_by_clients_cycle++;
 }
 
-unsigned int EdgeServer::GetCacheHitsCycle()
+unsigned int EdgeServer::GetCacheHitsReceivedQueriesByClientsCycle()
 {
     return this->cache_hits_received_queries_by_clients_cycle;
 }
 
-unsigned int EdgeServer::GetCacheMissCycle()
+unsigned int EdgeServer::GetCacheMissReceivedQueriesByClientsCycle()
 {
     return this->cache_miss_received_queries_by_clients_cycle;
 }
 
 void EdgeServer::ResetCycle()
 {
+    this->received_queries_by_clients_cycle            = 0;
     this->cache_hits_received_queries_by_clients_cycle = 0;
     this->cache_miss_received_queries_by_clients_cycle = 0;
 }
@@ -226,4 +208,23 @@ long int EdgeServer::getTimeIncremental(long int last_TTL)
     if ((last_TTL - this->time()) > MAX_TTL)
         last_TTL = this->time() + MAX_TTL;
     return last_TTL;
+}
+
+/* ========== GETTERS AND SETTERS ========== */
+
+double EdgeServer::GetIdleTime()
+{
+    return this->idle_time;
+}
+double EdgeServer::GetBusyTime()
+{
+    return this->busy_time;
+}
+double EdgeServer::GetProcessedQuerys()
+{
+    return this->processed_querys;
+}
+int EdgeServer::GetQuerysByClient(int j)
+{
+    return received_querys_from_count[ j ];
 }
