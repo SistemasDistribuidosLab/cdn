@@ -4,7 +4,6 @@
 #include <cmath>
 #include <openssl/sha.h>
 #include <sstream>
-#include "../bigint/BigInteger.hh"
 #include <openssl/bn.h>
 // #include "../applicationLayer/TlcProtocol.h"
 // #include "../applicationLayer/Query.h"

@@ -7,7 +7,6 @@
 #include "../Observer.h"
 #include "../wse/WSE.h"
 #include "../wse/MessageWSE.h"
-#include "../bigint/BigInteger.hh"
 
 class Client;
 
