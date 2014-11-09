@@ -46,6 +46,7 @@ void Client::inner_body(void) {
             MessageWSE * message_wse = message_wse_stack.back();
             message_wse_stack.pop_back();
 
+            this->number_of_querys_sended++;
             Message * message = new Message(this->GetId(), NODE_CLIENT, edge_server_to, NODE_EDGE_SERVER, time(), message_wse);
             delay = this->SendMessage(message);
             unprocessed_message_stack.push_back(message);

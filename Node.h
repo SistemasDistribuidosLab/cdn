@@ -19,16 +19,18 @@ class Node : public process {
         int isp;
         double delay_acum;
         unsigned int num_messages_sended;
+        unsigned int num_messages_received;
     protected:
         vector<Message *> message_stack;
         vector<Message *> unprocessed_message_stack;
     public:
 
         Node(const string &name, int id, int type) : process(name) {
-            this->id                  = id;
-            this->type                = type;
-            this->delay_acum          = 0;
-            this->num_messages_sended = 0;
+            this->id                    = id;
+            this->type                  = type;
+            this->delay_acum            = 0;
+            this->num_messages_received = 0;
+            this->num_messages_sended   = 0;
         }
         ~Node() { }
         int GetId();
@@ -42,14 +44,12 @@ class Node : public process {
         unsigned int GetNumMessagesSended(){
             return this->num_messages_sended;
         }
-        void SumDelayAcum(double delay){
-            this->delay_acum += delay;
-            this->num_messages_sended++;
+        unsigned int GetNumMessagesReceived(){
+            return this->num_messages_received;
         }
-        virtual void AddMessage(Message *message) {
-            message_stack.push_back(message);
-        }
-        double SendMessage(Message *message);
+        void SumDelayAcum(double delay);
+        virtual void AddMessage(Message *message);
+        virtual double SendMessage(Message *message);
         virtual void inner_body(void) = 0;
 };
 

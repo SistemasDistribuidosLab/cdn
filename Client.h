@@ -13,6 +13,7 @@ class Client : public Node {
         Dns *dns;
         int number_of_messages_sended_to_dns;
         int number_of_querys_sended_this_cycle;
+        unsigned int number_of_querys_sended;
         ifstream *endStream;
         vector<MessageWSE*> message_wse_stack;
     public:
@@ -21,6 +22,7 @@ class Client : public Node {
             this->arrival_time = arrival_time;
             this->querys_send = 0;
             this->number_of_messages_sended_to_dns = 0;
+            this->number_of_querys_sended = 0;
             this->number_of_querys_sended_this_cycle = 0;
             this->endStream = endStream;
         }
@@ -40,6 +42,9 @@ class Client : public Node {
         int GetEdgeServerId();
         int GetNumberOfMessagesSendedToDns();
         void HaveToSendAMessage();
+        unsigned int GetNumberOfQueriesSended(){
+            return this->number_of_querys_sended;
+        }
 };
 
 #endif

@@ -201,7 +201,7 @@ int main(int argc, char const * argv[]) {
     // Total consultas enviadas
     unsigned int total_num_messages_sended = 0;
     for (int i = 0; i < NUM_CLIENTS; ++i) {
-        total_num_messages_sended += clients[ i ]->GetNumMessagesSended();
+        total_num_messages_sended += clients[ i ]->GetNumberOfQueriesSended();
     }
     cout << "\tTotal querys sended:   " << total_num_messages_sended << endl;
     cout << fixed << setprecision(2);
