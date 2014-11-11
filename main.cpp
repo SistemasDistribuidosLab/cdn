@@ -10,6 +10,8 @@
 #include "generador/gen_rnd.h"
 
 #include <vector>
+#include <ctime>
+#include <sstream>
 
 using namespace std;
 
@@ -18,124 +20,196 @@ int NUM_EDGE_SERVERS;
 int DURACION_SIMULACION;
 int ARRIVAL_TIME;
 
-double isps[3][3] = {
+double isps[3][3] =
+{
     {0.1, 0.5, 0.5},
     {0.5, 0.1, 0.5},
     {0.5, 0.5, 0.1},
 };
 
 // vector< handle<Client> > clients;
-handle<Client> * clients;
-handle<EdgeServer> * edge_servers;
+handle<Client> *clients;
+handle<EdgeServer> *edge_servers;
 
-class Simulation : public process {
-    public:
-        Simulation(const string &name) : process(name) { }
-        ~Simulation() { }
-        void inner_body() {
-            rng<double> * arrival_time;
-            rng<double> * random_client;
-            arrival_time = new rngExp( "Arrive Time", ARRIVAL_TIME );
-            random_client = new rngUniform("SelectSource", 0, 100);
+class Simulation : public process
+{
+public:
+    Simulation(const string &name) : process(name) { }
+    ~Simulation() { }
+    void inner_body()
+    {
+        rng<double> *arrival_time;
+        rng<double> *random_client;
+        arrival_time = new rngExp( "Arrive Time", ARRIVAL_TIME );
+        random_client = new rngUniform("SelectSource", 0, 100);
 
-            // Iniciar Edge Servers
-            edge_servers = new handle<EdgeServer>[NUM_EDGE_SERVERS];
-            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
-                edge_servers[ i ] = new EdgeServer("edge_server", i, NODE_EDGE_SERVER);
-            }
-
-            ifstream * endStream;
-            // Iniciar Clientes
-            clients = new handle<Client>[ NUM_CLIENTS ];
-            for (int i = 0; i < NUM_CLIENTS; ++i) {
-                clients[ i ] = new Client("cliente", i, NODE_CLIENT, arrival_time, endStream);
-            }
-
-            handle<WSE> wse = new WSE("wse");
-            wse->SetIsp( 0 );
-
-            // Iniciar Transporte
-            handle<Transport> transport = new Transport("transporte", 0, 0);
-            transport->SetClients(clients);
-            transport->SetEdgeServers(edge_servers);
-            transport->SetWse(&wse);
-            Transport::SetIsps(isps);
-            transport->activate();
-
-
-
-            Dns * dns = new Dns();
-
-            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
-                edge_servers[ i ]->SetTransport(&transport);
-                edge_servers[ i ]->SetIsp( ((double)i / (double)NUM_EDGE_SERVERS) * NUM_ISP );
-            }
-            for (int i = 0; i < NUM_CLIENTS; ++i) {
-                clients[ i ]->SetTransport(&transport);
-                clients[ i ]->SetIsp( ((double)i / (double)NUM_CLIENTS) * NUM_ISP );
-                clients[ i ]->SetDns(dns);
-            }
-
-            wse->SetTransport(&transport);
-            wse->activate();
-            
-            handle<Stats> stats = new Stats("stats", DURACION_SIMULACION, edge_servers);
-            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
-                edge_servers[ i ]->activate();
-            }
-            for (int i = 0; i < NUM_CLIENTS; ++i) {
-                clients[ i ]->activate();
-            }
-            stats->activate();
-
-
-            char traces[2048];
-            strcpy(traces, "../RISE_16M.DAT");
-            // strcpy(traces, "../partial3.DAT");
-            // strcpy(traces, "../../../Descargas/partial3.DAT");
-            unsigned long int totalQueries = 1000000;
-            int Peer_Selection = 0;
-            int Nuser = 0;
-            int nodes = 100;
-            handle<Observer> obs = new Observer(nodes, "OBSERVER");
-            int * ends = new int[nodes + 1];
-            for ( int i = 0; i < nodes + 1; i++)
-                ends[i] = 0;
-
-            ofstream * chart_file = new ofstream();
-            chart_file->open ("query_chart");
-
-            ofstream * querys_sended_stream = new ofstream();
-            querys_sended_stream->open ("querys_sended_stream");
-
-            handle<Gen_rnd> generator = new Gen_rnd("GENERATOR", traces, &totalQueries, nodes,
-                                                    &obs, ends, Nuser, &wse, Peer_Selection, chart_file, querys_sended_stream);
-            generator->SetClients(clients);
-            generator->activate();
-            hold(DURACION_SIMULACION);
-
-            chart_file->close();
-            querys_sended_stream->close();
-            stats->CloseAll();
-
-            // Generar procecomandos
-            ofstream * comandos_charts_stream = new ofstream();
-            comandos_charts_stream->open ("comandos_charts");
-
-            (*comandos_charts_stream) << "plot ";
-            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
-                (*comandos_charts_stream) << "'querys_sended_stream' using 1:" << (i + 2) << " with lines, ";
-            }
-            (*comandos_charts_stream) << endl;
-            // ! Generar comandos
-
-            end_simulation( );
+        // Iniciar Edge Servers
+        edge_servers = new handle<EdgeServer>[NUM_EDGE_SERVERS];
+        for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+        {
+            edge_servers[ i ] = new EdgeServer("edge_server", i, NODE_EDGE_SERVER);
         }
+
+        // Iniciar Clientes
+        clients = new handle<Client>[ NUM_CLIENTS ];
+        for (int i = 0; i < NUM_CLIENTS; ++i)
+        {
+            clients[ i ] = new Client("cliente", i, NODE_CLIENT, arrival_time);
+        }
+
+        handle<WSE> wse = new WSE("wse");
+        wse->SetIsp( 0 );
+
+        // Iniciar Transporte
+        handle<Transport> transport = new Transport("transporte", 0, 0);
+        transport->SetClients(clients);
+        transport->SetEdgeServers(edge_servers);
+        transport->SetWse(&wse);
+        Transport::SetIsps(isps);
+        transport->activate();
+
+
+
+        Dns *dns = new Dns();
+
+        for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+        {
+            edge_servers[ i ]->SetTransport(&transport);
+            edge_servers[ i ]->SetIsp( ((double)i / (double)NUM_EDGE_SERVERS) * NUM_ISP );
+        }
+        for (int i = 0; i < NUM_CLIENTS; ++i)
+        {
+            clients[ i ]->SetTransport(&transport);
+            clients[ i ]->SetIsp( ((double)i / (double)NUM_CLIENTS) * NUM_ISP );
+            clients[ i ]->SetDns(dns);
+        }
+
+        wse->SetTransport(&transport);
+        wse->activate();
+
+        handle<Stats> stats = new Stats("stats", DURACION_SIMULACION, edge_servers);
+        for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+        {
+            edge_servers[ i ]->activate();
+        }
+        for (int i = 0; i < NUM_CLIENTS; ++i)
+        {
+            clients[ i ]->activate();
+        }
+        stats->activate();
+
+
+        char traces[2048];
+        strcpy(traces, "../RISE_16M.DAT");
+        // strcpy(traces, "../partial3.DAT");
+        // strcpy(traces, "../../../Descargas/partial3.DAT");
+        unsigned long int totalQueries = 1000000;
+        int Peer_Selection = 0;
+        int Nuser = 0;
+        int nodes = 100;
+        int *ends = new int[nodes + 1];
+        for ( int i = 0; i < nodes + 1; i++)
+            ends[i] = 0;
+
+        ofstream *chart_file = new ofstream();
+        chart_file->open ("query_chart");
+
+        ofstream *querys_sended_stream = new ofstream();
+        querys_sended_stream->open ("querys_sended_stream");
+
+        handle<Gen_rnd> generator = new Gen_rnd(
+            "GENERATOR",
+            traces,
+            &totalQueries,
+            nodes,
+            ends,
+            Nuser,
+            &wse,
+            Peer_Selection,
+            chart_file,
+            querys_sended_stream
+        );
+
+        generator->SetClients(clients);
+        generator->activate();
+        hold(DURACION_SIMULACION);
+
+        chart_file->close();
+        querys_sended_stream->close();
+        stats->CloseAll();
+
+        // Generar procecomandos
+        ofstream *comandos_charts_stream = new ofstream();
+        comandos_charts_stream->open ("comandos_charts");
+
+        (*comandos_charts_stream) << "plot ";
+        for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+        {
+            (*comandos_charts_stream) << "'querys_sended_stream' using 1:" << (i + 2) << " with lines, ";
+        }
+        (*comandos_charts_stream) << endl;
+        // ! Generar comandos
+
+        end_simulation( );
+    }
 };
 
 void GenerateGraph();
 
-int main(int argc, char const * argv[]) {
+string GenerarResumen(double elapsed_secs)
+{
+    stringstream ss;
+    ss << "Clientes:         " << NUM_CLIENTS << endl;
+    ss << "Servidores:    " << NUM_EDGE_SERVERS << endl;
+    ss << "Tiempo simulado: " << DURACION_SIMULACION << endl;
+    ss << "Tiempo de ejecucion: " << elapsed_secs << " ( 1 -> " << DURACION_SIMULACION / elapsed_secs << ")" << endl;
+    ss << endl;
+    ss << "===== Statistics =====" << endl;
+    ss << "Edge Servers:" << endl;
+    double total_idle_time_percentage  = 0;
+    double total_busy_time_percentage  = 0;
+
+    for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+    {
+        ss << fixed << setprecision(2);
+        double idle_time = edge_servers[ i ]->GetIdleTime();
+        double busy_time = edge_servers[ i ]->GetBusyTime();
+        double total_time = idle_time + busy_time;
+
+        double idle_time_percentage = total_time == 0 ? -1 : ( (idle_time / total_time) * 100 );
+        double busy_time_percentage = total_time == 0 ? -1 : ( (busy_time / total_time) * 100 );
+
+        total_idle_time_percentage += idle_time_percentage;
+        total_busy_time_percentage += busy_time_percentage;
+        ss << "\tEdge Server " << i << endl;
+        // ss << "\t\tIdle Time:  " << idle_time << " s" << endl;
+        // ss << "\t\tBusy Time:  " << busy_time << " s" << endl << endl;
+        ss << "\t\tIdle Percentage:  " << idle_time_percentage << " %" << endl;
+        ss << "\t\tBusy Percentage:  " << busy_time_percentage << " %" << endl;
+        ss << fixed << setprecision(0);
+        ss << "\t\tProcessed Querys: " << edge_servers[ i ]->GetProcessedQuerys() << endl;
+    }
+    ss << endl;
+    ss << "\tAverage Idle Percentage: " << ( (total_idle_time_percentage / NUM_EDGE_SERVERS) ) << "%" << endl;
+    ss << "\tAverage Processing Time: " << ( (total_busy_time_percentage / NUM_EDGE_SERVERS) ) << "%" << endl;
+    ss << endl;
+
+    ss << "Clients:" << endl;
+
+    // Total consultas enviadas
+    unsigned int total_num_messages_sended = 0;
+    for (int i = 0; i < NUM_CLIENTS; ++i)
+    {
+        total_num_messages_sended += clients[ i ]->GetNumberOfQueriesSended();
+    }
+    ss << "\tTotal querys sended:   " << total_num_messages_sended << endl;
+    ss << fixed << setprecision(2);
+    ss << "\tAverage querys sended: " << (double)total_num_messages_sended / (double)NUM_CLIENTS << endl;
+    return ss.str();
+}
+
+int main(int argc, char const *argv[])
+{
     clock_t begin = clock();
 
     NUM_CLIENTS = argc > 1 ? atoi(argv[1]) : 100;
@@ -147,7 +221,7 @@ int main(int argc, char const * argv[]) {
     cout << "NUM_EDGE_SERVERS:    " << NUM_EDGE_SERVERS << endl;
     cout << "DURACION_SIMULACION: " << DURACION_SIMULACION << endl;
 
-    simulation * sim = simulation::instance();
+    simulation *sim = simulation::instance();
     sim->begin_simulation( new sqsDll() );
 
     handle<Simulation> simulation_handle = new Simulation( "source" );
@@ -156,56 +230,32 @@ int main(int argc, char const * argv[]) {
     sim->run();
     sim->end_simulation();
 
+    /* Get Seconds */
+    time_t timer;
+    struct tm y2k;
+    double seconds;
+
+    y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
+    y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;
+    time(&timer);  /* get current time; same as: timer = time(NULL)  */
+    seconds = difftime(timer, mktime(&y2k));
+
+    cout << endl << "-----------SECONDS: " << (int)seconds << endl;
+    ofstream salida;
+    string archivo_salida = "salidas/";
+    // archivo_salida += 123;
+    archivo_salida += "salida";
+    cout << "Archivo salida: " << archivo_salida << endl;
+    salida.open(archivo_salida.c_str());
+    salida << "ASDASD" << endl;
+    salida.close();
+
+    // comandos.open(ms + "");
+
     clock_t end = clock();
     double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 
-    cout << "Duracion en segundos: " << elapsed_secs << endl;
-
-    cout << "Enf of Simulation" << endl;
-    cout << "NUM_CLIENTS:         " << NUM_CLIENTS << endl;
-    cout << "NUM_EDGE_SERVERS:    " << NUM_EDGE_SERVERS << endl;
-    cout << "DURACION_SIMULACION: " << DURACION_SIMULACION << endl;
-    cout << "Duracion Real: " << elapsed_secs << " ( 1 -> " << DURACION_SIMULACION / elapsed_secs << ")" << endl;
-    cout << "===== Statistics =====" << endl;
-    cout << "Edge Servers:" << endl;
-    double total_idle_time_percentage  = 0;
-    double total_busy_time_percentage  = 0;
-
-    streamsize default_precision = cout.precision();
-    for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
-        cout << fixed << setprecision(2);
-        double idle_time = edge_servers[ i ]->GetIdleTime();
-        double busy_time = edge_servers[ i ]->GetBusyTime();
-        double total_time = idle_time + busy_time;
-
-        double idle_time_percentage = total_time == 0 ? -1 : ( (idle_time / total_time) * 100 );
-        double busy_time_percentage = total_time == 0 ? -1 : ( (busy_time / total_time) * 100 );
-
-        total_idle_time_percentage += idle_time_percentage;
-        total_busy_time_percentage += busy_time_percentage;
-        cout << "\tEdge Server " << i << endl;
-        // cout << "\t\tIdle Time:  " << idle_time << " s" << endl;
-        // cout << "\t\tBusy Time:  " << busy_time << " s" << endl << endl;
-        cout << "\t\tIdle Percentage:  " << idle_time_percentage << " %" << endl;
-        cout << "\t\tBusy Percentage:  " << busy_time_percentage << " %" << endl;
-        cout << fixed << setprecision(0);
-        cout << "\t\tProcessed Querys: " << edge_servers[ i ]->GetProcessedQuerys() << endl;
-    }
-    cout << endl;
-    cout << "\tAverage Idle Percentage: " << ( (total_idle_time_percentage / NUM_EDGE_SERVERS) ) << "%" << endl;
-    cout << "\tAverage Processing Time: " << ( (total_busy_time_percentage / NUM_EDGE_SERVERS) ) << "%" << endl;
-    cout << endl;
-
-    cout << "Clients:" << endl;
-
-    // Total consultas enviadas
-    unsigned int total_num_messages_sended = 0;
-    for (int i = 0; i < NUM_CLIENTS; ++i) {
-        total_num_messages_sended += clients[ i ]->GetNumberOfQueriesSended();
-    }
-    cout << "\tTotal querys sended:   " << total_num_messages_sended << endl;
-    cout << fixed << setprecision(2);
-    cout << "\tAverage querys sended: " << (double)total_num_messages_sended / (double)NUM_CLIENTS << endl;
+    cout << GenerarResumen(elapsed_secs) << endl;
 
     GenerateGraph();
 
@@ -215,9 +265,11 @@ int main(int argc, char const * argv[]) {
 string GetColor(int, int);
 string GetColorNode(int, int);
 
-void GenerateGraph() {
+void GenerateGraph()
+{
     int total_edge_querys = 0;
-    for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+    for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+    {
         total_edge_querys += edge_servers[ i ]->GetProcessedQuerys();
     }
 
@@ -226,14 +278,14 @@ void GenerateGraph() {
     grafo << "digraph G {" << endl;
     grafo << "\tsplines=false;" << endl;
 
-    double alto = 0.3;
-    double ancho = 0.3;
     string string_tamano = ",height=0.30, width=0.30, fixedsize=true,";
 
-    for (int i = 0; i < NUM_CLIENTS; ++i) {
+    for (int i = 0; i < NUM_CLIENTS; ++i)
+    {
         grafo << "\tc" << i << "[shape=circle, color=lightblue,style=filled " << string_tamano << "];" << endl;
     }
-    for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+    for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+    {
         grafo << "\te" << i << "[shape=box, color=\"" << GetColorNode(edge_servers[ i ]->GetProcessedQuerys(), total_edge_querys) << "\",style=filled " << string_tamano << "];" << endl;
     }
     // grafo << "\tDNS[shape=box, color=orange,style=filled " << string_tamano << "];" << endl;
@@ -244,9 +296,11 @@ void GenerateGraph() {
     int total_total = 0;
     int total_querys[ NUM_CLIENTS ];
 
-    for (int i = 0; i < NUM_CLIENTS; ++i) {
+    for (int i = 0; i < NUM_CLIENTS; ++i)
+    {
         total = 0;
-        for (int j = 0; j < NUM_EDGE_SERVERS; ++j) {
+        for (int j = 0; j < NUM_EDGE_SERVERS; ++j)
+        {
             total += edge_servers[ j ]->GetQuerysByClient(i);
         }
         if (total > max_querys)
@@ -256,17 +310,22 @@ void GenerateGraph() {
     }
 
     // Clients -> EdgeServers
-    for (int i = 0; i < NUM_CLIENTS; ++i) {
-        for (int j = 0; j < NUM_EDGE_SERVERS; ++j) {
+    for (int i = 0; i < NUM_CLIENTS; ++i)
+    {
+        for (int j = 0; j < NUM_EDGE_SERVERS; ++j)
+        {
             if (edge_servers[ j ]->GetQuerysByClient(i) > 0)
                 grafo << "\t" << "\"c" << i << "\" -> \"e" << j << "\"[color=\"" << GetColor(edge_servers[ j ]->GetQuerysByClient(i), max_querys) << "\"];" << endl;
         }
     }
 
     // Clients -> DNS
-    for (int i = 0; i < NUM_CLIENTS; ++i) {
-        for (int j = 0; j < NUM_EDGE_SERVERS; ++j) {
-            if (edge_servers[ j ]->GetQuerysByClient(i) > 0) {
+    for (int i = 0; i < NUM_CLIENTS; ++i)
+    {
+        for (int j = 0; j < NUM_EDGE_SERVERS; ++j)
+        {
+            if (edge_servers[ j ]->GetQuerysByClient(i) > 0)
+            {
                 // grafo << "\t" << "\"c" << i << "\" -> \"DNS\"" << endl;
             }
         }
@@ -276,7 +335,8 @@ void GenerateGraph() {
     grafo.close();
 }
 
-string GetColor(int querys, int total_querys) {
+string GetColor(int querys, int total_querys)
+{
     // rdylgn11 color scheme
     // http://www.graphviz.org/doc/info/colors.html#brewer
     vector<string> colors;
@@ -291,12 +351,13 @@ string GetColor(int querys, int total_querys) {
     colors.push_back("#f46d43");
     colors.push_back("#d73027");
     colors.push_back("#a50026");
-    // cout << querys << " / " << total_querys << endl;
-    // cout << ((double)querys / (double)total_querys * 10) << endl;
+    // ss << querys << " / " << total_querys << endl;
+    // ss << ((double)querys / (double)total_querys * 10) << endl;
     return colors.at( ((double)querys / (double)total_querys * (colors.size() - 1 ) ) );
 }
 
-string GetColorNode(int querys, int total_querys) {
+string GetColorNode(int querys, int total_querys)
+{
     // rdylgn11 color scheme
     // http://www.graphviz.org/doc/info/colors.html#brewer
     vector<string> colors;
@@ -307,7 +368,7 @@ string GetColorNode(int querys, int total_querys) {
     colors.push_back("#810f7c");
     if (total_querys == 0)
         return colors.at(0);
-    // cout << querys << " / " << total_querys << endl;
-    // cout << ((double)querys / (double)total_querys * 10) << endl;
+    // ss << querys << " / " << total_querys << endl;
+    // ss << ((double)querys / (double)total_querys * 10) << endl;
     return colors.at( ((double)querys / (double)total_querys * (colors.size() - 1 ) ) );
 }

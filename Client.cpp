@@ -28,7 +28,8 @@ void Client::inner_body(void) {
                         break;
                     }
                 }
-                Message * original = unprocessed_message_stack.at(id_message);
+                // Obtengo el mensaje original:
+                // Message * original = unprocessed_message_stack.at(id_message);
                 unprocessed_message_stack.erase(unprocessed_message_stack.begin() + id_message);
             }
         }

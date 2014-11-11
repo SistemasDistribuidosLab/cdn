@@ -4,7 +4,6 @@
 #include "../glob.h"
 #include "../auxiliar/Util.h"
 #include "../auxiliar/Hash.h"
-#include "../Observer.h"
 #include "../wse/WSE.h"
 #include "../wse/MessageWSE.h"
 
@@ -40,9 +39,6 @@ class Gen_rnd: public process
         vector<string> tokens;
 
         double CTE;
-        double * init_time;
-
-        handle<Observer> * observer;
 
         handle<WSE> * wse;
 
@@ -67,12 +63,11 @@ class Gen_rnd: public process
             delete arrival_time;
             delete SelectSource;
 
-            //free(observer);
             //free(wse);
         }
 
         Gen_rnd ( const string &name, char * _traces_file, unsigned long int * _totalQueries,
-                  int _NP, handle<Observer> * obs, int * _ends, int _Nuser,
+                  int _NP, int * _ends, int _Nuser,
                   handle<WSE> * _wse, int _PS, ofstream * chart_file, ofstream * querys_sended_stream): process( name )
         {
             this-> chart_file = chart_file;
@@ -110,7 +105,6 @@ class Gen_rnd: public process
 
             prev = 0.0;
             actual   = 0.0;
-            observer = obs;
         }
         void SetClients(handle<Client> * clients)
         {

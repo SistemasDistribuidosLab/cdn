@@ -1,10 +1,10 @@
-OPCIONES_COMPILADOR=-w
+OPCIONES_COMPILADOR=-Wall -g
 CPPSIM=-Isrc $(OPCIONES_COMPILADOR)
 
-all: main.o Client.o EdgeServer.o Node.o Transport.o Message.o DNS.o WSE.o LruA.o Lru.o gen_rnd.o Util.o Stats.o Observer.o Hash.o
-	clang++ objects/main.o objects/Client.o objects/EdgeServer.o objects/Node.o objects/Transport.o objects/Message.o objects/DNS.o objects/WSE.o objects/LruA.o objects/Lru.o objects/gen_rnd.o objects/Util.o objects/Stats.o objects/Observer.o objects/Hash.o src/libcppsim.a $(CPPSIM) -L/usr/lib -lssl -lcrypto -o main
+all: main.o Client.o EdgeServer.o Node.o Transport.o Message.o DNS.o WSE.o LruA.o Lru.o gen_rnd.o Util.o Stats.o Hash.o
+	clang++ objects/main.o objects/Client.o objects/EdgeServer.o objects/Node.o objects/Transport.o objects/Message.o objects/DNS.o objects/WSE.o objects/LruA.o objects/Lru.o objects/gen_rnd.o objects/Util.o objects/Stats.o objects/Hash.o src/libcppsim.a $(CPPSIM) -L/usr/lib -lssl -lcrypto -o main
 	@clear
-	@./main
+	@./main 100 5 1
 
 main.o: main.cpp
 	@clang++ $(CPPSIM) -c main.cpp -o objects/main.o
@@ -44,9 +44,6 @@ Util.o: auxiliar/Util.cc
 
 Stats.o: Stats.cpp
 	@clang++ $(CPPSIM) -c Stats.cpp -o objects/Stats.o
-
-Observer.o: Observer.cc
-	@clang++ $(CPPSIM) -c Observer.cc -o objects/Observer.o
 
 Hash.o: auxiliar/Hash.cc
 	@clang++ $(CPPSIM) -c auxiliar/Hash.cc -o objects/Hash.o

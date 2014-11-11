@@ -16,7 +16,6 @@ void Gen_rnd::inner_body( )
     char * ptr;
     // Query *q; // ============================
     int id = 0;
-    int chosen = 0;
     int envP2P = 0;
 
     endStream.open( traces_file );
@@ -110,7 +109,6 @@ void Gen_rnd::inner_body( )
                 // }
             }
 
-            // (*observer)->end();
             passivate();
 
         }

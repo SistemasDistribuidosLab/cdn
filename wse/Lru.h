@@ -37,12 +37,7 @@ private:
 
     Hash *h;
 
-    //--temporales
     Entry *ptr;
-    unsigned int prio;
-    //vector<string> v;
-    //vector<string>::iterator itv;
-
 public:
 
     LRU( int *_cacheSize )

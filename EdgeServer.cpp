@@ -12,8 +12,6 @@ void EdgeServer::inner_body(void)
 {
     double time_aux;
     double processing_time_per_query = 0.01;
-    int ttl;
-    // cout << fixed << setprecision(4);
     while (1)
     {
         // ===== BUSY TIME START =====
@@ -29,7 +27,6 @@ void EdgeServer::inner_body(void)
 
             MessageWSE *message_wse = message->GetMessagePointer();
 
-            int ttl;
             Entry *a = ANSWERS->check( message_wse->getQuery() );
 
             if (message->GetTypeFrom() == NODE_CLIENT)

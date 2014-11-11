@@ -8,7 +8,6 @@ class EdgeServer;
 
 class Stats : public process {
     private:
-        ofstream * output;
         handle<EdgeServer> * edge_servers;
         static unsigned int cycles;
         ofstream * received_querys_by_edge_servers;
@@ -16,7 +15,6 @@ class Stats : public process {
         int DURACION_SIMULACION;
     public:
         Stats(const string &name, int DURACION_SIMULACION, handle<EdgeServer> * edge_servers) : process(name) {
-            this->output = output;
             this->edge_servers = edge_servers;
             this->DURACION_SIMULACION = DURACION_SIMULACION;
             
@@ -26,6 +24,7 @@ class Stats : public process {
             /*    Cache Hits File */
             cache_hits_by_edge_servers.open("charts/cache_hits_by_edge_servers");
             /*// Cache Hits File */
+            this->GenerateCommands();
         }
         ~Stats() {
 
@@ -34,10 +33,7 @@ class Stats : public process {
         unsigned int GetCycles() {
             return this->cycles;
         }
-        void CloseAll() {
-            received_querys_by_edge_servers->close();
-            cache_hits_by_edge_servers.close();
-
+        void GenerateCommands(){
             ofstream comandos;
             comandos.open("charts/comandos");
 
@@ -79,6 +75,10 @@ class Stats : public process {
                 comandos << "'charts/cache_hits_by_edge_servers' using 1:" << (i+2) << " with lines title \"EdgeServer " << i << "\", ";
             }
             /* // Cache Hits Commands */
+        }
+        void CloseAll() {
+            received_querys_by_edge_servers->close();
+            cache_hits_by_edge_servers.close();
         }
 
 };
