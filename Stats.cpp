@@ -45,7 +45,7 @@ void Stats::inner_body() {
 
             /*    Cache Hits File */
 
-            cache_hits_by_edge_servers << edge_servers[i]->GetCacheHitsReceivedQueriesByClientsCycle() << ", ";
+            cache_hits_by_edge_servers << ( edge_servers[i]->GetCacheHitsReceivedQueriesByClientsCycle() / TIME_WINDOW ) << ", ";
 
             /*// Cache Hits File */
 

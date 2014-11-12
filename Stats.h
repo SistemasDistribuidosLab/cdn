@@ -57,7 +57,7 @@ class Stats : public process {
             comandos << "Received Queries By Edge Servers (Include Total):" << endl;;
             comandos << "set title 'Received Queries By Edge Servers';";
             comandos << "set xlabel 'Time';";
-            comandos << "set ylabel 'Received Queries';";
+            comandos << "set ylabel 'Received Queries / second';";
             comandos << "plot ";
             for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
                 comandos << "'charts/received_querys_by_edge_servers' using 1:" << (i + 2) << " with lines title \"EdgeServer " << i << "\", ";
@@ -71,7 +71,7 @@ class Stats : public process {
             comandos << "Cache Hits By Edge Servers:" << endl;
             comandos << "set title 'Cache Hits By Edge Servers';";
             comandos << "set xlabel 'Time';";
-            comandos << "set ylabel 'Cache Hits';";
+            comandos << "set ylabel 'Cache Hits / second';";
             comandos << "plot ";
             for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
             {
