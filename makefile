@@ -4,7 +4,7 @@ CPPSIM=-Isrc $(OPCIONES_COMPILADOR)
 all: main.o Client.o EdgeServer.o Node.o Transport.o Message.o DNS.o WSE.o LruA.o Lru.o gen_rnd.o Util.o Stats.o Hash.o
 	clang++ objects/main.o objects/Client.o objects/EdgeServer.o objects/Node.o objects/Transport.o objects/Message.o objects/DNS.o objects/WSE.o objects/LruA.o objects/Lru.o objects/gen_rnd.o objects/Util.o objects/Stats.o objects/Hash.o src/libcppsim.a $(CPPSIM) -L/usr/lib -lssl -lcrypto -o main
 	@clear
-	@./main 100 5 1
+	@./main 100 5 100
 
 main.o: main.cpp
 	@clang++ $(CPPSIM) -c main.cpp -o objects/main.o

@@ -3,6 +3,7 @@
 
 #include "cppsim.hh"
 #include "Constants.h"
+#include "Dns.h"
 
 class EdgeServer;
 
@@ -13,9 +14,11 @@ class Stats : public process {
         ofstream * received_querys_by_edge_servers;
         ofstream cache_hits_by_edge_servers;
         int DURACION_SIMULACION;
+        Dns * dns;
     public:
-        Stats(const string &name, int DURACION_SIMULACION, handle<EdgeServer> * edge_servers) : process(name) {
+        Stats(const string &name, int DURACION_SIMULACION, handle<EdgeServer> * edge_servers, Dns * dns) : process(name) {
             this->edge_servers = edge_servers;
+            this->dns = dns;
             this->DURACION_SIMULACION = DURACION_SIMULACION;
             
             received_querys_by_edge_servers = new ofstream();
@@ -41,7 +44,7 @@ class Stats : public process {
             comandos << "Received Queries By Edge Servers (Doesn't Include Total):" << endl;;
             comandos << "set title 'Received Queries By Edge Servers';";
             comandos << "set xlabel 'Time';";
-            comandos << "set ylabel 'Received Queries';";
+            comandos << "set ylabel '#Received Queries / second';";
             comandos << "plot ";
             for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
                 comandos << "'charts/received_querys_by_edge_servers' using 1:" << (i + 2) << " with lines title \"EdgeServer " << i << "\", ";

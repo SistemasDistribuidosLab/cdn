@@ -70,7 +70,7 @@ public:
 
 
 
-        Dns *dns = new Dns();
+        Dns *dns = new Dns(clients, edge_servers);
 
         for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
         {
@@ -87,7 +87,7 @@ public:
         wse->SetTransport(&transport);
         wse->activate();
 
-        handle<Stats> stats = new Stats("stats", DURACION_SIMULACION, edge_servers);
+        handle<Stats> stats = new Stats("stats", DURACION_SIMULACION, edge_servers, dns);
         for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
         {
             edge_servers[ i ]->activate();

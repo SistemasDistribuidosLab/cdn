@@ -13,9 +13,10 @@ extern int NUM_CLIENTS;
 extern int NUM_EDGE_SERVERS;
 extern int DURACION_SIMULACION;
 
-#define NODE_CLIENT 0
-#define NODE_EDGE_SERVER 1
+#define NODE_CLIENT 	   0
+#define NODE_EDGE_SERVER   1
 #define NODE_ORIGIN_SERVER 2
+#define NODE_DNS		   3
 
 #define WSECACHESIZE 8000
 #define SIZE_ANSWER 1
@@ -48,5 +49,7 @@ extern int DURACION_SIMULACION;
 #define USER 412
 
 #define NUM_ISP 3
+
+#define TIME_WINDOW 10 // cada cuantos segundos registrará datos
 
 #endif

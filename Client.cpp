@@ -73,7 +73,7 @@ void Client::HaveToSendAMessage() {
 int Client::GetEdgeServerId() {
     this->number_of_messages_sended_to_dns++;
     // return this->dns->GetEdgeServerId((arrival_time->value() * 3));
-    return this->dns->GetEdgeServerId(this->GetId());
+    return this->dns->GetEdgeServerId(this->GetId(), this->GetIsp());
 }
 
 int Client::GetNumberOfMessagesSendedToDns() {

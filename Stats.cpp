@@ -29,6 +29,7 @@ static inline void loadBar(int x, int n, int w, double time) {
 void Stats::inner_body() {
     clock_t begin = clock();
     unsigned int total_received_queries_by_edge_servers;
+    int * num_messages_received_by_edge_servers_cycle_aux = new int[ NUM_EDGE_SERVERS ];
     cout << ".";
     while (1) {
         loadBar(time(), DURACION_SIMULACION, 100, double(clock() - begin) / CLOCKS_PER_SEC);
@@ -36,8 +37,11 @@ void Stats::inner_body() {
         (*received_querys_by_edge_servers) << time() << ", ";
         cache_hits_by_edge_servers << time() << ", ";
         for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
-            (*received_querys_by_edge_servers) << edge_servers[ i ]->GetReceivedQueriesByClientsCycle() << ", ";
+            (*received_querys_by_edge_servers) << (edge_servers[ i ]->GetReceivedQueriesByClientsCycle() / TIME_WINDOW) << ", ";
             total_received_queries_by_edge_servers += edge_servers[ i ]->GetReceivedQueriesByClientsCycle();
+
+            // Guardo las queries recividas por el edge server aca
+            num_messages_received_by_edge_servers_cycle_aux[ i ] = edge_servers[ i ]->GetReceivedQueriesByClientsCycle();
 
             /*    Cache Hits File */
 
@@ -47,11 +51,13 @@ void Stats::inner_body() {
 
             edge_servers[i]->ResetCycle();
         }
-        (*received_querys_by_edge_servers) << total_received_queries_by_edge_servers << ", ";
+        dns->ResetCycle();
+
+        (*received_querys_by_edge_servers) << total_received_queries_by_edge_servers / TIME_WINDOW << ", ";
         (*received_querys_by_edge_servers) << endl;
 
         cache_hits_by_edge_servers << endl;
         cycles++;
-        hold(10);
+        hold(TIME_WINDOW);
     }
 }
