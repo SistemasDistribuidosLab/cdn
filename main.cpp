@@ -208,6 +208,13 @@ string GenerarResumen(double elapsed_secs)
     return ss.str();
 }
 
+string itos(int i) // convert int to string
+{
+    stringstream s;
+    s << i;
+    return s.str();
+}
+
 int main(int argc, char const *argv[])
 {
     clock_t begin = clock();
@@ -240,22 +247,18 @@ int main(int argc, char const *argv[])
     time(&timer);  /* get current time; same as: timer = time(NULL)  */
     seconds = difftime(timer, mktime(&y2k));
 
-    cout << endl << "-----------SECONDS: " << (int)seconds << endl;
-    ofstream salida;
-    string archivo_salida = "salidas/";
-    // archivo_salida += 123;
-    archivo_salida += "salida";
-    cout << "Archivo salida: " << archivo_salida << endl;
-    salida.open(archivo_salida.c_str());
-    salida << "ASDASD" << endl;
-    salida.close();
-
-    // comandos.open(ms + "");
-
     clock_t end = clock();
     double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 
     cout << GenerarResumen(elapsed_secs) << endl;
+
+    ofstream salida;
+    string archivo_salida = "salidas/";
+    archivo_salida += itos( seconds ) + "_" + itos(NUM_CLIENTS) + "_" + itos(NUM_EDGE_SERVERS) + "_" + itos(DURACION_SIMULACION);
+    cout << "Archivo salida: " << archivo_salida << endl;
+    salida.open(archivo_salida.c_str());
+    salida << GenerarResumen(elapsed_secs);
+    salida.close();
 
     GenerateGraph();
 
