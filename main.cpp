@@ -187,7 +187,7 @@ string GenerarResumen(double elapsed_secs)
         ss << "\t\tIdle Percentage:  " << idle_time_percentage << " %" << endl;
         ss << "\t\tBusy Percentage:  " << busy_time_percentage << " %" << endl;
         ss << fixed << setprecision(0);
-        ss << "\t\tProcessed Querys: " << edge_servers[ i ]->GetProcessedQuerys() << endl;
+        ss << "\t\tProcessed Querys: " << edge_servers[ i ]->GetProcessedQueries() << endl;
     }
     ss << endl;
     ss << "\tAverage Idle Percentage: " << ( (total_idle_time_percentage / NUM_EDGE_SERVERS) ) << "%" << endl;
@@ -273,7 +273,7 @@ void GenerateGraph()
     int total_edge_querys = 0;
     for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
     {
-        total_edge_querys += edge_servers[ i ]->GetProcessedQuerys();
+        total_edge_querys += edge_servers[ i ]->GetProcessedQueries();
     }
 
     ofstream grafo;
@@ -289,7 +289,7 @@ void GenerateGraph()
     }
     for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
     {
-        grafo << "\te" << i << "[shape=box, color=\"" << GetColorNode(edge_servers[ i ]->GetProcessedQuerys(), total_edge_querys) << "\",style=filled " << string_tamano << "];" << endl;
+        grafo << "\te" << i << "[shape=box, color=\"" << GetColorNode(edge_servers[ i ]->GetProcessedQueries(), total_edge_querys) << "\",style=filled " << string_tamano << "];" << endl;
     }
     // grafo << "\tDNS[shape=box, color=orange,style=filled " << string_tamano << "];" << endl;
 

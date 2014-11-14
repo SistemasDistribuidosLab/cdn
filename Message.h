@@ -41,7 +41,7 @@ class Message {
             free(message);
         }
         MessageWSE GetMessage(){ return * message; }
-        MessageWSE * GetMessagePointer(){ return message; }
+        inline MessageWSE * GetMessagePointer(){ return message; }
         int GetTypeFrom(){ return type_from; }
         int GetTypeTo(){ return type_to; }
         int GetIdFrom(){ return id_from; };

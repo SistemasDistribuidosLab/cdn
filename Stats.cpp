@@ -28,35 +28,36 @@ static inline void loadBar(int x, int n, int w, double time) {
 
 void Stats::inner_body() {
     clock_t begin = clock();
-    unsigned int total_received_queries_by_edge_servers;
-    int * num_messages_received_by_edge_servers_cycle_aux = new int[ NUM_EDGE_SERVERS ];
+    unsigned int previous_total_received_queries_by_edge_servers[ NUM_EDGE_SERVERS ];
+    for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+        previous_total_received_queries_by_edge_servers[ i ] = 0;
+    }
+
     cout << ".";
+
     while (1) {
         loadBar(time(), DURACION_SIMULACION, 100, double(clock() - begin) / CLOCKS_PER_SEC);
-        total_received_queries_by_edge_servers = 0;
+
+        // Imprimo el tiempo en cada archivo
         (*received_querys_by_edge_servers) << time() << ", ";
         cache_hits_by_edge_servers << time() << ", ";
+        cache_usage_stream << time() << ", ";
+
+        // Escribo en los archivos
         for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
-            (*received_querys_by_edge_servers) << (edge_servers[ i ]->GetReceivedQueriesByClientsCycle() / TIME_WINDOW) << ", ";
-            total_received_queries_by_edge_servers += edge_servers[ i ]->GetReceivedQueriesByClientsCycle();
-
-            // Guardo las queries recividas por el edge server aca
-            num_messages_received_by_edge_servers_cycle_aux[ i ] = edge_servers[ i ]->GetReceivedQueriesByClientsCycle();
-
-            /*    Cache Hits File */
-
-            cache_hits_by_edge_servers << ( edge_servers[i]->GetCacheHitsReceivedQueriesByClientsCycle() / TIME_WINDOW ) << ", ";
-
-            /*// Cache Hits File */
-
-            edge_servers[i]->ResetCycle();
+            (*received_querys_by_edge_servers) << ( edge_servers[ i ]->GetReceivedQueriesByClients() - previous_total_received_queries_by_edge_servers[ i ] ) << ", ";
+            cache_hits_by_edge_servers << ( edge_servers[ i ]->GetReceivedQueriesByClients() > 0 ? ( (double)edge_servers[i]->GetCacheHitsReceivedQueriesByClients() / (double)edge_servers[ i ]->GetReceivedQueriesByClients() ) : 0 ) << ", ";
+            // cache_hits_by_edge_servers << ( edge_servers[ i ]->GetReceivedQueriesByClients() > 0 ? ( (double)(edge_servers[i]->GetReceivedQueriesByClients() - edge_servers[ i ]->GetCacheMissReceivedQueriesByClients() ) / (double)edge_servers[ i ]->GetReceivedQueriesByClients() ) : 0 ) << ", ";
+            cache_usage_stream << edge_servers[ i ]->GetUsedCache() << ", ";
+            previous_total_received_queries_by_edge_servers[ i ] = edge_servers[ i ]->GetReceivedQueriesByClients();
         }
+
         dns->ResetCycle();
 
-        (*received_querys_by_edge_servers) << total_received_queries_by_edge_servers / TIME_WINDOW << ", ";
         (*received_querys_by_edge_servers) << endl;
-
         cache_hits_by_edge_servers << endl;
+        cache_usage_stream << endl;
+
         cycles++;
         hold(TIME_WINDOW);
     }

@@ -39,7 +39,8 @@ class LRUA
         //vector<string>::iterator itv;
 
         priority_queue <Answer *, vector<Answer *>, CompareAnswers> pq;
-        list<Answer *> cache;
+        vector<Answer *> cache;
+        vector<Answer *>::iterator cache_entry_pointer;
     public:
 
         LRUA( int *_cacheSize ){
@@ -52,7 +53,7 @@ class LRUA
         ~LRUA( ){
 
             //pq.clear();
-            list<Answer *>::iterator it;
+            vector<Answer *>::iterator it;
 
             it = cache.begin();
 

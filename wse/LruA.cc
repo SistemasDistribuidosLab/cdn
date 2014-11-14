@@ -2,14 +2,9 @@
 #include "LruA.h"
 
 
-Answer * LRUA::check(string hashValue)
-{
-    string tmp;
-    for (list<Answer *>::iterator cache_entry_pointer = cache.begin(); cache_entry_pointer != cache.end(); cache_entry_pointer++)
-    {
-        tmp = (*cache_entry_pointer)->getKey();
-        if (tmp.compare(hashValue) == 0)
-        {
+Answer * LRUA::check(string hashValue) {
+    for (cache_entry_pointer = cache.begin(); cache_entry_pointer != cache.end(); cache_entry_pointer++) {
+        if ( ((*cache_entry_pointer)->getKey()).compare(hashValue) == 0) {
             (*cache_entry_pointer)->update(timestamps);
             return (*cache_entry_pointer);
         }
@@ -32,35 +27,29 @@ Answer * LRUA::check(string hashValue)
     return NULL;
 }*/
 
-void LRUA::cacheErase(Answer * a)
-{
-    list<Answer *>::iterator iter;
-    for (iter = cache.begin(); iter != cache.end(); iter ++)
-    {
+void LRUA::cacheErase(Answer * a) {
+    vector<Answer *>::iterator iter;
+    for (iter = cache.begin(); iter != cache.end(); iter ++) {
         string tmp = (*iter)->getKey();
-        if (tmp.compare(a->key) == 0)
-        {
+        if (tmp.compare(a->key) == 0) {
             cache.erase(iter);
             break;
         }
     }
 }
 
-void LRUA::insertAnswer(Answer * a)
-{
-    if (!this->isFreeSpace (a->size))
-    {
+void LRUA::insertAnswer(Answer * a) {
+    if (!this->isFreeSpace (a->size)) {
         this->createSpace(a->size);
     }
 
     ptr = a;
     pq.push(ptr);
     freeCache -= a->size;
-    cache.push_front( a);
+    cache.push_back( a);
 }
 
-bool LRUA::isFreeSpace( int size )
-{
+bool LRUA::isFreeSpace( int size ) {
     if ( freeCache >= size )
         return true;
     return false;
@@ -68,16 +57,13 @@ bool LRUA::isFreeSpace( int size )
 
 //---------------------------------------------------
 
-void LRUA::createSpace( int size )
-{
-    do
-    {
+void LRUA::createSpace( int size ) {
+    do {
         ptr = pq.top();
         pq.pop();
         freeCache += ptr->size;
         cacheErase( ptr );
         delete ptr ;
-    }
-    while ( freeCache < size );
+    } while ( freeCache < size );
 }
 

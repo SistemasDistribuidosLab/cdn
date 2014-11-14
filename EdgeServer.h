@@ -15,19 +15,17 @@ class EdgeServer : public Node
 private:
     double idle_time;
     double busy_time;
-    unsigned int processed_querys;
     unsigned int *received_querys_from_count;
     unsigned int received_queries_by_clients;
-    unsigned int received_queries_by_clients_cycle;
-    unsigned int cache_hits_received_queries_by_clients_cycle;
-    unsigned int cache_miss_received_queries_by_clients_cycle;
+    unsigned int cache_hits_received_queries_by_clients;
+    unsigned int cache_miss_received_queries_by_clients;
+    unsigned int processed_queries;
     LRU *ANSWERS;
 public:
     EdgeServer(const string &name, int id, int type) : Node(name, id, type)
     {
         idle_time = 0;
         busy_time = 0;
-        processed_querys = 0;
         received_querys_from_count = new unsigned int[ NUM_CLIENTS ];
         for (int i = 0; i < NUM_CLIENTS; ++i)
         {
@@ -35,12 +33,12 @@ public:
         }
 
         this->received_queries_by_clients                  = 0;
-        this->received_queries_by_clients_cycle            = 0;
-        this->cache_hits_received_queries_by_clients_cycle = 0;
-        this->cache_miss_received_queries_by_clients_cycle = 0;
+        this->cache_hits_received_queries_by_clients       = 0;
+        this->cache_miss_received_queries_by_clients       = 0;
+        this->processed_queries                            = 0;
 
-        int cacheSize = WSECACHESIZE;
-        ANSWERS = new LRU(&cacheSize);
+        int * cacheSize = new int(WSECACHESIZE);
+        ANSWERS = new LRU(cacheSize);
     }
     ~EdgeServer()
     {
@@ -59,14 +57,17 @@ public:
     Message *GetMessageFromMessageStack();
     void AddANewUnprocessedMessage(Message *);
     unsigned int GetReceivedQueriesByClients();
-    unsigned int GetReceivedQueriesByClientsCycle();
     int getVersion(string, int *);
     void AddANewCacheHit();
     void AddANewCacheMiss();
-    unsigned int GetCacheHitsReceivedQueriesByClientsCycle();
-    unsigned int GetCacheMissReceivedQueriesByClientsCycle();
-    void ResetCycle();
     long int getTTL(BIGNUM *);
     long int getTimeIncremental(long int);
+    unsigned int GetCacheHitsReceivedQueriesByClients();
+    unsigned int GetCacheMissReceivedQueriesByClients();
+    void AddANewProcessedQuery();
+    unsigned int GetProcessedQueries();
+    int GetUsedCache(){
+        return ANSWERS->GetUsedCache();
+    }
 };
 #endif

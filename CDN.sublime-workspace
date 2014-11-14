@@ -4,11 +4,35 @@
 		"selected_items":
 		[
 			[
-				"num",
-				"number_of_querys_sended"
+				"to",
+				"total_cache_hits_cycle"
 			],
 			[
 				"NUM",
+				"NUM_EDGE_SERVERS"
+			],
+			[
+				"b",
+				"max_received_queries_by_edge_servers"
+			],
+			[
+				"ve",
+				"VENTANA_DE_TIEMPO"
+			],
+			[
+				"id",
+				"id_mayor"
+			],
+			[
+				"num",
+				"num_messages_received_by_edge_servers_cycle"
+			],
+			[
+				"nu",
+				"num_messages_received_by_edge_servers_cycle"
+			],
+			[
+				"ED",
 				"NUM_EDGE_SERVERS"
 			],
 			[
@@ -19,19 +43,82 @@
 	},
 	"buffers":
 	[
+		{
+			"contents": "ASDASD\n",
+			"file": "salidas/salida",
+			"file_size": -1,
+			"file_write_time": -1,
+			"settings":
+			{
+				"buffer_size": 7,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main.cpp",
+			"settings":
+			{
+				"buffer_size": 11781,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Stats.cpp",
+			"settings":
+			{
+				"buffer_size": 2204,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "EdgeServer.h",
+			"settings":
+			{
+				"buffer_size": 2164,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "EdgeServer.cpp",
+			"settings":
+			{
+				"buffer_size": 6634,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "charts/comandos",
+			"settings":
+			{
+				"buffer_size": 1082,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Stats.h",
+			"settings":
+			{
+				"buffer_size": 2717,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 75.0,
+		"height": 54.0,
 		"selected_items":
 		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
 			[
 				"markdown",
 				"Set Syntax: Markdown"
 			]
 		],
-		"width": 575.0
+		"width": 449.0
 	},
 	"console":
 	{
@@ -56,35 +143,49 @@
 	],
 	"file_history":
 	[
-		"/home/giovanni/cdn_con_errores_cache/CDN.sublime-project",
-		"/home/giovanni/cdn_con_errores_cache/Client.cpp",
-		"/home/giovanni/cdn/CDN.sublime-project",
-		"/home/giovanni/cdn_con_errores_cache/DNS.cpp",
-		"/home/giovanni/cdn_con_errores_cache/makefile",
+		"/home/giovanni/cdn_con_errores_cache/comandos_charts",
 		"/home/giovanni/cdn_con_errores_cache/Constants.h",
-		"/home/giovanni/cdn_con_errores_cache/wse/WSE.cc",
-		"/home/giovanni/cdn_con_errores_cache/wse/WSE.h",
-		"/home/giovanni/cdn_con_errores_cache/EdgeServer.h",
+		"/home/giovanni/cdn_con_errores_cache/Client.cpp",
 		"/home/giovanni/cdn_con_errores_cache/EdgeServer.cpp",
-		"/home/giovanni/cdn_con_errores_cache/Node.h",
+		"/home/giovanni/cdn_con_errores_cache/charts/cache_hits_by_edge_servers",
+		"/home/giovanni/cdn_con_errores_cache/Stats.cpp",
+		"/home/giovanni/cdn_con_errores_cache/src/coroutine.cc",
+		"/home/giovanni/cdn_con_errores_cache/src/counter.cc",
 		"/home/giovanni/cdn_con_errores_cache/Client.h",
 		"/home/giovanni/cdn_con_errores_cache/main.cpp",
-		"/home/giovanni/cdn_con_errores_cache/generador/gen_rnd.cc",
-		"/home/giovanni/cdn_con_errores_cache/Stats.cpp",
-		"/home/giovanni/cdn_con_errores_cache/Stats.h",
+		"/home/giovanni/cdn_con_errores_cache/Dns.h",
+		"/home/giovanni/cdn_con_errores_cache/DNS.cpp",
+		"/home/giovanni/cdn_con_errores_cache/makefile",
+		"/home/giovanni/cdn_con_errores_cache/por_hacer.md",
 		"/home/giovanni/cdn_con_errores_cache/charts/comandos",
+		"/home/giovanni/cdn_con_errores_cache/Stats.h",
+		"/home/giovanni/cdn_con_errores_cache/dudas.md",
+		"/home/giovanni/cdn_con_errores_cache/charts/received_querys_by_edge_servers",
+		"/home/giovanni/cdn_con_errores_cache/src/dump.cc",
+		"/home/giovanni/cdn_con_errores_cache/wse/LruLCache.cc",
+		"/home/giovanni/cdn_con_errores_cache/src/abatch.cc",
+		"/home/giovanni/cdn_con_errores_cache/Node.h",
+		"/home/giovanni/cdn_con_errores_cache/tiempos.md",
+		"/home/giovanni/cdn_con_errores_cache/README.md",
+		"/home/giovanni/cdn_con_errores_cache/.gitignore",
+		"/home/giovanni/cdn_con_errores_cache/src/process.cc",
+		"/root/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/root/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/giovanni/cdn_con_errores_cache/EdgeServer.h",
+		"/home/giovanni/cdn_con_errores_cache/CDN.sublime-project",
+		"/home/giovanni/cdn/CDN.sublime-project",
+		"/home/giovanni/cdn_con_errores_cache/wse/WSE.cc",
+		"/home/giovanni/cdn_con_errores_cache/wse/WSE.h",
+		"/home/giovanni/cdn_con_errores_cache/generador/gen_rnd.cc",
 		"/home/giovanni/cdn_con_errores_cache/Isp.h",
 		"/home/giovanni/cdn_con_errores_cache/src/welch.cc",
 		"/home/giovanni/cdn_con_errores_cache/Node.cpp",
-		"/home/giovanni/cdn_con_errores_cache/tiempos.md",
 		"/home/giovanni/cdn_con_errores_cache_respaldo/generador/gen_rnd.cc",
 		"/home/giovanni/cdn_con_errores_cache_respaldo/Client.h",
-		"/home/giovanni/cdn_con_errores_cache/charts/cache_hits_by_edge_servers",
 		"/home/giovanni/cdn_con_errores_cache/wse/Lru.cc",
 		"/home/giovanni/cdn_con_errores_cache/wse/Lru.h",
 		"/home/giovanni/cdn_con_errores_cache/src/logger.cc",
 		"/home/giovanni/cdn_con_errores_cache/query_chart",
-		"/home/giovanni/cdn_con_errores_cache/comandos_charts",
 		"/home/giovanni/cdn_con_errores_cache/generador/query_charts.plot",
 		"/home/giovanni/cdn_con_errores_cache_respaldo/Client.cpp",
 		"/home/giovanni/cdn_con_errores_cache_respaldo/EdgeServer.cpp",
@@ -100,7 +201,7 @@
 	],
 	"find":
 	{
-		"height": 25.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -114,6 +215,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"cache_hits_received_queries_by_clients_cycle",
+			"ventana",
+			"num_messages_received_by_edge_servers",
+			"dns",
+			"_cycle",
+			"dns",
 			"wse",
 			"GetNumMessagesReceived",
 			"sumtoprocessed",
@@ -130,6 +237,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			""
 		],
 		"reverse": false,
 		"show_context": true,
@@ -140,8 +248,215 @@
 	"groups":
 	[
 		{
+			"selected": 3,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "salidas/salida",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11781,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6824,
+								6824
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3221.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Stats.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2204,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								905,
+								905
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 475.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "EdgeServer.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2164,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								489,
+								489
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 34.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "EdgeServer.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6634,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5255,
+								5120
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2320.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "charts/comandos",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1082,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								592,
+								592
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Stats.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2717,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1414,
+								1414
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 646.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -183,7 +498,7 @@
 	"project": "CDN.sublime-project",
 	"replace":
 	{
-		"height": 46.0
+		"height": 64.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -192,36 +507,96 @@
 		"selected_items":
 		[
 			[
-				"cdn",
-				"CDN.sublime-project"
+				"ed",
+				"EdgeServer.cpp"
 			],
 			[
-				"dns",
-				"Dns.h"
-			],
-			[
-				"coman",
+				"co",
 				"charts/comandos"
 			],
 			[
-				"stat",
-				"Stats.h"
+				"s",
+				"Stats.cpp"
+			],
+			[
+				"cac",
+				"charts/cache_hits_by_edge_servers"
 			],
 			[
 				"coma",
 				"charts/comandos"
 			],
 			[
-				"gen",
-				"generador/gen_rnd.cc"
+				"st",
+				"Stats.cpp"
+			],
+			[
+				"ma",
+				"main.cpp"
+			],
+			[
+				"salida",
+				"salidas/salida"
+			],
+			[
+				"out",
+				"src/coroutine.cc"
+			],
+			[
+				"con",
+				"Constants.h"
+			],
+			[
+				"cons",
+				"Constants.h"
+			],
+			[
+				"dns",
+				"DNS.cpp"
+			],
+			[
+				"sta",
+				"Stats.cpp"
 			],
 			[
 				"mai",
 				"main.cpp"
 			],
 			[
+				"cl",
+				"Client.cpp"
+			],
+			[
+				"dn",
+				"Dns.h"
+			],
+			[
+				"d",
+				"Dns.h"
+			],
+			[
 				"make",
 				"makefile"
+			],
+			[
+				"stat",
+				"Stats.h"
+			],
+			[
+				"cli",
+				"Client.h"
+			],
+			[
+				"cdn",
+				"CDN.sublime-project"
+			],
+			[
+				"coman",
+				"charts/comandos"
+			],
+			[
+				"gen",
+				"generador/gen_rnd.cc"
 			],
 			[
 				"w",
@@ -230,22 +605,6 @@
 			[
 				"wse",
 				"wse/WSE.h"
-			],
-			[
-				"cons",
-				"Constants.h"
-			],
-			[
-				"cl",
-				"Client.cpp"
-			],
-			[
-				"ma",
-				"main.cpp"
-			],
-			[
-				"ed",
-				"EdgeServer.h"
 			],
 			[
 				"node",
@@ -258,14 +617,6 @@
 			[
 				"lru",
 				"wse/Lru.h"
-			],
-			[
-				"co",
-				"Constants.h"
-			],
-			[
-				"cli",
-				"Client.cpp"
 			],
 			[
 				"n",
