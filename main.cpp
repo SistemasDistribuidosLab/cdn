@@ -70,7 +70,7 @@ public:
 
 
 
-        Dns *dns = new Dns(clients, edge_servers);
+        Dns *dns = new Dns(clients, edge_servers, isps);
 
         for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
         {
@@ -159,6 +159,7 @@ void GenerateGraph();
 string GenerarResumen(double elapsed_secs)
 {
     stringstream ss;
+    ss << "Tamano Cache Wse: " << WSECACHESIZE << endl;
     ss << "Clientes:         " << NUM_CLIENTS << endl;
     ss << "Servidores:    " << NUM_EDGE_SERVERS << endl;
     ss << "Tiempo simulado: " << DURACION_SIMULACION << endl;
@@ -224,10 +225,6 @@ int main(int argc, char const *argv[])
     DURACION_SIMULACION = argc > 3 ? atoi(argv[3]) : 100;
     ARRIVAL_TIME = argc > 4 ? atoi(argv[4]) : 1;
 
-    cout << "NUM_CLIENTS:         " << NUM_CLIENTS << endl;
-    cout << "NUM_EDGE_SERVERS:    " << NUM_EDGE_SERVERS << endl;
-    cout << "DURACION_SIMULACION: " << DURACION_SIMULACION << endl;
-
     simulation *sim = simulation::instance();
     sim->begin_simulation( new sqsDll() );
 
@@ -259,6 +256,11 @@ int main(int argc, char const *argv[])
     salida.open(archivo_salida.c_str());
     salida << GenerarResumen(elapsed_secs);
     salida.close();
+
+    archivo_salida = "cp charts/received_querys_by_edge_servers charts/" + itos( seconds ) + "_received_querys_by_edge_servers";
+    system(archivo_salida.c_str());
+    archivo_salida = "cp charts/cache_hits_by_edge_servers charts/" + itos( seconds ) + "_cache_hits_by_edge_servers";
+    system(archivo_salida.c_str());
 
     GenerateGraph();
 

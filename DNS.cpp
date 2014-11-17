@@ -7,19 +7,29 @@ int abs(int a) {
 int Dns::GetEdgeServerId(int id, int isp) {
     int weight[ NUM_EDGE_SERVERS ];
 
+    max_received_queries_by_edge_servers_cycle = 0; // para evitar la division por cero y comparaciones donde raramente es 0
+
     // Calcular la cantidad maxima de consultas recibidas en el intervalo (TIME_WINDOW segundos)
-    int max_received_queries_by_edge_servers = 0;
     for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
-        if (num_messages_received_by_edge_servers_cycle[ i ] > max_received_queries_by_edge_servers) {
-            max_received_queries_by_edge_servers = num_messages_received_by_edge_servers_cycle[ i ];
+        if (num_messages_received_by_edge_servers_cycle[ i ] > max_received_queries_by_edge_servers_cycle) {
+            max_received_queries_by_edge_servers_cycle = num_messages_received_by_edge_servers_cycle[ i ];
         }
     }
 
     for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
         weight[ i ] =
-            ( max_received_queries_by_edge_servers - num_messages_received_by_edge_servers_cycle[ i ] ) * 0.5 +
-            abs( isp - edge_servers[ i ]->GetIsp() ) * 0.5
-            ;
+            // A mayor cantidad de mensajes recibidos, mayor peso
+            (
+                max_received_queries_by_edge_servers_cycle > 0 ?
+                (
+                    ( num_messages_received_by_edge_servers_cycle[ i ] ) / max_received_queries_by_edge_servers_cycle
+                )
+                :
+                0
+            )
+            +
+            // Si la latencia es mayor, sube el peso
+            isps[ isp ][ edge_servers[ i ]->GetIsp() ];
     }
 
     int id_mayor = 0;
@@ -31,8 +41,8 @@ int Dns::GetEdgeServerId(int id, int isp) {
         }
     }
     num_messages_received_by_edge_servers_cycle[ id_mayor ]++;
-    return id_mayor;
-    // return id % NUM_EDGE_SERVERS;
+    // return id_mayor;
+    return id % NUM_EDGE_SERVERS;
 }
 
 // El reseteo se realiza en stats.cpp cada TIME_WINDOW segundos
