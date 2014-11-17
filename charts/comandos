@@ -1,5 +1,0 @@
-Received Queries By Edge Servers:
-set title 'Received Queries By Edge Servers';set xlabel 'Time';set ylabel '#Received Queries / second';plot 'charts/received_querys_by_edge_servers' using 1:2 with lines title "EdgeServer 0", 
-
-Cache Hits By Edge Servers:
-set title 'Cache Hits By Edge Servers';set xlabel 'Time';set ylabel 'Cache Hits / second';plot 'charts/cache_hits_by_edge_servers' using 1:2 with lines title "EdgeServer 0", 
