@@ -49,6 +49,11 @@ class Gen_rnd: public process
         int porcentaje_peers;
 
         int Peer_Selection;
+        bool FLASH_CROWD;
+        int NORMAL_RATE;
+        int NORMAL_TIME;
+        int CROWDED_RATE;
+        int CROWD_TIME;
 
     protected:
         void inner_body( void );
@@ -68,8 +73,14 @@ class Gen_rnd: public process
 
         Gen_rnd ( const string &name, char * _traces_file, unsigned long int * _totalQueries,
                   int _NP, int * _ends, int _Nuser,
-                  handle<WSE> * _wse, int _PS, ofstream * chart_file, ofstream * querys_sended_stream): process( name )
+                  handle<WSE> * _wse, int _PS, ofstream * chart_file, ofstream * querys_sended_stream, bool FLASH_CROWD, int NORMAL_RATE, int NORMAL_TIME, int CROWDED_RATE, int CROWD_TIME): process( name )
         {
+            this->FLASH_CROWD  = FLASH_CROWD;
+            this->NORMAL_RATE  = NORMAL_RATE;
+            this->NORMAL_TIME  = NORMAL_TIME;
+            this->CROWDED_RATE = CROWDED_RATE;
+            this->CROWD_TIME = CROWD_TIME;
+
             this-> chart_file = chart_file;
             this->querys_sended_stream = querys_sended_stream;
 

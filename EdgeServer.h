@@ -22,7 +22,7 @@ private:
     unsigned int processed_queries;
     LRU *ANSWERS;
 public:
-    EdgeServer(const string &name, int id, int type) : Node(name, id, type)
+    EdgeServer(const string &name, int id, int type, int WSECACHESIZE) : Node(name, id, type)
     {
         idle_time = 0;
         busy_time = 0;

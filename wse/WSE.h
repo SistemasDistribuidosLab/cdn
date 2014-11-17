@@ -20,7 +20,7 @@ class WSE: public Node {
         bool busy;
         LRUA *ANSWERS;
     public:
-        WSE ( const string &name ): Node ( name, 0, NODE_ORIGIN_SERVER ) {
+        WSE ( const string &name, int WSECACHESIZE ): Node ( name, 0, NODE_ORIGIN_SERVER ) {
             busy = false;
             int cacheSize = WSECACHESIZE;
             ANSWERS = new LRUA(&cacheSize);

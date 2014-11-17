@@ -19,145 +19,146 @@ int NUM_CLIENTS;
 int NUM_EDGE_SERVERS;
 int DURACION_SIMULACION;
 int ARRIVAL_TIME;
+int WSECACHESIZE;
+int FLASH_CROWD;
+int TIME_WINDOW;
+int CROWD_TIME;
+int NORMAL_TIME;
+int NORMAL_RATE;
+int CROWDED_RATE;
 
-double isps[3][3] =
-{
+double isps[3][3] = {
     {0.1, 0.5, 0.5},
     {0.5, 0.1, 0.5},
     {0.5, 0.5, 0.1},
 };
 
 // vector< handle<Client> > clients;
-handle<Client> *clients;
-handle<EdgeServer> *edge_servers;
+handle<Client> * clients;
+handle<EdgeServer> * edge_servers;
 
-class Simulation : public process
-{
-public:
-    Simulation(const string &name) : process(name) { }
-    ~Simulation() { }
-    void inner_body()
-    {
-        rng<double> *arrival_time;
-        rng<double> *random_client;
-        arrival_time = new rngExp( "Arrive Time", ARRIVAL_TIME );
-        random_client = new rngUniform("SelectSource", 0, 100);
+class Simulation : public process {
+    public:
+        Simulation(const string &name) : process(name) { }
+        ~Simulation() { }
+        void inner_body() {
+            rng<double> * arrival_time;
+            rng<double> * random_client;
+            arrival_time = new rngExp( "Arrive Time", ARRIVAL_TIME );
+            random_client = new rngUniform("SelectSource", 0, 100);
 
-        // Iniciar Edge Servers
-        edge_servers = new handle<EdgeServer>[NUM_EDGE_SERVERS];
-        for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
-        {
-            edge_servers[ i ] = new EdgeServer("edge_server", i, NODE_EDGE_SERVER);
+            // Iniciar Edge Servers
+            edge_servers = new handle<EdgeServer>[NUM_EDGE_SERVERS];
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+                edge_servers[ i ] = new EdgeServer("edge_server", i, NODE_EDGE_SERVER, WSECACHESIZE);
+            }
+
+            // Iniciar Clientes
+            clients = new handle<Client>[ NUM_CLIENTS ];
+            for (int i = 0; i < NUM_CLIENTS; ++i) {
+                clients[ i ] = new Client("cliente", i, NODE_CLIENT, arrival_time);
+            }
+
+            handle<WSE> wse = new WSE("wse", WSECACHESIZE);
+            wse->SetIsp( 0 );
+
+            // Iniciar Transporte
+            handle<Transport> transport = new Transport("transporte", 0, 0);
+            transport->SetClients(clients);
+            transport->SetEdgeServers(edge_servers);
+            transport->SetWse(&wse);
+            Transport::SetIsps(isps);
+            transport->activate();
+
+
+
+            Dns * dns = new Dns(clients, edge_servers, isps);
+
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+                edge_servers[ i ]->SetTransport(&transport);
+                edge_servers[ i ]->SetIsp( ((double)i / (double)NUM_EDGE_SERVERS) * NUM_ISP );
+            }
+            for (int i = 0; i < NUM_CLIENTS; ++i) {
+                clients[ i ]->SetTransport(&transport);
+                clients[ i ]->SetIsp( ((double)i / (double)NUM_CLIENTS) * NUM_ISP );
+                clients[ i ]->SetDns(dns);
+            }
+
+            wse->SetTransport(&transport);
+            wse->activate();
+
+            handle<Stats> stats = new Stats("stats", DURACION_SIMULACION, edge_servers, dns, TIME_WINDOW);
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+                edge_servers[ i ]->activate();
+            }
+            for (int i = 0; i < NUM_CLIENTS; ++i) {
+                clients[ i ]->activate();
+            }
+            stats->activate();
+
+
+            char traces[2048];
+            strcpy(traces, "../RISE_16M.DAT");
+            // strcpy(traces, "../partial3.DAT");
+            // strcpy(traces, "../../../Descargas/partial3.DAT");
+            unsigned long int totalQueries = 1000000;
+            int Peer_Selection = 0;
+            int Nuser = 0;
+            int nodes = 100;
+            int * ends = new int[nodes + 1];
+            for ( int i = 0; i < nodes + 1; i++)
+                ends[i] = 0;
+
+            ofstream * chart_file = new ofstream();
+            chart_file->open ("query_chart");
+
+            ofstream * querys_sended_stream = new ofstream();
+            querys_sended_stream->open ("querys_sended_stream");
+
+            handle<Gen_rnd> generator = new Gen_rnd(
+                "GENERATOR",
+                traces,
+                &totalQueries,
+                nodes,
+                ends,
+                Nuser,
+                &wse,
+                Peer_Selection,
+                chart_file,
+                querys_sended_stream,
+                FLASH_CROWD,
+                NORMAL_RATE,
+                NORMAL_TIME,
+                CROWDED_RATE,
+                CROWD_TIME
+            );
+
+            generator->SetClients(clients);
+            generator->activate();
+            hold(DURACION_SIMULACION);
+
+            chart_file->close();
+            querys_sended_stream->close();
+            stats->CloseAll();
+
+            // Generar procecomandos
+            ofstream * comandos_charts_stream = new ofstream();
+            comandos_charts_stream->open ("comandos_charts");
+
+            (*comandos_charts_stream) << "plot ";
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+                (*comandos_charts_stream) << "'querys_sended_stream' using 1:" << (i + 2) << " with lines, ";
+            }
+            (*comandos_charts_stream) << endl;
+            // ! Generar comandos
+
+            end_simulation( );
         }
-
-        // Iniciar Clientes
-        clients = new handle<Client>[ NUM_CLIENTS ];
-        for (int i = 0; i < NUM_CLIENTS; ++i)
-        {
-            clients[ i ] = new Client("cliente", i, NODE_CLIENT, arrival_time);
-        }
-
-        handle<WSE> wse = new WSE("wse");
-        wse->SetIsp( 0 );
-
-        // Iniciar Transporte
-        handle<Transport> transport = new Transport("transporte", 0, 0);
-        transport->SetClients(clients);
-        transport->SetEdgeServers(edge_servers);
-        transport->SetWse(&wse);
-        Transport::SetIsps(isps);
-        transport->activate();
-
-
-
-        Dns *dns = new Dns(clients, edge_servers, isps);
-
-        for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
-        {
-            edge_servers[ i ]->SetTransport(&transport);
-            edge_servers[ i ]->SetIsp( ((double)i / (double)NUM_EDGE_SERVERS) * NUM_ISP );
-        }
-        for (int i = 0; i < NUM_CLIENTS; ++i)
-        {
-            clients[ i ]->SetTransport(&transport);
-            clients[ i ]->SetIsp( ((double)i / (double)NUM_CLIENTS) * NUM_ISP );
-            clients[ i ]->SetDns(dns);
-        }
-
-        wse->SetTransport(&transport);
-        wse->activate();
-
-        handle<Stats> stats = new Stats("stats", DURACION_SIMULACION, edge_servers, dns);
-        for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
-        {
-            edge_servers[ i ]->activate();
-        }
-        for (int i = 0; i < NUM_CLIENTS; ++i)
-        {
-            clients[ i ]->activate();
-        }
-        stats->activate();
-
-
-        char traces[2048];
-        strcpy(traces, "../RISE_16M.DAT");
-        // strcpy(traces, "../partial3.DAT");
-        // strcpy(traces, "../../../Descargas/partial3.DAT");
-        unsigned long int totalQueries = 1000000;
-        int Peer_Selection = 0;
-        int Nuser = 0;
-        int nodes = 100;
-        int *ends = new int[nodes + 1];
-        for ( int i = 0; i < nodes + 1; i++)
-            ends[i] = 0;
-
-        ofstream *chart_file = new ofstream();
-        chart_file->open ("query_chart");
-
-        ofstream *querys_sended_stream = new ofstream();
-        querys_sended_stream->open ("querys_sended_stream");
-
-        handle<Gen_rnd> generator = new Gen_rnd(
-            "GENERATOR",
-            traces,
-            &totalQueries,
-            nodes,
-            ends,
-            Nuser,
-            &wse,
-            Peer_Selection,
-            chart_file,
-            querys_sended_stream
-        );
-
-        generator->SetClients(clients);
-        generator->activate();
-        hold(DURACION_SIMULACION);
-
-        chart_file->close();
-        querys_sended_stream->close();
-        stats->CloseAll();
-
-        // Generar procecomandos
-        ofstream *comandos_charts_stream = new ofstream();
-        comandos_charts_stream->open ("comandos_charts");
-
-        (*comandos_charts_stream) << "plot ";
-        for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
-        {
-            (*comandos_charts_stream) << "'querys_sended_stream' using 1:" << (i + 2) << " with lines, ";
-        }
-        (*comandos_charts_stream) << endl;
-        // ! Generar comandos
-
-        end_simulation( );
-    }
 };
 
 void GenerateGraph();
 
-string GenerarResumen(double elapsed_secs)
-{
+string GenerarResumen(double elapsed_secs) {
     stringstream ss;
     ss << "Tamano Cache Wse: " << WSECACHESIZE << endl;
     ss << "Clientes:         " << NUM_CLIENTS << endl;
@@ -170,8 +171,7 @@ string GenerarResumen(double elapsed_secs)
     double total_idle_time_percentage  = 0;
     double total_busy_time_percentage  = 0;
 
-    for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
-    {
+    for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
         ss << fixed << setprecision(2);
         double idle_time = edge_servers[ i ]->GetIdleTime();
         double busy_time = edge_servers[ i ]->GetBusyTime();
@@ -199,8 +199,7 @@ string GenerarResumen(double elapsed_secs)
 
     // Total consultas enviadas
     unsigned int total_num_messages_sended = 0;
-    for (int i = 0; i < NUM_CLIENTS; ++i)
-    {
+    for (int i = 0; i < NUM_CLIENTS; ++i) {
         total_num_messages_sended += clients[ i ]->GetNumberOfQueriesSended();
     }
     ss << "\tTotal querys sended:   " << total_num_messages_sended << endl;
@@ -209,23 +208,42 @@ string GenerarResumen(double elapsed_secs)
     return ss.str();
 }
 
-string itos(int i) // convert int to string
-{
+string itos(int i) { // convert int to string
     stringstream s;
     s << i;
     return s.str();
 }
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const * argv[]) {
     clock_t begin = clock();
 
-    NUM_CLIENTS = argc > 1 ? atoi(argv[1]) : 100;
-    NUM_EDGE_SERVERS = argc > 2 ? atoi(argv[2]) : 5;
-    DURACION_SIMULACION = argc > 3 ? atoi(argv[3]) : 100;
-    ARRIVAL_TIME = argc > 4 ? atoi(argv[4]) : 1;
+    NUM_CLIENTS         = argc >  1 ? atoi(argv[ 1])      : 100;
+    NUM_EDGE_SERVERS    = argc >  2 ? atoi(argv[ 2])      : 5;
+    DURACION_SIMULACION = argc >  3 ? atoi(argv[ 3])      : 100;
+    ARRIVAL_TIME        = argc >  4 ? atoi(argv[ 4])      : 1;
+    WSECACHESIZE        = argc >  5 ? atoi(argv[ 5])      : 8000;
+    FLASH_CROWD         = argc >  6 ? atoi(argv[ 6]) != 0 : true;
+    TIME_WINDOW         = argc >  7 ? atoi(argv[ 7])      : 10;
+    CROWD_TIME          = argc >  8 ? atoi(argv[ 8])      : 5;
+    NORMAL_TIME         = argc >  9 ? atoi(argv[ 9])      : 50;
+    NORMAL_RATE         = argc > 10 ? atoi(argv[10])      : 100;
+    CROWDED_RATE        = argc > 11 ? atoi(argv[11])      : 500;
 
-    simulation *sim = simulation::instance();
+    cout << "NUM_CLIENTS: " << NUM_CLIENTS << endl;
+    cout << "NUM_EDGE_SERVERS: " << NUM_EDGE_SERVERS << endl;
+    cout << "DURACION_SIMULACION: " << DURACION_SIMULACION << endl;
+    cout << "ARRIVAL_TIME: " << ARRIVAL_TIME << endl;
+    cout << "WSECACHESIZE: " << WSECACHESIZE << endl;
+    cout << "FLASH_CROWD: " << FLASH_CROWD << endl;
+    cout << "TIME_WINDOW: " << TIME_WINDOW << endl;
+    cout << "CROWD_TIME: " << CROWD_TIME << endl;
+    cout << "NORMAL_TIME: " << NORMAL_TIME << endl;
+    cout << "NORMAL_RATE: " << NORMAL_RATE << endl;
+    cout << "CROWDED_RATE: " << CROWDED_RATE << endl;
+
+
+
+    simulation * sim = simulation::instance();
     sim->begin_simulation( new sqsDll() );
 
     handle<Simulation> simulation_handle = new Simulation( "source" );
@@ -270,11 +288,9 @@ int main(int argc, char const *argv[])
 string GetColor(int, int);
 string GetColorNode(int, int);
 
-void GenerateGraph()
-{
+void GenerateGraph() {
     int total_edge_querys = 0;
-    for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
-    {
+    for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
         total_edge_querys += edge_servers[ i ]->GetProcessedQueries();
     }
 
@@ -285,12 +301,10 @@ void GenerateGraph()
 
     string string_tamano = ",height=0.30, width=0.30, fixedsize=true,";
 
-    for (int i = 0; i < NUM_CLIENTS; ++i)
-    {
+    for (int i = 0; i < NUM_CLIENTS; ++i) {
         grafo << "\tc" << i << "[shape=circle, color=lightblue,style=filled " << string_tamano << "];" << endl;
     }
-    for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
-    {
+    for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
         grafo << "\te" << i << "[shape=box, color=\"" << GetColorNode(edge_servers[ i ]->GetProcessedQueries(), total_edge_querys) << "\",style=filled " << string_tamano << "];" << endl;
     }
     // grafo << "\tDNS[shape=box, color=orange,style=filled " << string_tamano << "];" << endl;
@@ -301,11 +315,9 @@ void GenerateGraph()
     int total_total = 0;
     int total_querys[ NUM_CLIENTS ];
 
-    for (int i = 0; i < NUM_CLIENTS; ++i)
-    {
+    for (int i = 0; i < NUM_CLIENTS; ++i) {
         total = 0;
-        for (int j = 0; j < NUM_EDGE_SERVERS; ++j)
-        {
+        for (int j = 0; j < NUM_EDGE_SERVERS; ++j) {
             total += edge_servers[ j ]->GetQuerysByClient(i);
         }
         if (total > max_querys)
@@ -315,22 +327,17 @@ void GenerateGraph()
     }
 
     // Clients -> EdgeServers
-    for (int i = 0; i < NUM_CLIENTS; ++i)
-    {
-        for (int j = 0; j < NUM_EDGE_SERVERS; ++j)
-        {
+    for (int i = 0; i < NUM_CLIENTS; ++i) {
+        for (int j = 0; j < NUM_EDGE_SERVERS; ++j) {
             if (edge_servers[ j ]->GetQuerysByClient(i) > 0)
                 grafo << "\t" << "\"c" << i << "\" -> \"e" << j << "\"[color=\"" << GetColor(edge_servers[ j ]->GetQuerysByClient(i), max_querys) << "\"];" << endl;
         }
     }
 
     // Clients -> DNS
-    for (int i = 0; i < NUM_CLIENTS; ++i)
-    {
-        for (int j = 0; j < NUM_EDGE_SERVERS; ++j)
-        {
-            if (edge_servers[ j ]->GetQuerysByClient(i) > 0)
-            {
+    for (int i = 0; i < NUM_CLIENTS; ++i) {
+        for (int j = 0; j < NUM_EDGE_SERVERS; ++j) {
+            if (edge_servers[ j ]->GetQuerysByClient(i) > 0) {
                 // grafo << "\t" << "\"c" << i << "\" -> \"DNS\"" << endl;
             }
         }
@@ -340,8 +347,7 @@ void GenerateGraph()
     grafo.close();
 }
 
-string GetColor(int querys, int total_querys)
-{
+string GetColor(int querys, int total_querys) {
     // rdylgn11 color scheme
     // http://www.graphviz.org/doc/info/colors.html#brewer
     vector<string> colors;
@@ -361,8 +367,7 @@ string GetColor(int querys, int total_querys)
     return colors.at( ((double)querys / (double)total_querys * (colors.size() - 1 ) ) );
 }
 
-string GetColorNode(int querys, int total_querys)
-{
+string GetColorNode(int querys, int total_querys) {
     // rdylgn11 color scheme
     // http://www.graphviz.org/doc/info/colors.html#brewer
     vector<string> colors;

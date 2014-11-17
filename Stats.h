@@ -16,11 +16,13 @@ class Stats : public process {
         ofstream cache_usage_stream;
         int DURACION_SIMULACION;
         Dns * dns;
+        int TIME_WINDOW;
     public:
-        Stats(const string &name, int DURACION_SIMULACION, handle<EdgeServer> * edge_servers, Dns * dns) : process(name) {
-            this->edge_servers = edge_servers;
-            this->dns = dns;
+        Stats(const string &name, int DURACION_SIMULACION, handle<EdgeServer> * edge_servers, Dns * dns, int TIME_WINDOW) : process(name) {
+            this->edge_servers        = edge_servers;
+            this->dns                 = dns;
             this->DURACION_SIMULACION = DURACION_SIMULACION;
+            this->TIME_WINDOW         = TIME_WINDOW;
             
             received_querys_by_edge_servers = new ofstream();
             received_querys_by_edge_servers->open("charts/received_querys_by_edge_servers");

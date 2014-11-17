@@ -18,18 +18,16 @@ extern int DURACION_SIMULACION;
 #define NODE_ORIGIN_SERVER 2
 #define NODE_DNS		   3
 
-#define WSECACHESIZE 8000
+// #define WSECACHESIZE 8000
 #define SIZE_ANSWER 1
 #define STATIC_TIMEOUT 100 // cambiar por dinamico
 
-#define TTL_WSE 180 // 3min
-
 // FLASH CROWDS
-#define FLASH_CROWD true  // se utiliza o no el flash crowd
-#define CROWD_TIME 5.0 // segundos con flash crowd
-#define NORMAL_TIME 50.0 //segundos con tasa normal
-#define NORMAL_RATE 100.0 // tasa de arribo sin flash crowd
-#define CROWDED_RATE 500.0 // tasa de arribo con flash crowd
+// #define FLASH_CROWD true  // se utiliza o no el flash crowd
+// #define CROWD_TIME 5.0 // segundos con flash crowd
+// #define NORMAL_TIME 50.0 //segundos con tasa normal
+// #define NORMAL_RATE 100.0 // tasa de arribo sin flash crowd
+// #define CROWDED_RATE 500.0 // tasa de arribo con flash crowd
 
 #define QUERY_RATE_STRATEGY 0
 #define QUERY_DELTA_T 10000 //CADA 10000 Unidades de Tiempo
@@ -50,6 +48,6 @@ extern int DURACION_SIMULACION;
 
 #define NUM_ISP 3
 
-#define TIME_WINDOW 10 // cada cuantos segundos registrará datos
+// #define TIME_WINDOW 10 // cada cuantos segundos registrará datos
 
 #endif
