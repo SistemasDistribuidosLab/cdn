@@ -1,6 +1,6 @@
 #include "Dns.h"
 
-int abs(int a) {
+inline int abs(int a) {
     return a < 0 ? -a : a;
 }
 
@@ -32,17 +32,17 @@ int Dns::GetEdgeServerId(int id, int isp) {
             isps[ isp ][ edge_servers[ i ]->GetIsp() ];
     }
 
-    int id_mayor = 0;
-    int mayor    = weight[ 0 ];
+    int id_menor = 0;
+    int menor    = weight[ 0 ];
     for (int i = 1; i < NUM_EDGE_SERVERS; ++i) {
-        if (weight[ i ] > mayor) {
-            mayor = weight[ i ];
-            id_mayor = i;
+        if (weight[ i ] < menor) {
+            menor = weight[ i ];
+            id_menor = i;
         }
     }
-    num_messages_received_by_edge_servers_cycle[ id_mayor ]++;
-    // return id_mayor;
-    return id % NUM_EDGE_SERVERS;
+    num_messages_received_by_edge_servers_cycle[ id_menor ]++;
+    return id_menor;
+    // return id % NUM_EDGE_SERVERS;
 }
 
 // El reseteo se realiza en stats.cpp cada TIME_WINDOW segundos
