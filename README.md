@@ -1,3 +1,21 @@
+# Explicaciones
+* [Proceso de enviar un mensaje desde un cliente a un EdgeServer](#proceso-de-enviar-un-mensaje-desde-un-cliente-a-un-edgeserver)
+
+### Proceso de enviar un mensaje desde un cliente a un EdgeServer
+
+```c
+// Parametros de esta llamada:
+// - id del creador
+// - tipo creador
+// - id receptor
+// - tipo receptor
+// - tiempo creacion mensaje
+// - mensaje (de tipo MessageWSE *)
+Message * message = new Message(this->GetId(), NODE_CLIENT, edge_server_to, NODE_EDGE_SERVER, time(), message_wse);
+// delay corresponde al delay de enviar mensaje entre isp de emisor y receptor
+delay = this->SendMessage(message);
+```
+
 # Modificaciones interesantes
 * [Donde se trabaja con el cache en EdgeServers](#donde_se_utiliza_cache_edge_server)
 * [Modificar política de asignación DNS](#politica_asignacion_dns)
