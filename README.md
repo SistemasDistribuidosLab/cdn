@@ -1,6 +1,7 @@
 # Explicaciones
 * [Proceso de enviar un mensaje desde un cliente a un EdgeServer](#proceso-de-enviar-un-mensaje-desde-un-cliente-a-un-edgeserver)
 
+<a name="proceso-de-enviar-un-mensaje-desde-un-cliente-a-un-edgeserver"></a>
 ### Proceso de enviar un mensaje desde un cliente a un EdgeServer
 
 Él código a continuación corresponde a la clase cliente, pero es común en los demás servidores (edge servers y wse):
