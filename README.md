@@ -1,5 +1,6 @@
 # Modificaciones interesantes
-[Donde se trabaja con el cache en EdgeServers](#donde_se_utiliza_cache_edge_server)
+* [Donde se trabaja con el cache en EdgeServers](#donde_se_utiliza_cache_edge_server)
+* [Modificar política de asignación DNS](#politica_asignacion_dns)
 
 <a name="donde_se_utiliza_cache_edge_server"></a>
 ### Donde se trabaja con el cache en EdgeServers
@@ -24,6 +25,25 @@ else // La consulta está en cache
     // [...]
 }
 ```
+
+<a name="politica_asignacion_dns"></a>
+### Modificar Política de asignación DNS
+*DNS.cpp:*
+```c
+/****************************************************************************************
+*  Nombre: GetEdgeServerId
+*  Funcion: Asigna un edge server al client i que pertenece al isp isp
+*
+*  Parametros:
+*      - int id: id del cliente
+*      - int isp: isp del cliente
+*
+*  Retorno: id del EdgeServer asignado al cliente
+****************************************************************************************/
+int Dns::GetEdgeServerId(int id, int isp) {
+	// [...]
+}
+    ```
 
 
 # Comandos
