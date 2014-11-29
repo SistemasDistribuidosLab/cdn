@@ -30,18 +30,23 @@ void EdgeServer::inner_body(void)
 
             if (message->GetTypeFrom() == NODE_CLIENT)
             {
-                Entry * a = ANSWERS->check( message_wse->getQuery() );
 
                 this->ReceiveANewMessageFromClient( message->GetIdFrom() );
                 this->AddANewUnprocessedMessage(message);
+
+                // Anade 1 al contador de consultas recibidas (para luego poder hacer la relacion entre cache hits respecto al total)
                 this->SumToProcessedQuerys();
-                if (a != NULL && a->old( time() ))
+                
+                Entry * a = ANSWERS->check( message_wse->getQuery() ); // Busca en el cache una query (message_wse->getQuery() -> BIGNUM*).
+                
+                if (a != NULL && a->old( time() )) // Si está en el cache y no ha vencido su ttl
                 {
-                    ANSWERS->remove(a);
+                    ANSWERS->remove(a); // Se remueve de cache
                     a = NULL;
                 }
-                if (a == NULL)
+                if (a == NULL) // No está en el cache
                 {
+                    // Sumo cache hit y envio la consulta al WSE
                     this->AddANewCacheMiss();
                     this->SendMessage(
                         new Message(
@@ -53,8 +58,9 @@ void EdgeServer::inner_body(void)
                             message_wse)
                     );
                 }
-                else
+                else // La consulta está en cache
                 {
+                    // Sumo cache hit y envio la respuesta al cliente
                     this->AddANewCacheHit();
                     this->SendMessage(
                         new Message(

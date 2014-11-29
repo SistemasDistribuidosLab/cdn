@@ -1,11 +1,29 @@
 # Modificaciones interesantes
-[Donde Se Utiliza El Cache En EdgeServer](#donde_se_utiliza_cache_edge_server)
+[Donde se trabaja con el cache en EdgeServers](#donde_se_utiliza_cache_edge_server)
 
 <a name="donde_se_utiliza_cache_edge_server"></a>
-### Donde Se Utiliza El Cache En EdgeServer
-En la clase *EdgeServer.cpp*:
-* ```Entry * a = ANSWERS->check( message_wse->getQuery() );```. Busca en el cache una query (message_wse->getQuery() -> *BIGNUM\**).
-* Existen dos posibles caminos:
+### Donde se trabaja con el cache en EdgeServers
+*EdgeServer.cpp*:
+* Buscar en cache:
+```c
+Entry * a = ANSWERS->check( message_wse->getQuery() ); // Busca en el cache una query (message_wse->getQuery() -> BIGNUM*).
+if (a != NULL && a->old( time() )) // Si está en el cache y no ha vencido su ttl
+ANSWERS->remove(a); // Se remueve de cache
+a = NULL;
+```
+Existen dos posibles caminos:
+* ```c
+if (a == NULL) // No está en el cache
+{
+    // Sumo cache hit y envio la consulta al WSE
+    // [...]
+}
+else // La consulta está en cache
+{
+    // Sumo cache hit y envio la respuesta al cliente
+    // [...]
+}
+```
 
 
 # Comandos
