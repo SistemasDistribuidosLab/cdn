@@ -50,4 +50,6 @@ extern int DURACION_SIMULACION;
 
 // #define TIME_WINDOW 10 // cada cuantos segundos registrará datos
 
+#define INTERVALO_MEDIR_CACHE_HITS 50
+
 #endif

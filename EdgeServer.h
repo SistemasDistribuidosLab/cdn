@@ -21,6 +21,7 @@ private:
     unsigned int cache_miss_received_queries_by_clients;
     unsigned int processed_queries;
     LRU *ANSWERS;
+    vector<double> cache_hits_vector;
 public:
     EdgeServer(const string &name, int id, int type, int WSECACHESIZE) : Node(name, id, type)
     {
@@ -39,10 +40,14 @@ public:
 
         int * cacheSize = new int(WSECACHESIZE);
         ANSWERS = new LRU(cacheSize);
+        cache_hits_vector.push_back(0);
     }
     ~EdgeServer()
     {
         delete ANSWERS;
+    }
+    vector<double> GetCacheHitsVector(){
+        return this->cache_hits_vector;
     }
     int GetUnprocessedMessageId(MessageWSE *);
     double GetIdleTime();

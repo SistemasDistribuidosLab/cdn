@@ -27,7 +27,8 @@ int NORMAL_TIME;
 int NORMAL_RATE;
 int CROWDED_RATE;
 
-double isps[3][3] = {
+double isps[3][3] =
+{
     {0.1, 0.5, 0.5},
     {0.5, 0.1, 0.5},
     {0.5, 0.5, 0.1},
@@ -37,11 +38,13 @@ double isps[3][3] = {
 handle<Client> * clients;
 handle<EdgeServer> * edge_servers;
 
-class Simulation : public process {
+class Simulation : public process
+{
     public:
         Simulation(const string &name) : process(name) { }
         ~Simulation() { }
-        void inner_body() {
+        void inner_body()
+        {
             rng<double> * arrival_time;
             rng<double> * random_client;
             arrival_time = new rngExp( "Arrive Time", ARRIVAL_TIME );
@@ -49,13 +52,15 @@ class Simulation : public process {
 
             // Iniciar Edge Servers
             edge_servers = new handle<EdgeServer>[NUM_EDGE_SERVERS];
-            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+            {
                 edge_servers[ i ] = new EdgeServer("edge_server", i, NODE_EDGE_SERVER, WSECACHESIZE);
             }
 
             // Iniciar Clientes
             clients = new handle<Client>[ NUM_CLIENTS ];
-            for (int i = 0; i < NUM_CLIENTS; ++i) {
+            for (int i = 0; i < NUM_CLIENTS; ++i)
+            {
                 clients[ i ] = new Client("cliente", i, NODE_CLIENT, arrival_time);
             }
 
@@ -74,11 +79,13 @@ class Simulation : public process {
 
             Dns * dns = new Dns(clients, edge_servers, isps);
 
-            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+            {
                 edge_servers[ i ]->SetTransport(&transport);
                 edge_servers[ i ]->SetIsp( ((double)i / (double)NUM_EDGE_SERVERS) * NUM_ISP );
             }
-            for (int i = 0; i < NUM_CLIENTS; ++i) {
+            for (int i = 0; i < NUM_CLIENTS; ++i)
+            {
                 clients[ i ]->SetTransport(&transport);
                 clients[ i ]->SetIsp( ((double)i / (double)NUM_CLIENTS) * NUM_ISP );
                 clients[ i ]->SetDns(dns);
@@ -88,10 +95,12 @@ class Simulation : public process {
             wse->activate();
 
             handle<Stats> stats = new Stats("stats", DURACION_SIMULACION, edge_servers, dns, TIME_WINDOW);
-            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+            {
                 edge_servers[ i ]->activate();
             }
-            for (int i = 0; i < NUM_CLIENTS; ++i) {
+            for (int i = 0; i < NUM_CLIENTS; ++i)
+            {
                 clients[ i ]->activate();
             }
             stats->activate();
@@ -146,10 +155,44 @@ class Simulation : public process {
             comandos_charts_stream->open ("comandos_charts");
 
             (*comandos_charts_stream) << "plot ";
-            for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+            {
                 (*comandos_charts_stream) << "'querys_sended_stream' using 1:" << (i + 2) << " with lines, ";
             }
             (*comandos_charts_stream) << endl;
+
+            ofstream cache_hits_stream;
+            cache_hits_stream.open("charts/cache_hits");
+            vector<double> * cache_hits_vector = new vector<double>[ NUM_EDGE_SERVERS ];
+            int highest_cache_hit_vector_length = 0;
+            for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+            {
+                cache_hits_vector[ i ] = edge_servers[ i ]->GetCacheHitsVector();
+                if (cache_hits_vector[ i ].size() > highest_cache_hit_vector_length)
+                {
+                    highest_cache_hit_vector_length = cache_hits_vector[ i ].size();
+                }
+            }
+
+            for (int i = 0; i < highest_cache_hit_vector_length; ++i)
+            {
+                cache_hits_stream << (i * INTERVALO_MEDIR_CACHE_HITS);
+                for (int k = 0; k < NUM_EDGE_SERVERS; ++k)
+                {
+                    if (i < cache_hits_vector[ k ].size())
+                    {
+                        cache_hits_stream << ", " << cache_hits_vector[ k ].at( i );
+                    }else{
+                        cache_hits_stream << ", " << 0;
+                    }
+                }
+                cache_hits_stream << endl;
+            }
+            cache_hits_stream.close();
+
+
+
+
             // ! Generar comandos
 
             end_simulation( );
@@ -158,7 +201,8 @@ class Simulation : public process {
 
 void GenerateGraph();
 
-string GenerarResumen(double elapsed_secs) {
+string GenerarResumen(double elapsed_secs)
+{
     stringstream ss;
     ss << "Tamano Cache Wse: " << WSECACHESIZE << endl;
     ss << "Clientes:         " << NUM_CLIENTS << endl;
@@ -171,7 +215,8 @@ string GenerarResumen(double elapsed_secs) {
     double total_idle_time_percentage  = 0;
     double total_busy_time_percentage  = 0;
 
-    for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+    for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+    {
         ss << fixed << setprecision(2);
         double idle_time = edge_servers[ i ]->GetIdleTime();
         double busy_time = edge_servers[ i ]->GetBusyTime();
@@ -199,7 +244,8 @@ string GenerarResumen(double elapsed_secs) {
 
     // Total consultas enviadas
     unsigned int total_num_messages_sended = 0;
-    for (int i = 0; i < NUM_CLIENTS; ++i) {
+    for (int i = 0; i < NUM_CLIENTS; ++i)
+    {
         total_num_messages_sended += clients[ i ]->GetNumberOfQueriesSended();
     }
     ss << "\tTotal querys sended:   " << total_num_messages_sended << endl;
@@ -208,13 +254,15 @@ string GenerarResumen(double elapsed_secs) {
     return ss.str();
 }
 
-string itos(int i) { // convert int to string
+string itos(int i)   // convert int to string
+{
     stringstream s;
     s << i;
     return s.str();
 }
 
-int main(int argc, char const * argv[]) {
+int main(int argc, char const * argv[])
+{
     clock_t begin = clock();
 
     NUM_CLIENTS         = argc >  1 ? atoi(argv[ 1])      : 100;
@@ -288,9 +336,11 @@ int main(int argc, char const * argv[]) {
 string GetColor(int, int);
 string GetColorNode(int, int);
 
-void GenerateGraph() {
+void GenerateGraph()
+{
     int total_edge_querys = 0;
-    for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+    for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+    {
         total_edge_querys += edge_servers[ i ]->GetProcessedQueries();
     }
 
@@ -301,10 +351,12 @@ void GenerateGraph() {
 
     string string_tamano = ",height=0.30, width=0.30, fixedsize=true,";
 
-    for (int i = 0; i < NUM_CLIENTS; ++i) {
+    for (int i = 0; i < NUM_CLIENTS; ++i)
+    {
         grafo << "\tc" << i << "[shape=circle, color=lightblue,style=filled " << string_tamano << "];" << endl;
     }
-    for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {
+    for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
+    {
         grafo << "\te" << i << "[shape=box, color=\"" << GetColorNode(edge_servers[ i ]->GetProcessedQueries(), total_edge_querys) << "\",style=filled " << string_tamano << "];" << endl;
     }
     // grafo << "\tDNS[shape=box, color=orange,style=filled " << string_tamano << "];" << endl;
@@ -315,9 +367,11 @@ void GenerateGraph() {
     int total_total = 0;
     int total_querys[ NUM_CLIENTS ];
 
-    for (int i = 0; i < NUM_CLIENTS; ++i) {
+    for (int i = 0; i < NUM_CLIENTS; ++i)
+    {
         total = 0;
-        for (int j = 0; j < NUM_EDGE_SERVERS; ++j) {
+        for (int j = 0; j < NUM_EDGE_SERVERS; ++j)
+        {
             total += edge_servers[ j ]->GetQuerysByClient(i);
         }
         if (total > max_querys)
@@ -327,17 +381,22 @@ void GenerateGraph() {
     }
 
     // Clients -> EdgeServers
-    for (int i = 0; i < NUM_CLIENTS; ++i) {
-        for (int j = 0; j < NUM_EDGE_SERVERS; ++j) {
+    for (int i = 0; i < NUM_CLIENTS; ++i)
+    {
+        for (int j = 0; j < NUM_EDGE_SERVERS; ++j)
+        {
             if (edge_servers[ j ]->GetQuerysByClient(i) > 0)
                 grafo << "\t" << "\"c" << i << "\" -> \"e" << j << "\"[color=\"" << GetColor(edge_servers[ j ]->GetQuerysByClient(i), max_querys) << "\"];" << endl;
         }
     }
 
     // Clients -> DNS
-    for (int i = 0; i < NUM_CLIENTS; ++i) {
-        for (int j = 0; j < NUM_EDGE_SERVERS; ++j) {
-            if (edge_servers[ j ]->GetQuerysByClient(i) > 0) {
+    for (int i = 0; i < NUM_CLIENTS; ++i)
+    {
+        for (int j = 0; j < NUM_EDGE_SERVERS; ++j)
+        {
+            if (edge_servers[ j ]->GetQuerysByClient(i) > 0)
+            {
                 // grafo << "\t" << "\"c" << i << "\" -> \"DNS\"" << endl;
             }
         }
@@ -347,7 +406,8 @@ void GenerateGraph() {
     grafo.close();
 }
 
-string GetColor(int querys, int total_querys) {
+string GetColor(int querys, int total_querys)
+{
     // rdylgn11 color scheme
     // http://www.graphviz.org/doc/info/colors.html#brewer
     vector<string> colors;
@@ -367,7 +427,8 @@ string GetColor(int querys, int total_querys) {
     return colors.at( ((double)querys / (double)total_querys * (colors.size() - 1 ) ) );
 }
 
-string GetColorNode(int querys, int total_querys) {
+string GetColorNode(int querys, int total_querys)
+{
     // rdylgn11 color scheme
     // http://www.graphviz.org/doc/info/colors.html#brewer
     vector<string> colors;

@@ -9,7 +9,8 @@
 
 //#define WSECACHESIZE 8000
 
-class WSE: public Node {
+class WSE: public Node
+{
 
     private:
         // ID_PAGE , (TTL, VERSION)
@@ -18,15 +19,20 @@ class WSE: public Node {
         list<MessageWSE *> queue_in;
 
         bool busy;
-        LRUA *ANSWERS;
+        LRUA * ANSWERS;
+        unsigned int cache_hits;
+        // ofstream cache_hits_stream;
+        // cache_hits_stream.open("charts/wse_cache_hits");
     public:
-        WSE ( const string &name, int WSECACHESIZE ): Node ( name, 0, NODE_ORIGIN_SERVER ) {
+        WSE ( const string &name, int WSECACHESIZE ): Node ( name, 0, NODE_ORIGIN_SERVER )
+        {
             busy = false;
             int cacheSize = WSECACHESIZE;
             ANSWERS = new LRUA(&cacheSize);
         }
 
-        ~WSE() {
+        ~WSE()
+        {
             //  answers.clear();
             delete ANSWERS;
         }
@@ -34,15 +40,18 @@ class WSE: public Node {
 
         void inner_body ( void );
 
-        void add_request ( MessageWSE *bn ) {
+        void add_request ( MessageWSE * bn )
+        {
             queue_in.push_back(bn);
         }
 
-        bool get_busy() {
+        bool get_busy()
+        {
             return busy;
         }
 
-        void print() {
+        void print()
+        {
             cout << "WSE" << endl;
         }
 

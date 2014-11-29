@@ -1,5 +1,6 @@
 # OPCIONES_COMPILADOR=-pg -Wall -g
-OPCIONES_COMPILADOR=-Wall -O2
+# OPCIONES_COMPILADOR=-Wall -O2
+OPCIONES_COMPILADOR=-Wall -g
 CPPSIM=-Isrc $(OPCIONES_COMPILADOR)
 
 all: main.o Client.o EdgeServer.o Node.o Transport.o Message.o DNS.o WSE.o LruA.o Lru.o gen_rnd.o Util.o Stats.o Hash.o

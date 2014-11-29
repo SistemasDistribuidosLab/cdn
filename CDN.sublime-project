@@ -14,7 +14,7 @@
 			{
 				"additional_options":
 				[
-					"--style=java",
+					// "--style=java",
 					"--indent-classes",
 					"--indent-preprocessor",
 					"--indent-switches",

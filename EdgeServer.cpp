@@ -11,6 +11,7 @@ using namespace std;
 void EdgeServer::inner_body(void) {
     double time_aux;
     double processing_time_per_query = 0.01;
+    unsigned int anterior = 0;
     while (1) {
         // ===== BUSY TIME START =====
         while (!message_stack.empty()) {
@@ -47,7 +48,6 @@ void EdgeServer::inner_body(void) {
                     );
                 } else {
                     this->AddANewCacheHit();
-                    this->AddANewProcessedQuery();
                     this->SendMessage(
                         new Message(
                             this->GetId(),
@@ -78,6 +78,17 @@ void EdgeServer::inner_body(void) {
                 this->AddANewProcessedQuery();
                 this->SendMessage(new Message(this->GetId(), this->GetType(),
                                               original->GetIdFrom(), original->GetTypeFrom(), time(), message_wse));
+            }
+
+            if( this->GetReceivedQueriesByClients() % INTERVALO_MEDIR_CACHE_HITS == 0){
+                cache_hits_vector.push_back( (double)GetCacheHitsReceivedQueriesByClients() / (double)GetProcessedQueries() );
+                // cache_hits_vector.push_back( (double)GetCacheHitsReceivedQueriesByClients() - (double)anterior );
+                anterior = GetCacheHitsReceivedQueriesByClients();
+                if(GetId() == 0){
+                    // cout << GetCacheHitsReceivedQueriesByClients() << " - " << anterior << ": " << (double)GetCacheHitsReceivedQueriesByClients() - anterior << endl;
+                }
+
+                // cache_hits_vector.push_back( GetCacheHitsReceivedQueriesByClients() );
             }
         }
         // ===== BUSY TIME END =====

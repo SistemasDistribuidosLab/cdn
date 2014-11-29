@@ -2,12 +2,12 @@
 
 void WSE::inner_body(void) {
 
+    unsigned int number_of_queries = 0;
     while (1) {
 
         if (queue_in.empty() )
             passivate();
         // ASSERT(!queue_in.empty());
-
 
         Message *mes = message_stack.back();
         MessageWSE *m = mes->GetMessagePointer();
@@ -48,6 +48,10 @@ void WSE::inner_body(void) {
 
             default: cout << "ERROR: WSE Type o msg" << endl;
         }*/
+        number_of_queries++;
+        if(number_of_queries % INTERVALO_MEDIR_CACHE_HITS == 0){
+            // cout << (double)this->cache_hits << endl;
+        }
     }
 }
 
@@ -57,8 +61,11 @@ int WSE::getVersion(string s, BIGNUM * b)
     Answer * a = ANSWERS->check(s);
     if (a != NULL)
     {
+        // cout << "!= NULL" << endl;
         if (a->getTimeOut() < this->time())
         {
+            cout << "\tHIT" << endl;
+            this->cache_hits++;
             ttl = (this->time()) + TTL_WSE;
             // TTL es igual a new random number
             a->setNewVersion(ttl);
