@@ -1,7 +1,8 @@
 # Modificaciones interesantes
 [Donde Se Utiliza El Cache En EdgeServer](#donde_se_utiliza_cache_edge_server)
 
-### Donde Se Utiliza El Cache En EdgeServer<a name="donde_se_utiliza_cache_edge_server"></a>
+<a name="donde_se_utiliza_cache_edge_server"></a>
+### Donde Se Utiliza El Cache En EdgeServer
 En la clase *EdgeServer.cpp*:
 * ```Entry * a = ANSWERS->check( message_wse->getQuery() );```. Busca en el cache una query (message_wse->getQuery() -> *BIGNUM\**).
 * Existen dos posibles caminos:
