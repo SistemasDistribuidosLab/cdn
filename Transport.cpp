@@ -54,10 +54,11 @@ void Transport::inner_body(void) {
     while (1) {
         // ===== BUSY TIME START =====
         // time_aux = time();
+        // Por cada mensaje en el stack
         while (!message_stack.empty()) {
             Message *message = message_stack.back();
             message_stack.pop_back();
-            // cout << time() << " - Transporte " << this->GetId() << ": Mensaje Enviado en tiempo " << message->GetCreationTime() << " desde el cliente " << message->GetIdFrom() << ": " << message->GetMessage() << endl;
+            // Variable que guardará el servidor receptor (cliente, edge server o wse)
             Node *servidor;
             switch (message->GetTypeTo()) {
                 case NODE_CLIENT:
@@ -71,7 +72,6 @@ void Transport::inner_body(void) {
                     break;
             }
 
-            // handle<EdgeServer> edge_server = edge_servers[ message->GetIdTo() ];
             servidor->AddMessage(message);
             // hold(0.001);
             if (servidor->idle()) {

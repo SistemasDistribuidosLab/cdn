@@ -48,13 +48,9 @@ void Client::inner_body(void) {
             message_wse_stack.pop_back();
 
             this->number_of_querys_sended++;
-            // Parametros de esta llamada:
-            // - id del creador
-            // - tipo creador
-            // - id receptor
-            // - tipo receptor
-            // - tiempo creacion mensaje
-            // - mensaje (de tipo MessageWSE *)
+            // Parametros de esta llamada: 
+            // id del creador, tipo creador, id receptor, tipo receptor, 
+            // tiempo creacion mensaje, mensaje (de tipo MessageWSE *) 
             Message * message = new Message(this->GetId(), NODE_CLIENT, edge_server_to, NODE_EDGE_SERVER, time(), message_wse);
             // delay corresponde al delay de enviar mensaje entre isp de emisor y receptor
             delay = this->SendMessage(message);
