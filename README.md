@@ -12,7 +12,7 @@ ANSWERS->remove(a); // Se remueve de cache
 a = NULL;
 ```
 Existen dos posibles caminos:
-* ```c
+```c
 if (a == NULL) // No está en el cache
 {
     // Sumo cache hit y envio la consulta al WSE
