@@ -7,9 +7,9 @@
 Él código a continuación corresponde a la clase cliente, pero es común en los demás servidores (edge servers y wse):
 
 ```c
-// Parametros de esta llamada: 
-// id del creador, tipo creador, id receptor, tipo receptor, 
-// tiempo creacion mensaje, mensaje (de tipo MessageWSE *) 
+// Parametros de esta llamada:
+// id del creador, tipo creador, id receptor, tipo receptor,
+// tiempo creacion mensaje, mensaje (de tipo MessageWSE *)
 Message * message = new Message(this->GetId(), NODE_CLIENT, edge_server_to, NODE_EDGE_SERVER, time(), message_wse);
 Message * message = new Message(this->GetId(), NODE_CLIENT, edge_server_to, NODE_EDGE_SERVER, time(), message_wse);
 // delay corresponde al delay de enviar mensaje entre isp de emisor y receptor
@@ -57,6 +57,17 @@ while (1) {
 
 El receptor del mensaje realiza un proceso similar al proceso transporte:
 
+```c
+while (!message_stack.empty())
+{
+    Message * message = this->GetMessageFromMessageStack();
+    if (message->GetTypeFrom() == NODE_CLIENT) {
+        // [ Si es cliente ... ]
+    } else if (message->GetTypeFrom() == NODE_ORIGIN_SERVER) {
+        // [ Si es wse ... ]
+    }
+}
+```
 
 
 # Modificaciones interesantes

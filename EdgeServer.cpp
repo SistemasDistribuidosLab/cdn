@@ -30,7 +30,7 @@ void EdgeServer::inner_body(void)
 
             if (message->GetTypeFrom() == NODE_CLIENT)
             {
-
+                // [ Si es cliente ... ]
                 this->ReceiveANewMessageFromClient( message->GetIdFrom() );
                 this->AddANewUnprocessedMessage(message);
 
@@ -76,6 +76,7 @@ void EdgeServer::inner_body(void)
 
             else if (message->GetTypeFrom() == NODE_ORIGIN_SERVER)
             {
+                // [ Si es wse ... ]
                 int id_message = GetUnprocessedMessageId(message->GetMessagePointer());
                 Message * original = unprocessed_message_stack.at(id_message);
                 unprocessed_message_stack.erase(unprocessed_message_stack.begin() + id_message);

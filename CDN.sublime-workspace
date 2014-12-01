@@ -96,14 +96,6 @@
 	"buffers":
 	[
 		{
-			"file": "wse/WSE.cc",
-			"settings":
-			{
-				"buffer_size": 3152,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "EdgeServer.cpp",
 			"settings":
 			{
@@ -112,34 +104,36 @@
 			}
 		},
 		{
-			"file": "wse/MessageWSE.h",
-			"settings":
-			{
-				"buffer_size": 942,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "DNS.cpp",
-			"settings":
-			{
-				"buffer_size": 2174,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "README.md",
 			"settings":
 			{
-				"buffer_size": 3255,
+				"buffer_size": 4891,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "proceso-de-enviar-un-mensaje-desde-un-cliente-a-un-edgeserver",
+			"settings":
+			{
+				"buffer_size": 61,
+				"line_ending": "Unix",
+				"name": "proceso-de-enviar-un-mensaje-desde-un-cliente-a-un"
+			}
+		},
+		{
+			"contents": "donde-se-trabaja-con-el-cache-en-edgeservers",
+			"settings":
+			{
+				"buffer_size": 44,
+				"line_ending": "Unix",
+				"name": "donde-se-trabaja-con-el-cache-en-edgeservers"
 			}
 		},
 		{
 			"file": "Client.cpp",
 			"settings":
 			{
-				"buffer_size": 3865,
+				"buffer_size": 3801,
 				"line_ending": "Unix"
 			}
 		},
@@ -147,7 +141,7 @@
 			"file": "Node.cpp",
 			"settings":
 			{
-				"buffer_size": 1145,
+				"buffer_size": 1470,
 				"line_ending": "Unix"
 			}
 		},
@@ -155,15 +149,7 @@
 			"file": "Transport.cpp",
 			"settings":
 			{
-				"buffer_size": 2564,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "charts/comandos",
-			"settings":
-			{
-				"buffer_size": 1522,
+				"buffer_size": 2386,
 				"line_ending": "Unix"
 			}
 		},
@@ -172,6 +158,14 @@
 			"settings":
 			{
 				"buffer_size": 2322,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Node.h",
+			"settings":
+			{
+				"buffer_size": 1559,
 				"line_ending": "Unix"
 			}
 		}
@@ -224,24 +218,29 @@
 	],
 	"file_history":
 	[
+		"/home/giovanni/cdn/charts/comandos",
+		"/home/giovanni/cdn/DNS.cpp",
+		"/home/giovanni/cdn/EdgeServer.h",
+		"/home/giovanni/cdn/wse/MessageWSE.h",
+		"/home/giovanni/cdn/Node.h",
+		"/home/giovanni/cdn/Transport.h",
 		"/home/giovanni/cdn/Client.h",
 		"/home/giovanni/cdn/main.cpp",
+		"/home/giovanni/cdn/Message.cpp",
+		"/home/giovanni/cdn/src/coroutine.cc",
+		"/home/giovanni/cdn/wse/WSE.cc",
 		"/home/giovanni/cdn/Constants.h",
 		"/home/giovanni/cdn/wse/LruLCache.cc",
 		"/home/giovanni/cdn/wse/LruA.h",
-		"/home/giovanni/cdn/Transport.h",
 		"/home/giovanni/cdn/CDN.sublime-project",
 		"/home/giovanni/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
 		"/home/giovanni/cdn/charts/received_querys_by_edge_servers",
 		"/home/giovanni/cdn/README.md",
 		"/home/giovanni/cdn/makefile",
 		"/home/giovanni/cdn/wse/WSE.h",
-		"/home/giovanni/cdn/Message.cpp",
 		"/home/giovanni/cdn/charts/cache_hits",
 		"/home/giovanni/cdn/comandos_charts",
 		"/home/giovanni/cdn/EdgeServer.cpp",
-		"/home/giovanni/cdn/charts/comandos",
-		"/home/giovanni/cdn/wse/WSE.cc",
 		"/home/giovanni/cdn/Stats.h",
 		"/home/giovanni/cdn/charts/cache_usage",
 		"/home/giovanni/cdn/charts/cache_hits_by_edge_servers",
@@ -250,7 +249,6 @@
 		"/home/giovanni/cdn/charts/470405586_cache_hits_by_edge_servers",
 		"/home/giovanni/cdn/generador/query_charts.plot",
 		"/home/giovanni/cdn/query_chart",
-		"/home/giovanni/cdn/EdgeServer.h",
 		"/home/giovanni/cdn/Dns.h",
 		"/home/giovanni/cdn/src/jain.cc",
 		"/home/giovanni/Escritorio/domain.xml",
@@ -357,6 +355,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			" ",
+			"_",
+			"comandos",
 			"SumToProcessedQuerys",
 			"ofstream",
 			"stateless-ear",
@@ -422,6 +423,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"-",
 			"cache_usage",
 			""
 		],
@@ -434,41 +436,11 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "wse/WSE.cc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3152,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								295,
-								295
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 77.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "EdgeServer.cpp",
 					"semi_transient": false,
 					"settings":
@@ -480,68 +452,8 @@
 						"selection":
 						[
 							[
-								3849,
-								3849
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 910.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "wse/MessageWSE.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 942,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								723,
-								723
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 345.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "DNS.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2174,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1926,
-								1926
+								6160,
+								6160
 							]
 						],
 						"settings":
@@ -551,27 +463,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": -0.0,
-						"translation.y": 400.0,
+						"translation.y": 2580.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 1,
 					"file": "README.md",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3255,
+						"buffer_size": 4891,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								258,
-								258
+								217,
+								217
 							]
 						],
 						"settings":
@@ -582,16 +494,72 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 61,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								61,
+								61
+							]
+						],
+						"settings":
+						{
+							"auto_name": "proceso-de-enviar-un-mensaje-desde-un-cliente-a-un",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 44,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								44,
+								44
+							]
+						],
+						"settings":
+						{
+							"auto_name": "donde-se-trabaja-con-el-cache-en-edgeservers",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
 					"file": "Client.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3865,
+						"buffer_size": 3801,
 						"regions":
 						{
 						},
@@ -612,24 +580,24 @@
 						"translation.y": 519.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 5,
 					"file": "Node.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1145,
+						"buffer_size": 1470,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								496,
-								496
+								545,
+								545
 							]
 						],
 						"settings":
@@ -642,16 +610,16 @@
 						"translation.y": 39.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 6,
 					"file": "Transport.cpp",
-					"semi_transient": true,
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2564,
+						"buffer_size": 2386,
 						"regions":
 						{
 						},
@@ -672,39 +640,11 @@
 						"translation.y": 825.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "charts/comandos",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1522,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1522,
-								1522
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
+					"buffer": 7,
 					"file": "EdgeServer.h",
 					"semi_transient": false,
 					"settings":
@@ -722,6 +662,7 @@
 						],
 						"settings":
 						{
+							"history_list_is_closing": true,
 							"syntax": "Packages/C++/C++.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
@@ -730,7 +671,133 @@
 						"translation.y": 214.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 11,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 5,
+					"file": "Node.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1470,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1362,
+								1362
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 455.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "Node.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1559,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1080,
+								1080
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 264.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 0,
+					"file": "EdgeServer.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7622,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2222,
+								2222
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 663.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Transport.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2386,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1919,
+								1919
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 825.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
 					"type": "text"
 				}
 			]
@@ -753,11 +820,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -783,24 +857,36 @@
 		"selected_items":
 		[
 			[
-				"cli",
-				"Client.cpp"
-			],
-			[
-				"lci",
-				"Client.cpp"
-			],
-			[
-				"read",
-				"README.md"
+				"node",
+				"Node.cpp"
 			],
 			[
 				"edge",
 				"EdgeServer.cpp"
 			],
 			[
+				"trans",
+				"Transport.cpp"
+			],
+			[
+				"cli",
+				"Client.cpp"
+			],
+			[
+				"edg",
+				"EdgeServer.cpp"
+			],
+			[
 				"mai",
 				"main.cpp"
+			],
+			[
+				"read",
+				"README.md"
+			],
+			[
+				"lci",
+				"Client.cpp"
 			],
 			[
 				"wse",
@@ -881,10 +967,6 @@
 			[
 				"tr",
 				"Transport.h"
-			],
-			[
-				"trans",
-				"Transport.cpp"
 			],
 			[
 				"isp",
@@ -969,10 +1051,6 @@
 			[
 				"w",
 				"wse/WSE.cc"
-			],
-			[
-				"node",
-				"Node.h"
 			],
 			[
 				"mak",
