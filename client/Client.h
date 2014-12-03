@@ -1,7 +1,7 @@
 #ifndef CLIENT
 #define CLIENT
 
-#include "Node.h"
+#include "../Node.h"
 
 class EdgeServer;
 class Transport;

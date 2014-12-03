@@ -1,10 +1,10 @@
 #include <iostream>
 #include "EdgeServer.h"
-#include "Constants.h"
-#include "Client.h"
-#include "wse/MessageWSE.h"
-#include "wse/Answer.h"
-#include "wse/Lru.h"
+#include "../Constants.h"
+#include "../client/Client.h"
+#include "../wse/MessageWSE.h"
+#include "../wse/Answer.h"
+#include "../wse/Lru.h"
 
 using namespace std;
 

@@ -1,5 +1,5 @@
 #include "gen_rnd.h"
-#include "../Client.h"
+#include "../client/Client.h"
 #include "../Constants.h"
 #include <cmath>
 #include <openssl/sha.h>

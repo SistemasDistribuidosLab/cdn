@@ -1,9 +1,9 @@
 #ifndef EDGE_SERVER
 #define EDGE_SERVER
 
-#include "Node.h"
-#include "Constants.h"
-#include "wse/Lru.h"
+#include "../Node.h"
+#include "../Constants.h"
+#include "../wse/Lru.h"
 
 using namespace std;
 

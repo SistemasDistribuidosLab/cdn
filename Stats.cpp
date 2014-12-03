@@ -1,5 +1,5 @@
 #include "Stats.h"
-#include "EdgeServer.h"
+#include "edgeserver/EdgeServer.h"
 #include "Constants.h"
 
 unsigned int Stats::cycles = 0;
