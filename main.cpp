@@ -154,7 +154,7 @@ class Simulation : public process
 
             // Generar procecomandos
             ofstream * comandos_charts_stream = new ofstream();
-            comandos_charts_stream->open ("comandos_charts");
+            comandos_charts_stream->open ("comandos_charts/comandos_charts");
 
             (*comandos_charts_stream) << "plot ";
             for (int i = 0; i < NUM_EDGE_SERVERS; ++i)
