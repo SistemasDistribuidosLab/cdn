@@ -3,7 +3,7 @@
 
 // #include "Message.h"
 #include "cppsim.hh"
-#include "Message.h"
+#include "transport/Message.h"
 #include "Isp.h"
 #include <vector>
 

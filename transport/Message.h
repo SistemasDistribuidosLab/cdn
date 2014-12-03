@@ -3,7 +3,7 @@
 
 #include <string>
 #include <cstdlib>
-#include "wse/MessageWSE.h"
+#include "../wse/MessageWSE.h"
 
 using namespace std;
 

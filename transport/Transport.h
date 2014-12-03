@@ -3,7 +3,7 @@
 
 #include "cppsim.hh"
 #include "../Node.h"
-#include "../Message.h"
+#include "Message.h"
 #include <vector>
 
 using namespace std;
