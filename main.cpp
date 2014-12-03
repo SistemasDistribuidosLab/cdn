@@ -1,6 +1,6 @@
 #include "cppsim.hh"
 #include "Constants.h"
-#include "Dns.h"
+#include "transport/Dns.h"
 #include "transport/Transport.h"
 #include "client/Client.h"
 #include "edgeserver/EdgeServer.h"

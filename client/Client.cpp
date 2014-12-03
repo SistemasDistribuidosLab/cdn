@@ -1,6 +1,6 @@
 #include "Client.h"
 #include "../Constants.h"
-#include "../Dns.h"
+#include "../transport/Dns.h"
 
 #include <iostream>
 #include <iomanip>

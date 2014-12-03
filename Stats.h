@@ -3,7 +3,7 @@
 
 #include "cppsim.hh"
 #include "Constants.h"
-#include "Dns.h"
+#include "transport/Dns.h"
 
 class EdgeServer;
 

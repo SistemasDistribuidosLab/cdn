@@ -1,9 +1,9 @@
 #ifndef DNS
 #define DNS
 
-#include "Constants.h"
-#include "client/Client.h"
-#include "edgeserver/EdgeServer.h"
+#include "../Constants.h"
+#include "../client/Client.h"
+#include "../edgeserver/EdgeServer.h"
 
 class Dns {
     private:
