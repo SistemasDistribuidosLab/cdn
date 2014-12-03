@@ -95,29 +95,37 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "README.md",
-			"settings":
-			{
-				"buffer_size": 5172,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "EdgeServer.cpp",
-			"settings":
-			{
-				"buffer_size": 7699,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 54.0,
 		"selected_items":
 		[
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"markdown",
+				"GitHub Flavored Markdown: Preview"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"mark",
+				"Markmon launch"
+			],
+			[
+				"markm",
+				"Markmon launch"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
 			[
 				"style",
 				"SublimeAStyleFormatter: Format Current File"
@@ -125,14 +133,6 @@
 			[
 				"package ins",
 				"Package Control: Install Package"
-			],
-			[
-				"install",
-				"Package Control: Install Package"
-			],
-			[
-				"markdown",
-				"Set Syntax: Markdown"
 			]
 		],
 		"width": 449.0
@@ -160,41 +160,70 @@
 	],
 	"file_history":
 	[
-		"/home/giovanni/cdn/EdgeServer.h",
-		"/home/giovanni/cdn/Transport.cpp",
-		"/home/giovanni/cdn/EdgeServer.cpp",
-		"/home/giovanni/cdn/Node.h",
-		"/home/giovanni/cdn/Node.cpp",
-		"/home/giovanni/cdn/Client.cpp",
 		"/home/giovanni/cdn/README.md",
-		"/home/giovanni/cdn/charts/comandos",
-		"/home/giovanni/cdn/DNS.cpp",
-		"/home/giovanni/cdn/wse/MessageWSE.h",
-		"/home/giovanni/cdn/Transport.h",
-		"/home/giovanni/cdn/Client.h",
+		"/home/giovanni/cdn/makefile",
+		"/home/giovanni/cdn/Node.h",
+		"/home/giovanni/cdn/node/Node.cpp",
+		"/home/giovanni/cdn/wse/WSE.h",
+		"/home/giovanni/cdn/transport/Transport.h",
+		"/home/giovanni/cdn/edgeserver/EdgeServer.h",
+		"/home/giovanni/cdn/edgeserver/EdgeServer.cpp",
+		"/home/giovanni/cdn/node/Node.h",
+		"/home/giovanni/cdn/client/Client.h",
+		"/home/giovanni/cdn/client/Client.cpp",
+		"/home/giovanni/cdn/comandos_charts",
+		"/home/giovanni/cdn/.gitignore",
+		"/home/giovanni/cdn/Funciones.h",
 		"/home/giovanni/cdn/main.cpp",
-		"/home/giovanni/cdn/Message.cpp",
-		"/home/giovanni/cdn/src/coroutine.cc",
+		"/home/giovanni/cdn/charts/comandos",
 		"/home/giovanni/cdn/wse/WSE.cc",
+		"/home/giovanni/cdn/transport/Transport.cpp",
+		"/home/giovanni/cdn/query_chart",
+		"/home/giovanni/cdn/querys_sended_stream",
+		"/home/giovanni/cdn/gmon.out",
+		"/home/giovanni/cdn/generador/gen_rnd.cc",
+		"/home/giovanni/cdn/Isp.h",
+		"/home/giovanni/cdn/Stats.h",
+		"/home/giovanni/cdn/transport/Dns.h",
+		"/home/giovanni/cdn/Transport.cpp",
+		"/home/giovanni/cdn/transport/Message.h",
+		"/home/giovanni/cdn/grafo.dot",
+		"/home/giovanni/cdn/dudas.md",
+		"/home/giovanni/cdn/src/handle.cc",
+		"/home/giovanni/cdn/src/handle.hh",
+		"/home/giovanni/cdn/CDN.sublime-project",
+		"/home/giovanni/cdn/tiempos.md",
+		"/home/giovanni/cdn/por_hacer.md",
+		"/home/giovanni/cdn/Stats.cpp",
+		"/home/giovanni/cdn/Node.cpp",
+		"/home/giovanni/cdn/transport/DNS.cpp",
+		"/home/giovanni/cdn/transport/Message.cpp",
+		"/home/giovanni/cdn/src/mean.cc",
+		"/home/giovanni/cdn/Dns.h",
+		"/home/giovanni/cdn/src/trace.cc",
+		"/home/giovanni/cdn/src/trremoval_R5.cc",
+		"/home/giovanni/cdn/Transport.h",
+		"/home/giovanni/cdn/main",
+		"/home/giovanni/cdn/Message.cpp",
+		"/home/giovanni/cdn/src/exactvar.hh",
+		"/home/giovanni/cdn/DNS.cpp",
+		"/home/giovanni/cdn/EdgeServer.cpp",
+		"/home/giovanni/cdn/EdgeServer.h",
+		"/home/giovanni/cdn/Client.cpp",
+		"/home/giovanni/cdn/wse/MessageWSE.h",
+		"/home/giovanni/cdn/Client.h",
+		"/home/giovanni/cdn/src/coroutine.cc",
 		"/home/giovanni/cdn/Constants.h",
 		"/home/giovanni/cdn/wse/LruLCache.cc",
 		"/home/giovanni/cdn/wse/LruA.h",
-		"/home/giovanni/cdn/CDN.sublime-project",
 		"/home/giovanni/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
 		"/home/giovanni/cdn/charts/received_querys_by_edge_servers",
-		"/home/giovanni/cdn/makefile",
-		"/home/giovanni/cdn/wse/WSE.h",
 		"/home/giovanni/cdn/charts/cache_hits",
-		"/home/giovanni/cdn/comandos_charts",
-		"/home/giovanni/cdn/Stats.h",
 		"/home/giovanni/cdn/charts/cache_usage",
 		"/home/giovanni/cdn/charts/cache_hits_by_edge_servers",
-		"/home/giovanni/cdn/Stats.cpp",
 		"/home/giovanni/cdn/charts/470405586_received_querys_by_edge_servers",
 		"/home/giovanni/cdn/charts/470405586_cache_hits_by_edge_servers",
 		"/home/giovanni/cdn/generador/query_charts.plot",
-		"/home/giovanni/cdn/query_chart",
-		"/home/giovanni/cdn/Dns.h",
 		"/home/giovanni/cdn/src/jain.cc",
 		"/home/giovanni/Escritorio/domain.xml",
 		"/home/giovanni/GlassFish_Server/glassfish/domains/stateless/config/domain.xml",
@@ -258,31 +287,7 @@
 		"/home/giovanni/cdn_con_errores_cache/wse/LruLCache.cc",
 		"/home/giovanni/cdn_con_errores_cache/generador/query_charts.plot",
 		"/home/giovanni/cdn_con_errores_cache/query_chart",
-		"/home/giovanni/cdn_con_errores_cache/src/coroutine.cc",
-		"/home/giovanni/cdn_con_errores_cache/src/counter.cc",
-		"/home/giovanni/cdn_con_errores_cache/Stats.h",
-		"/home/giovanni/cdn_con_errores_cache/src/dump.cc",
-		"/home/giovanni/cdn_con_errores_cache/Node.h",
-		"/home/giovanni/cdn_con_errores_cache/tiempos.md",
-		"/home/giovanni/cdn_con_errores_cache/src/process.cc",
-		"/root/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
-		"/root/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
-		"/home/giovanni/cdn_con_errores_cache/CDN.sublime-project",
-		"/home/giovanni/cdn_con_errores_cache/src/welch.cc",
-		"/home/giovanni/cdn_con_errores_cache/Node.cpp",
-		"/home/giovanni/cdn_con_errores_cache_respaldo/generador/gen_rnd.cc",
-		"/home/giovanni/cdn_con_errores_cache_respaldo/Client.h",
-		"/home/giovanni/cdn_con_errores_cache/src/logger.cc",
-		"/home/giovanni/cdn_con_errores_cache_respaldo/Client.cpp",
-		"/home/giovanni/cdn_con_errores_cache_respaldo/EdgeServer.cpp",
-		"/home/giovanni/cdn_con_errores_cache_respaldo/main.cpp",
-		"/home/giovanni/cdn_con_errores_cache_respaldo/EdgeServer.h",
-		"/home/giovanni/cdn_con_errores_cache/CDN.sublime-workspace",
-		"/home/giovanni/cdn_con_errores_cache/main",
-		"/home/giovanni/cdn_con_errores_cache/lru/lru.hpp",
-		"/etc/opt/hypertable/hypertable.cfg",
-		"/opt/hypertable/0.9.8.3/conf/hypertable.cfg",
-		"/opt/hypertable/current/conf/hypertable.cfg"
+		"/home/giovanni/cdn_con_errores_cache/src/coroutine.cc"
 	],
 	"find":
 	{
@@ -300,6 +305,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Node.cpp",
+			"dns",
+			"Dns.cpp",
+			"Message.cpp",
+			"Transport.cpp",
+			"EdgeServer.cpp",
+			"Client.cpp",
 			" ",
 			"_",
 			"comandos",
@@ -368,6 +380,12 @@
 		"regex": false,
 		"replace_history":
 		[
+			"node/Node.cpp",
+			"transport/Dns.cpp",
+			"transport/Message.cpp",
+			"transport/Transport.cpp",
+			"edgeserver/EdgeServer.cpp",
+			"client/Client.cpp",
 			"-",
 			"cache_usage",
 			""
@@ -381,69 +399,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "README.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5172,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2302,
-								2302
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 770.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "EdgeServer.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7699,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3025,
-								3025
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 689.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -494,52 +451,136 @@
 		"selected_items":
 		[
 			[
-				"ed",
-				"EdgeServer.cpp"
-			],
-			[
 				"read",
 				"README.md"
-			],
-			[
-				"node",
-				"Node.cpp"
-			],
-			[
-				"edge",
-				"EdgeServer.cpp"
-			],
-			[
-				"trans",
-				"Transport.cpp"
-			],
-			[
-				"cli",
-				"Client.cpp"
-			],
-			[
-				"edg",
-				"EdgeServer.cpp"
 			],
 			[
 				"mai",
 				"main.cpp"
 			],
 			[
-				"lci",
-				"Client.cpp"
+				"coman",
+				"comandos_charts"
+			],
+			[
+				".git",
+				".gitignore"
+			],
+			[
+				"node",
+				"node/Node.cpp"
 			],
 			[
 				"wse",
-				"wse/WSE.cc"
+				"wse/WSE.h"
 			],
 			[
-				"coma",
-				"charts/comandos"
+				"tra",
+				"transport/Transport.h"
+			],
+			[
+				"ed",
+				"edgeserver/EdgeServer.h"
+			],
+			[
+				"cli",
+				"client/Client.h"
 			],
 			[
 				"make",
 				"makefile"
+			],
+			[
+				"query",
+				"query_chart"
+			],
+			[
+				"func",
+				"Funciones.h"
+			],
+			[
+				"",
+				".gitignore"
+			],
+			[
+				"isp",
+				"Isp.h"
+			],
+			[
+				"duda",
+				"dudas.md"
+			],
+			[
+				"tiem",
+				"tiempos.md"
+			],
+			[
+				"por",
+				"por_hacer.md"
+			],
+			[
+				"sta",
+				"Stats.h"
+			],
+			[
+				"dns",
+				"transport/Dns.h"
+			],
+			[
+				"tras",
+				"transport/Transport.h"
+			],
+			[
+				"mess",
+				"transport/Message.h"
+			],
+			[
+				"transpor",
+				"transport/Transport.cpp"
+			],
+			[
+				"nde",
+				"Node.cpp"
+			],
+			[
+				"trans",
+				"transport/Transport.h"
+			],
+			[
+				"stat",
+				"Stats.cpp"
+			],
+			[
+				"gen",
+				"generador/gen_rnd.cc"
+			],
+			[
+				"ma",
+				"makefile"
+			],
+			[
+				"cl",
+				"client/Client.cpp"
+			],
+			[
+				"dn",
+				"Dns.h"
+			],
+			[
+				"edge",
+				"EdgeServer.cpp"
+			],
+			[
+				"edg",
+				"EdgeServer.cpp"
+			],
+			[
+				"lci",
+				"Client.cpp"
+			],
+			[
+				"coma",
+				"charts/comandos"
 			],
 			[
 				"cons",
@@ -554,14 +595,6 @@
 				"charts/cache_hits"
 			],
 			[
-				"coman",
-				"charts/comandos"
-			],
-			[
-				"stat",
-				"Stats.h"
-			],
-			[
 				"charts",
 				"charts/cache_hits"
 			],
@@ -572,10 +605,6 @@
 			[
 				"1000",
 				"charts/cache_hits_by_edge_servers_every_1000_queries"
-			],
-			[
-				"sta",
-				"Stats.cpp"
 			],
 			[
 				"cache",
@@ -590,28 +619,12 @@
 				"simulador.sh"
 			],
 			[
-				"dns",
-				"DNS.cpp"
-			],
-			[
 				"st",
 				"Stats.h"
 			],
 			[
-				"tra",
-				"Transport.cpp"
-			],
-			[
 				"tr",
 				"Transport.h"
-			],
-			[
-				"isp",
-				"Isp.h"
-			],
-			[
-				"cl",
-				"Client.h"
 			],
 			[
 				".md",
@@ -634,10 +647,6 @@
 				"Message.cpp"
 			],
 			[
-				"mess",
-				"Message.h"
-			],
-			[
 				"lru",
 				"wse/Lru.h"
 			],
@@ -648,14 +657,6 @@
 			[
 				"lrua",
 				"wse/LruA.h"
-			],
-			[
-				"gen",
-				"generador/gen_rnd.cc"
-			],
-			[
-				"ma",
-				"main.cpp"
 			],
 			[
 				"co",
@@ -676,10 +677,6 @@
 			[
 				"con",
 				"Constants.h"
-			],
-			[
-				"dn",
-				"Dns.h"
 			],
 			[
 				"d",
