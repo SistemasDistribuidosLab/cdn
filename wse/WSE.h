@@ -2,7 +2,7 @@
 #define WSE_H
 
 #include "../glob.h"
-#include "../Node.h"
+#include "../node/Node.h"
 #include "MessageWSE.h"
 #include "LruA.h"
 #include "../Constants.h"

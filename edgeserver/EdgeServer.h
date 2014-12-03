@@ -1,7 +1,7 @@
 #ifndef EDGE_SERVER
 #define EDGE_SERVER
 
-#include "../Node.h"
+#include "../node/Node.h"
 #include "../Constants.h"
 #include "../wse/Lru.h"
 

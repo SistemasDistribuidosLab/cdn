@@ -121,10 +121,10 @@ class Simulation : public process
                 ends[i] = 0;
 
             ofstream * chart_file = new ofstream();
-            chart_file->open ("query_chart");
+            chart_file->open ("charts/query_charts/query_chart");
 
             ofstream * querys_sended_stream = new ofstream();
-            querys_sended_stream->open ("querys_sended_stream");
+            querys_sended_stream->open ("charts/querys_sended_streams/querys_sended_stream");
 
             handle<Gen_rnd> generator = new Gen_rnd(
                 "GENERATOR",
