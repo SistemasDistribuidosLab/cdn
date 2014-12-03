@@ -1,8 +1,8 @@
-#include "Constants.h"
+#include "../Constants.h"
 #include "Transport.h"
-#include "client/Client.h"
-#include "edgeserver/EdgeServer.h"
-#include "wse/WSE.h"
+#include "../client/Client.h"
+#include "../edgeserver/EdgeServer.h"
+#include "../wse/WSE.h"
 
 double Transport::isps[3][3];
 

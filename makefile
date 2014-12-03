@@ -20,8 +20,8 @@ EdgeServer.o: edgeserver/EdgeServer.cpp
 Node.o: Node.cpp
 	@clang++ $(CPPSIM) -c Node.cpp -o objects/Node.o
 
-Transport.o: Transport.cpp
-	@clang++ $(CPPSIM) -c Transport.cpp -o objects/Transport.o
+Transport.o: transport/Transport.cpp
+	@clang++ $(CPPSIM) -c transport/Transport.cpp -o objects/Transport.o
 
 Message.o: Message.cpp
 	@clang++ $(CPPSIM) -c Message.cpp -o objects/Message.o
@@ -51,7 +51,7 @@ Hash.o: auxiliar/Hash.cc
 	@clang++ $(CPPSIM) -c auxiliar/Hash.cc -o objects/Hash.o
 
 main:
-	@clang++ main.cpp client/Client.cpp edgeserver/EdgeServer.cpp Node.cpp Transport.cpp Message.cpp DNS.cpp wse/WSE.cc wse/LruA.cc generador/gen_rnd.cc auxiliar/Util.cc Stats.cpp Observer.cc src/libcppsim.a -Isrc  -o main
+	@clang++ main.cpp client/Client.cpp edgeserver/EdgeServer.cpp Node.cpp transport/Transport.cpp Message.cpp DNS.cpp wse/WSE.cc wse/LruA.cc generador/gen_rnd.cc auxiliar/Util.cc Stats.cpp Observer.cc src/libcppsim.a -Isrc  -o main
 	clear
 	@./main
 
