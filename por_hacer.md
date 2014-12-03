@@ -1,1 +1,0 @@
-graficar consultas / segundo en vez de consultas recibidas

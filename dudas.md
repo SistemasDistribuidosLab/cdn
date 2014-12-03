@@ -1,1 +1,0 @@
-- Cache hits lo dejo en cache_hits_ciclo / total_cache_hits ?

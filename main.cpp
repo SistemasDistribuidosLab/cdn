@@ -12,6 +12,8 @@
 #include <vector>
 #include <ctime>
 #include <sstream>
+#include <iomanip>
+#include <iostream>
 
 using namespace std;
 
