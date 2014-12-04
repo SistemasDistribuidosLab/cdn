@@ -23,6 +23,18 @@ class Message {
         unsigned long int id;
         static unsigned long int instances;
     public:
+        /**
+          *
+          * - id_from: id del creador del mensaje.
+          * - type_from: tipo del creador del mensaje.
+          * - id_to: id del receptor del mensaje.
+          * - type_to: tipo del receptor del mensaje.
+          * - creation_time: cuando se crea el mensaje, esta variable se llama como time().
+          * - message: Mensaje generado por gen_rnd (de tipo MessageWSE *) que contiene los datos
+          *            necesarios para conocer la consulta y poder manejar un cache con ésta.
+          * - 
+          *
+          **/
         Message(int id_from, int type_from, int id_to, int type_to, double creation_time, MessageWSE * message) {
             this->message = message;
 
@@ -34,6 +46,8 @@ class Message {
 
             this->creation_time = creation_time;
 
+            // Asigno un identificador único basado en el número de instancias
+            // (Ej. de los valores que tomará: 0, 1, 2, 3, 4, 5, ...)
             this->id = Message::instances;
             Message::instances++;
         }

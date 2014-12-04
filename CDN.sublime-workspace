@@ -104,10 +104,42 @@
 			}
 		},
 		{
-			"file": "tutorial/explicaciones",
+			"file": "main.cpp",
 			"settings":
 			{
-				"buffer_size": 2726,
+				"buffer_size": 15153,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "client/Client.h",
+			"settings":
+			{
+				"buffer_size": 1591,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "edgeserver/EdgeServer.h",
+			"settings":
+			{
+				"buffer_size": 2681,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "client/Client.cpp",
+			"settings":
+			{
+				"buffer_size": 3523,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Constants.h",
+			"settings":
+			{
+				"buffer_size": 1351,
 				"line_ending": "Unix"
 			}
 		}
@@ -176,11 +208,18 @@
 	],
 	"file_history":
 	[
+		"/home/giovanni/cdn/makefile",
+		"/home/giovanni/cdn/client/Client.cpp",
+		"/home/giovanni/cdn/charts/comandos",
+		"/home/giovanni/cdn/client/Client.h",
+		"/home/giovanni/cdn/generador/gen_rnd.cc",
+		"/home/giovanni/cdn/Constants.h",
+		"/home/giovanni/cdn/tutorial/explicaciones",
+		"/home/giovanni/.netrc",
 		"/home/giovanni/cdn/edgeserver/EdgeServer.h",
 		"/home/giovanni/cdn/explicaciones",
 		"/home/giovanni/cdn/modificaciones_interesantes",
 		"/home/giovanni/cdn/clases",
-		"/home/giovanni/cdn/makefile",
 		"/home/giovanni/cdn/README.md",
 		"/home/giovanni/cdn/Node.h",
 		"/home/giovanni/cdn/node/Node.cpp",
@@ -188,19 +227,15 @@
 		"/home/giovanni/cdn/transport/Transport.h",
 		"/home/giovanni/cdn/edgeserver/EdgeServer.cpp",
 		"/home/giovanni/cdn/node/Node.h",
-		"/home/giovanni/cdn/client/Client.h",
-		"/home/giovanni/cdn/client/Client.cpp",
 		"/home/giovanni/cdn/comandos_charts",
 		"/home/giovanni/cdn/.gitignore",
 		"/home/giovanni/cdn/Funciones.h",
 		"/home/giovanni/cdn/main.cpp",
-		"/home/giovanni/cdn/charts/comandos",
 		"/home/giovanni/cdn/wse/WSE.cc",
 		"/home/giovanni/cdn/transport/Transport.cpp",
 		"/home/giovanni/cdn/query_chart",
 		"/home/giovanni/cdn/querys_sended_stream",
 		"/home/giovanni/cdn/gmon.out",
-		"/home/giovanni/cdn/generador/gen_rnd.cc",
 		"/home/giovanni/cdn/Isp.h",
 		"/home/giovanni/cdn/Stats.h",
 		"/home/giovanni/cdn/transport/Dns.h",
@@ -232,7 +267,6 @@
 		"/home/giovanni/cdn/wse/MessageWSE.h",
 		"/home/giovanni/cdn/Client.h",
 		"/home/giovanni/cdn/src/coroutine.cc",
-		"/home/giovanni/cdn/Constants.h",
 		"/home/giovanni/cdn/wse/LruLCache.cc",
 		"/home/giovanni/cdn/wse/LruA.h",
 		"/home/giovanni/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
@@ -301,9 +335,7 @@
 		"/home/giovanni/cdn_con_errores_cache/salidas/salida",
 		"/home/giovanni/cdn_con_errores_cache/wse/WSE.cc",
 		"/home/giovanni/partial3.DAT",
-		"/home/giovanni/cdn_con_errores_cache/por_hacer.md",
-		"/home/giovanni/cdn_con_errores_cache/charts/cache_usage",
-		"/home/giovanni/cdn_con_errores_cache/wse/LruLCache.cc"
+		"/home/giovanni/cdn_con_errores_cache/por_hacer.md"
 	],
 	"find":
 	{
@@ -321,6 +353,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"arrival_",
 			"Node.cpp",
 			"dns",
 			"Dns.cpp",
@@ -415,7 +448,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -431,13 +464,73 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								56,
+								56
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15153,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1668,
+								1668
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 757.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "client/Client.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1591,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								811,
+								811
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
@@ -449,33 +542,91 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "tutorial/explicaciones",
+					"buffer": 3,
+					"file": "edgeserver/EdgeServer.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2726,
+						"buffer_size": 2681,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2726,
-								2726
+								568,
+								1634
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"syntax": "Packages/C++/C++.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 315.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "client/Client.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3523,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3061,
+								3061
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 935.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Constants.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1351,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								397,
+								397
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -528,6 +679,26 @@
 		"selected_items":
 		[
 			[
+				"ed",
+				"edgeserver/EdgeServer.h"
+			],
+			[
+				"mai",
+				"main.cpp"
+			],
+			[
+				"cl",
+				"client/Client.cpp"
+			],
+			[
+				"cons",
+				"Constants.h"
+			],
+			[
+				"clien",
+				"client/Client.h"
+			],
+			[
 				"expli",
 				"tutorial/explicaciones"
 			],
@@ -542,10 +713,6 @@
 			[
 				"read",
 				"README.md"
-			],
-			[
-				"mai",
-				"main.cpp"
 			],
 			[
 				"coman",
@@ -566,10 +733,6 @@
 			[
 				"tra",
 				"transport/Transport.h"
-			],
-			[
-				"ed",
-				"edgeserver/EdgeServer.h"
 			],
 			[
 				"cli",
@@ -648,10 +811,6 @@
 				"makefile"
 			],
 			[
-				"cl",
-				"client/Client.cpp"
-			],
-			[
 				"dn",
 				"Dns.h"
 			],
@@ -670,10 +829,6 @@
 			[
 				"coma",
 				"charts/comandos"
-			],
-			[
-				"cons",
-				"Constants.h"
 			],
 			[
 				"ws",

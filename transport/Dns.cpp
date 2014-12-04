@@ -17,7 +17,7 @@ inline int abs(int a) {
 int Dns::GetEdgeServerId(int id, int isp) {
     int weight[ NUM_EDGE_SERVERS ];
 
-    max_received_queries_by_edge_servers_cycle = 0; // para evitar la division por cero y comparaciones donde raramente es 0
+    max_received_queries_by_edge_servers_cycle = 0;
 
     // Calcular la cantidad maxima de consultas recibidas en el intervalo (TIME_WINDOW segundos)
     for (int i = 0; i < NUM_EDGE_SERVERS; ++i) {

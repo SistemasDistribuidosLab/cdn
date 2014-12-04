@@ -19,6 +19,9 @@ class Transport : public Node {
         handle<WSE> *wse;
         static double isps[3][3];
     public:
+        /**
+          * Solo recibe los parámetros necesarios para llamar al constructor de la clase padre Node
+          **/
         Transport(const string &name, int id, int type) : Node(name, id, type) {
             //cout << "{*} Transporte iniciado" << endl;
         }

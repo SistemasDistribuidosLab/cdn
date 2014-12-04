@@ -19,6 +19,16 @@ class Stats : public process
         Dns * dns;
         int TIME_WINDOW;
     public:
+        /**
+          *
+          * - name: utilizado por libcppsim.
+          * - DURACION_SIMULACION: duración de la simulación (se utiliza para calcular el tiempo
+                                   restante aproximado).
+          * - edge_servers: puntero al arreglo de edge servers creado en main.cpp
+          * - dns: puntero a la instancia de dns creada en main.cpp
+          * - TIME_WINDOW: indica cada cuanto tiempo se recogerán estadísticas
+          *
+          **/
         Stats(const string &name, int DURACION_SIMULACION, handle<EdgeServer> * edge_servers, Dns * dns, int TIME_WINDOW) : process(name)
         {
             this->edge_servers        = edge_servers;
@@ -26,11 +36,15 @@ class Stats : public process
             this->DURACION_SIMULACION = DURACION_SIMULACION;
             this->TIME_WINDOW         = TIME_WINDOW;
 
+            // Archivo para guardar las consultas recibidas por los edge servers en un formato
+            // que puede leer gnuplot
             received_querys_by_edge_servers = new ofstream();
             received_querys_by_edge_servers->open("charts/received_querys_by_edge_servers");
 
 
             /*    Cache Hits File */
+            // Archivo para guardar los cache hits de los edge servers en un formato
+            // que puede leer gnuplot
             cache_hits_by_edge_servers.open("charts/cache_hits_by_edge_servers");
             cache_usage_stream.open("charts/cache_usage");
             /*// Cache Hits File */
