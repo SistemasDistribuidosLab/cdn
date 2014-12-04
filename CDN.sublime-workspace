@@ -95,6 +95,22 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "README.md",
+			"settings":
+			{
+				"buffer_size": 1174,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "tutorial/explicaciones",
+			"settings":
+			{
+				"buffer_size": 2726,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -160,13 +176,16 @@
 	],
 	"file_history":
 	[
-		"/home/giovanni/cdn/README.md",
+		"/home/giovanni/cdn/edgeserver/EdgeServer.h",
+		"/home/giovanni/cdn/explicaciones",
+		"/home/giovanni/cdn/modificaciones_interesantes",
+		"/home/giovanni/cdn/clases",
 		"/home/giovanni/cdn/makefile",
+		"/home/giovanni/cdn/README.md",
 		"/home/giovanni/cdn/Node.h",
 		"/home/giovanni/cdn/node/Node.cpp",
 		"/home/giovanni/cdn/wse/WSE.h",
 		"/home/giovanni/cdn/transport/Transport.h",
-		"/home/giovanni/cdn/edgeserver/EdgeServer.h",
 		"/home/giovanni/cdn/edgeserver/EdgeServer.cpp",
 		"/home/giovanni/cdn/node/Node.h",
 		"/home/giovanni/cdn/client/Client.h",
@@ -284,10 +303,7 @@
 		"/home/giovanni/partial3.DAT",
 		"/home/giovanni/cdn_con_errores_cache/por_hacer.md",
 		"/home/giovanni/cdn_con_errores_cache/charts/cache_usage",
-		"/home/giovanni/cdn_con_errores_cache/wse/LruLCache.cc",
-		"/home/giovanni/cdn_con_errores_cache/generador/query_charts.plot",
-		"/home/giovanni/cdn_con_errores_cache/query_chart",
-		"/home/giovanni/cdn_con_errores_cache/src/coroutine.cc"
+		"/home/giovanni/cdn_con_errores_cache/wse/LruLCache.cc"
 	],
 	"find":
 	{
@@ -399,8 +415,69 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1174,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "tutorial/explicaciones",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2726,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2726,
+								2726
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -450,6 +527,18 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"expli",
+				"tutorial/explicaciones"
+			],
+			[
+				"modi",
+				"modificaciones_interesantes"
+			],
+			[
+				"expl",
+				"explicaciones"
+			],
 			[
 				"read",
 				"README.md"

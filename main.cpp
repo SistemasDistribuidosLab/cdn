@@ -63,7 +63,7 @@ class Simulation : public process
             clients = new handle<Client>[ NUM_CLIENTS ];
             for (int i = 0; i < NUM_CLIENTS; ++i)
             {
-                clients[ i ] = new Client("cliente", i, NODE_CLIENT, arrival_time);
+                clients[ i ] = new Client("cliente", i, NODE_CLIENT);
             }
 
             handle<WSE> wse = new WSE("wse", WSECACHESIZE);
