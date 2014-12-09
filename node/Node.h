@@ -13,12 +13,14 @@ class Transport;
 class Node : public process {
     private:
         int id;
+        int id_unique;
         int type;
         handle<Transport> *transport;
         int isp;
         double delay_acum;
         unsigned int num_messages_sended;
         unsigned int num_messages_received;
+        static unsigned int id_uniques;
     protected:
         vector<Message *> message_stack;
         vector<Message *> unprocessed_message_stack;
@@ -30,9 +32,12 @@ class Node : public process {
             this->delay_acum            = 0;
             this->num_messages_received = 0;
             this->num_messages_sended   = 0;
+            this->id_unique = Node::id_uniques;
+            Node::id_uniques++;
         }
         ~Node() { }
         int GetId();
+        unsigned int GetIdUnique();
         string GetIdString();
         int GetType();
         int GetIsp();

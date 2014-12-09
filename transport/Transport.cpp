@@ -1,80 +1,76 @@
 #include "../Constants.h"
 #include "Transport.h"
-#include "../client/Client.h"
-#include "../edgeserver/EdgeServer.h"
-#include "../wse/WSE.h"
 
 double Transport::isps[3][3];
 
-void Transport::AddMessage(Message *message) {
+void Transport::AddMessage(Message * message)
+{
     this->message_stack.push_back(message);
 }
 
-void Transport::SetIsps(double ptr_isps[][3]) {
+void Transport::SetIsps(double ptr_isps[][3])
+{
     // isps = ptr_isps;
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < 3; ++j) {
+    for (int i = 0; i < 3; ++i)
+    {
+        for (int j = 0; j < 3; ++j)
+        {
             isps[ i ][ j ] = ptr_isps[ i ][ j ];
         }
     }
 }
 
-void Transport::SetEdgeServers(handle<EdgeServer> *edge_servers) {
-    this->edge_servers = edge_servers;
-}
-void Transport::SetClients(handle<Client> *clients) {
-    this->clients = clients;
+void Transport::AddNode(handle< Node > * node)
+{
+    this->nodes.push_back(node);
 }
 
-void Transport::SetWse(handle<WSE> *wse) {
-    this->wse = wse;
-}
-
-Node *Transport::GetServer(int id, int type) {
-    if (type == NODE_CLIENT)
-        return clients[ id ];
-    if (type == NODE_EDGE_SERVER)
-        return edge_servers[ id ];
-    if (type == NODE_ORIGIN_SERVER)
-        return *wse;
+Node * Transport::GetServer(int id_unique)
+{
+    Node * node;
+    for (int i = 0, max = nodes.size(); i < max; i++)
+    {
+        node = (Node *)(*nodes.at(i));
+        if (node->GetIdUnique() == id_unique)
+        {
+            return node;
+        }
+    }
     return NULL;
 }
 
-int Transport::GetNumOfServers(int type) {
-    if (type == NODE_CLIENT)
-        return NUM_CLIENTS;
-    if (type == NODE_EDGE_SERVER)
-        return NUM_EDGE_SERVERS;
-    if (type == NODE_ORIGIN_SERVER)
-        return 0;
-    return 0;
+Node * Transport::GetServer(int id, int type)
+{
+    Node * node;
+    for (int i = 0, max = nodes.size(); i < max; i++)
+    {
+        node = (Node *)(*nodes.at(i));
+        if (node->GetType() == type && node->GetId() == id)
+        {
+            return node;
+        }
+    }
+    return NULL;
 }
 
-void Transport::inner_body(void) {
-    while (1) {
+void Transport::inner_body(void)
+{
+    while (1)
+    {
         // ===== BUSY TIME START =====
         // time_aux = time();
         // Por cada mensaje en el stack
-        while (!message_stack.empty()) {
-            Message *message = message_stack.back();
+        while (!message_stack.empty())
+        {
+            Message * message = message_stack.back();
             message_stack.pop_back();
             // Variable que guardará el servidor receptor (cliente, edge server o wse)
-            Node *servidor;
-            switch (message->GetTypeTo()) {
-                case NODE_CLIENT:
-                    servidor = clients[ message->GetIdTo() ];
-                    break;
-                case NODE_EDGE_SERVER:
-                    servidor = edge_servers[ message->GetIdTo() ];
-                    break;
-                case NODE_ORIGIN_SERVER:
-                    servidor = (*wse);
-                    break;
-            }
+            Node * servidor = this->GetServer(message->GetIdTo(), message->GetTypeTo());
 
             servidor->AddMessage(message);
             // hold(0.001);
-            if (servidor->idle()) {
+            if (servidor->idle())
+            {
                 servidor->activate();
             }
         }

@@ -4,7 +4,6 @@
 #include "transport/Transport.h"
 #include "client/Client.h"
 #include "edgeserver/EdgeServer.h"
-#include "Funciones.h"
 #include "Stats.h"
 #include "wse/WSE.h"
 #include "generador/gen_rnd.h"
@@ -71,9 +70,16 @@ class Simulation : public process
 
             // Iniciar Transporte
             handle<Transport> transport = new Transport("transporte", 0, 0);
-            transport->SetClients(clients);
-            transport->SetEdgeServers(edge_servers);
-            transport->SetWse(&wse);
+            for (int i = 0, max = NUM_CLIENTS; i < max; i++)
+            {
+                transport->AddNode((handle< Node > *) &clients[ i ]);
+            }
+            for (int i = 0, max = NUM_EDGE_SERVERS; i < max; i++)
+            {
+                transport->AddNode((handle< Node > *) &edge_servers[ i ]);
+            }
+            transport->AddNode((handle< Node > *) &wse);
+            
             Transport::SetIsps(isps);
             transport->activate();
 
@@ -184,7 +190,9 @@ class Simulation : public process
                     if (i < cache_hits_vector[ k ].size())
                     {
                         cache_hits_stream << ", " << cache_hits_vector[ k ].at( i );
-                    }else{
+                    }
+                    else
+                    {
                         cache_hits_stream << ", " << 0;
                     }
                 }

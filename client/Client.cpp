@@ -51,7 +51,13 @@ void Client::inner_body(void) {
             // Parametros de esta llamada: 
             // id del creador, tipo creador, id receptor, tipo receptor, 
             // tiempo creacion mensaje, mensaje (de tipo MessageWSE *) 
+
+            // OPCION 1:
             Message * message = new Message(this->GetId(), NODE_CLIENT, edge_server_to, NODE_EDGE_SERVER, time(), message_wse);
+            // OPCION 2:
+
+            // FIN OPCIONES
+            
             // delay corresponde al delay de enviar mensaje entre isp de emisor y receptor
             delay = this->SendMessage(message);
             unprocessed_message_stack.push_back(message);

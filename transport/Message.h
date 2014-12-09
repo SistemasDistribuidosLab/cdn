@@ -12,10 +12,12 @@ class Message {
         // from
         int id_from;
         int type_from;
+        int id_unique_from;
 
         // to
         int id_to;
         int type_to;
+        int id_unique_to;
 
         double creation_time;
         int * count_pointer;
@@ -49,6 +51,16 @@ class Message {
             // Asigno un identificador único basado en el número de instancias
             // (Ej. de los valores que tomará: 0, 1, 2, 3, 4, 5, ...)
             this->id = Message::instances;
+            Message::instances++;
+        }
+        
+        Message(int id_unique_from, int id_unique_to, double creation_time, MessageWSE * message){
+            this->id_unique_from = id_unique_from;
+            
+            this->id_unique_to   = id_unique_to;
+            
+            this->creation_time = creation_time;
+
             Message::instances++;
         }
         virtual ~Message() {
