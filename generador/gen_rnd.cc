@@ -5,16 +5,12 @@
 #include <openssl/sha.h>
 #include <sstream>
 #include <openssl/bn.h>
-// #include "../applicationLayer/TlcProtocol.h"
-// #include "../applicationLayer/Query.h"
 
 
 void Gen_rnd::inner_body( )
 {
-    // handle<TlcProtocol> *gq;
     string line, terms, line_querys_sended;
-    char * ptr;
-    // Query *q; // ============================
+    char *ptr;
     int id = 0;
     int envP2P = 0;
 
@@ -25,8 +21,6 @@ void Gen_rnd::inner_body( )
 
     double phase_time = this->time();
 
-
-    //cout<<"Linea "<<linea<<endl;
     double accumulated_time = time();
     double query_in_interval = 0;
     int num_cycles = 0;
@@ -67,29 +61,14 @@ void Gen_rnd::inner_body( )
 
         ptr = util->obtain_terms( tokens );
 
-        //  gq = queue_thread.front();
-        //  queue_thread.pop_front();
-
-        //  Verifica si va a un peer o al WSE, cuando la consulta llega desde un nodo fuera
-        //  de la red de peers
-
-
         // ===== ELIJO UN CLIENTE AL AZAR Y ENVIO UN MENSAJE
-#ifndef USERS_GENERATE_QUERYS
-
         int id_client = random_client->value();
 
-        BIGNUM * hashValue = h->GenerateKey(ptr);
-        MessageWSE * wseQuery = new MessageWSE(NULL, hashValue, ptr, USER);
+        BIGNUM *hashValue = h->GenerateKey(ptr);
+        MessageWSE *wseQuery = new MessageWSE(NULL, hashValue, ptr, USER);
         clients[ id_client ]->AddMessageWse(wseQuery);
         clients[ id_client ]->activate();
-
-
-#endif
         // ||||| ELIJO UN CLIENTE AL AZAR Y ENVIO UN MENSAJE
-
-
-
 
         ///CTE = arrival_time->value();
         sentQueries++;
@@ -99,20 +78,10 @@ void Gen_rnd::inner_body( )
         if (sentQueries >= (*totalQueries) )
         {
             ends[NP] = 1; //Indica que se ha enviado la ultima consulta
-            //cout<<"ULTIMA CONSULTA "<<endl;
-            if ( envP2P == 0 )   //No se enviaron consultas a los peers
-            {
-                //Apaga replicadores
-                // for ( int i = 0 ; i < (int)Peers.size(); i++) { // ============================
-                //     gq = Peers[i];
-                //     (*gq)->EndReplicator();
-                // }
-            }
-
             passivate();
-
         }
 
+        // Si estamos en un flash crowd
         if (FLASH_CROWD)
         {
 
@@ -208,28 +177,28 @@ void Gen_rnd::setQueryRate( int newRate)
     // newRate queries/sec
     switch (QUERY_RATE_STRATEGY)
     {
-        // DELTA T TIME
-        case 0:
-            if (this->time() > QUERY_DELTA_T )
-            {
-                double lambda = (1.0 / newRate);
-                delete arrival_time;
-                arrival_time = new rngExp("Arrive Time", lambda);
-                arrival_time ->reset();
-            }
-            break;
+    // DELTA T TIME
+    case 0:
+        if (this->time() > QUERY_DELTA_T )
+        {
+            double lambda = (1.0 / newRate);
+            delete arrival_time;
+            arrival_time = new rngExp("Arrive Time", lambda);
+            arrival_time ->reset();
+        }
+        break;
 
-        // Q QUERIES
-        case 1:
-            if ( (lastStepQueries + QUERY_DELTA_Q) < sentQueries)
-            {
-                lastStepQueries = sentQueries;
-                double lambda = (1.0 / newRate);
-                delete arrival_time;
-                arrival_time = new rngExp("Arrive Time", lambda);
-                arrival_time ->reset();
-            }
-            break;
+    // Q QUERIES
+    case 1:
+        if ( (lastStepQueries + QUERY_DELTA_Q) < sentQueries)
+        {
+            lastStepQueries = sentQueries;
+            double lambda = (1.0 / newRate);
+            delete arrival_time;
+            arrival_time = new rngExp("Arrive Time", lambda);
+            arrival_time ->reset();
+        }
+        break;
     }
 }
 
@@ -260,10 +229,6 @@ double Gen_rnd::rand_val(int seed)
         x = x_new;
     else
         x = x_new + m;
-    //
     // // Return a random value between 0.0 and 1.0
     return ((double) x / m);
-    // }
-
-
 }
