@@ -23,9 +23,12 @@ class Message {
         int id_unique_to;
 
         double creation_time; // tiempo de creación (obtenido de un llamado a time() dentro de un nodo)
-        MessageWSE * message;
-        unsigned long int id;
+        MessageWSE * message; // Mensaje que contiene la query, utilizado para mantener compatibilidad
+        unsigned long int id; // identificador único del mensaje
+        // Número de instancias de Message creadas (se utiliza)
+        // para generar el id único
         static unsigned long int instances;
+
     public:
         /**
           *
