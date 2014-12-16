@@ -9,18 +9,20 @@ using namespace std;
 
 class Message {
     private:
-        // from
-        int id_from;
+        // Atributos del nodo emisor
+        int id_from; // Identificador dentro del conjunto de nodos de tipo type_from
+        // Tipo de nodo emisor (e.g.: NODE_CLIENT, NODE_EDGE_SERVER, NODE_ORIGIN_SERVER, NODE_DNS,etc)
+        // Nota: Los tipos están definidos en Constants.h
         int type_from;
         int id_unique_from;
 
-        // to
-        int id_to;
+        // Atributos del nodo receptor
+        int id_to; // Identificador dentro del conjunto de nodos de tipo type_to
+        // Tipo de nodo receptor
         int type_to;
         int id_unique_to;
 
-        double creation_time;
-        int * count_pointer;
+        double creation_time; // tiempo de creación (obtenido de un llamado a time() dentro de un nodo)
         MessageWSE * message;
         unsigned long int id;
         static unsigned long int instances;
@@ -72,7 +74,6 @@ class Message {
         int GetTypeTo(){ return type_to; }
         int GetIdFrom(){ return id_from; };
         int GetIdTo(){ return id_to; };
-        int * GetCountPointer(){ return count_pointer; };
         double GetCreationTime(){ return creation_time ; }
         unsigned long int GetId(){ return this->id; }
 };
